@@ -8,11 +8,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 public class RobotContainer {
+  // Initialization code for our robot
   public RobotContainer() {
     configureBindings();
+    configureAutonomous();
   }
 
+  // Set up the driver controls
   private void configureBindings() {}
+  // Set up the autonomous routines
+  private void configureAutonomous() {}
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
