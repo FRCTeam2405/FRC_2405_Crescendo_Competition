@@ -32,8 +32,26 @@ public class GuitarController extends CommandGenericHID {
 
 
     /** @return A Trigger representing the start button (plus) */
-    public Trigger start() { return button(Constants.Controllers.Guitar.START_BUTTON ); }
+    public Trigger start() { return button(Constants.Controllers.Guitar.START_BUTTON); }
 
     /** @return A Trigger representing the select button (minus) */
-    public Trigger select() { return button(Constants.Controllers.Guitar.SELECT_BUTTON ); }
+    public Trigger select() { return button(Constants.Controllers.Guitar.SELECT_BUTTON); }
+
+
+    /** @return The current x-value of the guitar joystick */
+    public double getJoystickX() { return getRawAxis(Constants.Controllers.Guitar.JOYSTICK_X); }
+
+    /** @return The current y-value of the guitar joystick */
+    public double getJoystickY() { return getRawAxis(Constants.Controllers.Guitar.JOYSTICK_Y); }
+
+
+    //TODO! figure out how to return the strum output in a useful manner
+    /** @return A Trigger representing the strum bar pushed up. */
+    public Trigger strumUp() { return pov(Constants.Controllers.Guitar.STRUM_UP); }
+
+    /** @return A Trigger representing the strum bar pushed down. */
+    public Trigger strumDown() { return pov(Constants.Controllers.Guitar.STRUM_DOWN); }
+
+    /** @return A Trigger representing the strum bar in its neutral position. */
+    public Trigger strumNeutral() { return pov(Constants.Controllers.Guitar.STRUM_NEUTRAL); }
 }
