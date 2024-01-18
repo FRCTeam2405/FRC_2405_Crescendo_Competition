@@ -7,6 +7,9 @@ public final class Constants {
     }
 
     public static final class Controllers {
+        public static final int DRIVER_CONTROLLER_PORT = 0;
+        public static final int CODRIVER_CONTROLLER_PORT = 1;
+
         public static final class Guitar {
             // Port IDs for the buttons on the controller
             public static final int GREEN_FRET = 3;
