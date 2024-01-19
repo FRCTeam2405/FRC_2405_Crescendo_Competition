@@ -4,6 +4,8 @@ public final class Constants {
     public static final class Swerve {
         /** Swerve drive max speed, in meters per second. */
         public static final double MAX_SPEED = 4.0;
+        /** Swerve drive max angular speed, in radians per second. */
+        public static final double MAX_ANGULAR_SPEED = 0.4 * (2 * Math.PI);
     }
 
     public static final class Controllers {
