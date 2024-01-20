@@ -4,12 +4,18 @@
 
 package frc.robot.commands.swerve;
 
+import java.io.Console;
 import java.util.function.DoubleSupplier;
+import java.util.logging.Logger;
+
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveContainer;
+import swervelib.SwerveController;
 
 public class TeleopDrive extends Command {
   private SwerveContainer swerve;
@@ -37,12 +43,18 @@ public class TeleopDrive extends Command {
   public void execute() {
     // Cube input of XY movement, multiply by max speed
     double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
-    double correctedMoveY = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
+    double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedTurnTheta = turnTheta.getAsDouble() * Constants.Swerve.MAX_ANGULAR_SPEED;
+
+    SmartDashboard.putNumber("movex", correctedMoveX);
+    SmartDashboard.putNumber("movey", correctedMoveY);
+
+    SmartDashboard.putNumber("movez", correctedTurnTheta);
+
 
     //TODO! Cleanup, test, & improve
     ChassisSpeeds desiredSpeeds = swerve.inner.swerveController.getRawTargetSpeeds(correctedMoveX, correctedMoveY, correctedTurnTheta);
-    swerve.inner.drive(desiredSpeeds);
+    swerve.inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
   }
 
   // Called once the command ends or is interrupted.

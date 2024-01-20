@@ -41,10 +41,10 @@ public class RobotContainer {
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
     double invertedMultiplier = inverted ? -1 : 1;
-    double axisOut = controller.getRawAxis(axis);
-    return () -> (
-      Math.abs(axisOut) > deadband
-    ) ? axisOut * invertedMultiplier : 0;
+    return () -> {
+      double axisOut = controller.getRawAxis(axis);
+      return (Math.abs(axisOut) > deadband) ? axisOut * invertedMultiplier : 0;
+    }; 
   }
 
   // Set up the autonomous routines

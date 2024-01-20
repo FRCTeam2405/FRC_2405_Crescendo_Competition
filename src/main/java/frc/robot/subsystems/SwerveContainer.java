@@ -8,6 +8,8 @@ package frc.robot.subsystems;
 
 import java.io.File;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
+
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -32,6 +34,10 @@ public class SwerveContainer implements Subsystem {
     } catch(Exception e) {
       throw new RuntimeException(e);
     }
+
+    
+
+    // Configure PathPlanner and/or Choreo
   }
 
   @Override
