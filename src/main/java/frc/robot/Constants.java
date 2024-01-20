@@ -3,14 +3,26 @@ package frc.robot;
 public final class Constants {
     public static final class Swerve {
         /** Swerve drive max speed, in meters per second. */
-        public static final double MAX_SPEED = 4.0;
+        public static final double MAX_SPEED = 0.1;
         /** Swerve drive max angular speed, in radians per second. */
-        public static final double MAX_ANGULAR_SPEED = 0.4 * (2 * Math.PI);
+        public static final double MAX_ANGULAR_SPEED = 0.01 * (2 * Math.PI);
     }
 
     public static final class Controllers {
         public static final int DRIVER_CONTROLLER_PORT = 0;
         public static final int CODRIVER_CONTROLLER_PORT = 1;
+
+        public static final class Taranis {
+            // Port IDs for the Taranis driver controller
+            // We can make this whatever we want, and
+            // configure it on the controller side.
+            public static final int DRIVE_X_AXIS = 0;
+            public static final int DRIVE_Y_AXIS = 1;
+            public static final int ROTATE_AXIS = 2;
+
+            public static final double DRIVE_DEADBAND = 0.05;
+            public static final double ROTATE_DEADBAND = 0.05;
+        }
 
         public static final class Guitar {
             // Port IDs for the buttons on the controller
