@@ -14,11 +14,10 @@ public final class Constants {
 
         public static final class Taranis {
             // Port IDs for the Taranis driver controller
-            // We can make this whatever we want, and
-            // configure it on the controller side.
-            public static final int DRIVE_X_AXIS = 0;
-            public static final int DRIVE_Y_AXIS = 1;
-            public static final int ROTATE_AXIS = 2;
+            // These should match the Xbox controller layout
+            public static final int DRIVE_X_AXIS = 1;
+            public static final int DRIVE_Y_AXIS = 0;
+            public static final int ROTATE_AXIS = 4;
 
             public static final double DRIVE_DEADBAND = 0.05;
             public static final double ROTATE_DEADBAND = 0.05;
