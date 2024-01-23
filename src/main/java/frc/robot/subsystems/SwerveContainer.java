@@ -13,6 +13,7 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import swervelib.SwerveDrive;
@@ -47,6 +48,8 @@ public class SwerveContainer implements Subsystem {
   }
   @Override
   public void periodic() {
-
+    // Redundantly post the robot yaw to check for bugs.
+    //TODO! Removed when unneeded
+    SmartDashboard.putNumber("yawTest", inner.getGyroRotation3d().getZ());
   }
 }

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.swerve;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.SwerveContainer;
 
@@ -24,6 +25,9 @@ public class ZeroGyro extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // Test functionality to check that this commmand is being run.
+    //TODO! remove once unneeded
+    SmartDashboard.putNumber("timesZeroed", SmartDashboard.getNumber("timesZeroed", 0) + 1);
     swerve.zeroGyro();
   }
 }
