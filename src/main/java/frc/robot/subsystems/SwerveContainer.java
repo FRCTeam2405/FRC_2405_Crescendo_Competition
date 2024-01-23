@@ -10,6 +10,8 @@ import java.io.File;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -41,6 +43,7 @@ public class SwerveContainer implements Subsystem {
   }
   public void zeroGyro() {
     inner.zeroGyro();
+    inner.resetOdometry(new Pose2d(inner.getPose().getTranslation(), new Rotation2d(0)));
   }
   @Override
   public void periodic() {
