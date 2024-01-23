@@ -44,7 +44,6 @@ public class SwerveContainer implements Subsystem {
   }
   public void zeroGyro() {
     inner.zeroGyro();
-    inner.resetOdometry(new Pose2d(inner.getPose().getTranslation(), new Rotation2d(0)));
   }
   @Override
   public void periodic() {
