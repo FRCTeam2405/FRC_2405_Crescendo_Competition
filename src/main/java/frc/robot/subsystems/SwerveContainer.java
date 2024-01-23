@@ -39,7 +39,9 @@ public class SwerveContainer implements Subsystem {
 
     // Configure PathPlanner and/or Choreo
   }
-
+  public void zeroGyro() {
+    inner.zeroGyro();
+  }
   @Override
   public void periodic() {
 
