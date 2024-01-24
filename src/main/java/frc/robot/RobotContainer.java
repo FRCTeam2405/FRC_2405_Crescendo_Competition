@@ -62,7 +62,10 @@ public class RobotContainer {
   // Set up the autonomous routines
   private void configureAutonomous() {
     //TODO! configure all the autons
-    autonChooser.addOption("Square Test", new PathPlannerAuto(""));
+    autonChooser.addOption("Square Test", new PathPlannerAuto("Square Test Path"));
+    autonChooser.addOption("Square Test Rotate", new PathPlannerAuto("Square Test Path, rotate after drive"));
+    autonChooser.addOption("Circle Test", new PathPlannerAuto("Circle Test Path"));
+    autonChooser.addOption("Circle Test Rotate", new PathPlannerAuto("Circle Test Path, rotate during drive"));
   }
 
   public Command getAutonomousCommand() {
