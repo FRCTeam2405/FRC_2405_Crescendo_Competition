@@ -6,6 +6,10 @@ package frc.robot;
 
 import java.util.function.DoubleSupplier;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
@@ -19,6 +23,9 @@ public class RobotContainer {
   //TODO! CommandGenericHID may not be optimal. Decide whether we need to make a helper class or other tool.
   private CommandGenericHID driverController = new CommandGenericHID(Constants.Controllers.DRIVER_CONTROLLER_PORT);
   private GuitarController codriverController = new GuitarController(Constants.Controllers.CODRIVER_CONTROLLER_PORT);
+
+  // Autonomous chooser for SmartDashboard
+  private SendableChooser<Command> autonChooser = new SendableChooser<>();
 
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
@@ -53,7 +60,10 @@ public class RobotContainer {
   }
 
   // Set up the autonomous routines
-  private void configureAutonomous() {}
+  private void configureAutonomous() {
+    //TODO! configure all the autons
+    autonChooser.addOption("Square Test", new PathPlannerAuto(""));
+  }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
