@@ -1,11 +1,25 @@
 package frc.robot;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+
 public final class Constants {
     public static final class Swerve {
         /** Swerve drive max speed, in meters per second. */
         public static final double MAX_SPEED = 0.5;
         /** Swerve drive max angular speed, in radians per second. */
         public static final double MAX_ANGULAR_SPEED = 0.05 * (2 * Math.PI);
+
+        //TODO! Configure the path follower
+        public static final HolonomicPathFollowerConfig PATH_PLANNER_CONFIG = 
+            new HolonomicPathFollowerConfig(
+                new PIDConstants(0, 0, 0),
+                new PIDConstants(0, 0, 0),
+                MAX_SPEED,
+                0,
+                new ReplanningConfig()
+            );
     }
 
     public static final class Controllers {
