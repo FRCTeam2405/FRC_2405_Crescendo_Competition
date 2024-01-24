@@ -14,8 +14,8 @@ public final class Constants {
         //TODO! Configure the path follower
         public static final HolonomicPathFollowerConfig PATH_PLANNER_CONFIG = 
             new HolonomicPathFollowerConfig(
-                new PIDConstants(0, 0, 0),
-                new PIDConstants(0, 0, 0),
+                new PIDConstants(0.4, 0, 0.1),
+                new PIDConstants(0.4, 0, 0.1),
                 MAX_SPEED,
                 0,
                 new ReplanningConfig()
