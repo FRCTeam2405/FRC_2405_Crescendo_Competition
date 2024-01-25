@@ -7,7 +7,7 @@ import com.pathplanner.lib.util.ReplanningConfig;
 public final class Constants {
     public static final class Swerve {
         /** Swerve drive max speed, in meters per second. */
-        public static final double MAX_SPEED = 0.1;
+        public static final double MAX_SPEED = 0.5;
         /** Swerve drive max angular speed, in radians per second. */
         public static final double MAX_ANGULAR_SPEED = 0.05 * (2 * Math.PI);
 
