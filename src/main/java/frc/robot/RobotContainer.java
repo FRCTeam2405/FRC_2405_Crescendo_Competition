@@ -67,6 +67,7 @@ public class RobotContainer {
     autonChooser.addOption("Square Test Rotate", new PathPlannerAuto("Square Test Path, rotate after drive"));
     autonChooser.addOption("Circle Test", new PathPlannerAuto("Circle Test Path"));
     autonChooser.addOption("Circle Test Rotate", new PathPlannerAuto("Circle Test Path, rotate during drive"));
+    autonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
 
     SmartDashboard.putData("autonDropdown", autonChooser);
   }
