@@ -30,4 +30,9 @@ public class ZeroGyro extends InstantCommand {
     SmartDashboard.putNumber("timesZeroed", SmartDashboard.getNumber("timesZeroed", 0) + 1);
     swerve.zeroGyro();
   }
+
+  @Override
+  public void execute() {
+    swerve.zeroGyro();
+  }
 }
