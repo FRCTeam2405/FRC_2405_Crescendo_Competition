@@ -36,7 +36,10 @@ public class TeleopDrive extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    // Set the motors to coast
+    swerve.inner.setMotorIdleMode(false);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

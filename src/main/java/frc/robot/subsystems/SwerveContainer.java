@@ -41,8 +41,6 @@ public class SwerveContainer implements Subsystem {
       throw new RuntimeException(e);
     }
 
-    inner.setMotorIdleMode(false);
-
     // Configure PathPlanner and/or Choreo
     configurePathplanner();
   }
