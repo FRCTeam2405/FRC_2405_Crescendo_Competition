@@ -15,7 +15,11 @@ public final class Constants {
         public static final HolonomicPathFollowerConfig PATH_PLANNER_CONFIG = 
             new HolonomicPathFollowerConfig(
                 // Best Values So Far: kP: 3.14, kI: 0, kD: 0.1
+                /*
                 new PIDConstants(4.5, 0, 0.05),
+                new PIDConstants(3.14, 0, 0.1),
+                */
+                new PIDConstants(3.14, 0, 0.1),
                 new PIDConstants(3.14, 0, 0.1),
                 MAX_SPEED,
                 14.778574017813,
