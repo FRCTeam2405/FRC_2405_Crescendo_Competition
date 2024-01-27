@@ -23,13 +23,9 @@ public class ZeroGyro extends InstantCommand {
   }
 
   // Called when the command is initially scheduled.
+  // Does not seem to run when using an InstantCommand
   @Override
-  public void initialize() {
-    // Test functionality to check that this commmand is being run.
-    //TODO! remove once unneeded
-    SmartDashboard.putNumber("timesZeroed", SmartDashboard.getNumber("timesZeroed", 0) + 1);
-    swerve.zeroGyro();
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
