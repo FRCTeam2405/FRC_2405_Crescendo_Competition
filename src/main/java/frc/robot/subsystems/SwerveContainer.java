@@ -68,9 +68,7 @@ public class SwerveContainer implements Subsystem {
 
   @Override
   public void periodic() {
-    // Redundantly post the robot yaw to check for bugs.
-    //TODO! Removed when unneeded
-    SmartDashboard.putNumber("yawTest", inner.getGyroRotation3d().getZ());
+    
   }
   
   // Pass-through functions
