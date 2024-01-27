@@ -68,7 +68,11 @@ public class SwerveContainer implements Subsystem {
 
   @Override
   public void periodic() {
-    
+    // Post the Pose2D to the dashboard to test odometry
+    Pose2d pose = inner.getPose();
+    SmartDashboard.putNumber("translationX", pose.getTranslation().getX());
+    SmartDashboard.putNumber("translationY", pose.getTranslation().getY());
+    SmartDashboard.putNumber("rotation", pose.getRotation().getDegrees());
   }
   
   // Pass-through functions
