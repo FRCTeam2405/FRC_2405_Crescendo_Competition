@@ -25,7 +25,9 @@ public class ZeroGyro extends InstantCommand {
   // Called when the command is initially scheduled.
   // Does not seem to run when using an InstantCommand
   @Override
-  public void initialize() {}
+  public void initialize() {
+    swerve.zeroGyro();
+  }
 
   @Override
   public void execute() {
