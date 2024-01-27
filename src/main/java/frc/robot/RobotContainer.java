@@ -7,7 +7,6 @@ package frc.robot;
 import java.util.function.DoubleSupplier;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -63,6 +62,11 @@ public class RobotContainer {
   // Set up the autonomous routines
   private void configureAutonomous() {
     //TODO! configure all the autons
+
+    // Set a default autonomous to prevent errors
+    //TODO! Set this to an autonomous that will still get us points
+    autonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
+
     autonChooser.addOption("Square Test", new PathPlannerAuto("Square Test Path"));
     autonChooser.addOption("Square Test Rotate", new PathPlannerAuto("Square Test Path, rotate after drive"));
     autonChooser.addOption("Circle Test", new PathPlannerAuto("Circle Test Path"));
@@ -74,6 +78,5 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return autonChooser.getSelected();
-    // return Commands.print("No autonomous command configured");
   }
 }
