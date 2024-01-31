@@ -11,6 +11,7 @@ import java.io.File;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import edu.wpi.first.hal.HALUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -27,6 +28,9 @@ import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 public class SwerveContainer implements Subsystem {
 
   public static SwerveDrive inner;
+
+  // Gets team number
+  private int robotTeamNumber = HALUtil.getTeamNumber();
 
   /** Creates a new SwerveContainer. */
   public SwerveContainer() {
@@ -71,6 +75,9 @@ public class SwerveContainer implements Subsystem {
     SmartDashboard.putNumber("translationX", pose.getTranslation().getX());
     SmartDashboard.putNumber("translationY", pose.getTranslation().getY());
     SmartDashboard.putNumber("rotation", pose.getRotation().getDegrees());
+
+    SmartDashboard.putNumber("robotTeamNumber", robotTeamNumber);
+
   }
   
   // Pass-through functions
