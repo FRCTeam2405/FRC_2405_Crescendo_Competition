@@ -47,7 +47,7 @@ public class SwerveContainer implements Subsystem {
 
     // Try to init the swerve drive, and send an error if it fails.
     try {
-      inner = new SwerveParser(new File(Filesystem.getDeployDirectory(), "swerve"))
+      inner = new SwerveParser(swerveConfig)
         .createSwerveDrive(Constants.Swerve.MAX_SPEED);      
     } catch(Exception e) {
       throw new RuntimeException(e);
