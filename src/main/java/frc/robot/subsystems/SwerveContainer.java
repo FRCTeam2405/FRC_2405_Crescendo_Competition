@@ -11,6 +11,7 @@ import java.io.File;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import edu.wpi.first.hal.HALUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -28,14 +29,25 @@ public class SwerveContainer implements Subsystem {
 
   public static SwerveDrive inner;
 
+  // Gets team number
+  private int robotTeamNumber = HALUtil.getTeamNumber();
+
   /** Creates a new SwerveContainer. */
   public SwerveContainer() {
     // Set the verbosity before initializing the swerve drive.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
 
+    // TODO! Prefer removing test config before competition
+    File swerveConfig = 
+      // If the team number is 9998, use the testbot config
+      // Otherwise, use the competition config
+      robotTeamNumber == 9998
+        ? new File(Filesystem.getDeployDirectory(), "swerve/test")
+        : new File(Filesystem.getDeployDirectory(), "swerve/competition");
+
     // Try to init the swerve drive, and send an error if it fails.
     try {
-      inner = new SwerveParser(new File(Filesystem.getDeployDirectory(), "swerve"))
+      inner = new SwerveParser(swerveConfig)
         .createSwerveDrive(Constants.Swerve.MAX_SPEED);      
     } catch(Exception e) {
       throw new RuntimeException(e);
@@ -71,6 +83,9 @@ public class SwerveContainer implements Subsystem {
     SmartDashboard.putNumber("translationX", pose.getTranslation().getX());
     SmartDashboard.putNumber("translationY", pose.getTranslation().getY());
     SmartDashboard.putNumber("rotation", pose.getRotation().getDegrees());
+
+    SmartDashboard.putNumber("robotTeamNumber", robotTeamNumber);
+
   }
   
   // Pass-through functions

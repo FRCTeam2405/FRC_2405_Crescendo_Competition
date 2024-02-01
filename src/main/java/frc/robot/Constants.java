@@ -19,8 +19,8 @@ public final class Constants {
                 new PIDConstants(4.5, 0, 0.05),
                 new PIDConstants(3.14, 0, 0.1),
                 */
-                new PIDConstants(3.14, 0, 0.3),
-                new PIDConstants(3.14, 0, 0.3),
+                new PIDConstants(1, 0, 0.01),
+                new PIDConstants(1, 0, 0.01),
                 MAX_SPEED,
                 14.778574017813,
                 new ReplanningConfig(false, true)
@@ -63,6 +63,26 @@ public final class Constants {
             public static final int STRUM_UP = 0;
             public static final int STRUM_DOWN = 90;
             public static final int STRUM_NEUTRAL = -1;
+        }
+
+        public static final class AprilTags {
+
+            public static final int BLUE_SOURCE_RIGHT = 1;
+            public static final int BLUE_SOURCE_LEFT = 2;
+            public static final int RED_SPEAKER_RIGHT = 3;
+            public static final int RED_SPEAKER_CENTER = 4;
+            public static final int RED_AMP = 5;
+            public static final int BLUE_AMP = 6;
+            public static final int BLUE_SPEAKER_CENTER = 7;
+            public static final int BLUE_SPEAKER_LEFT = 8;
+            public static final int RED_SOURCE_RIGHT = 9;
+            public static final int RED_SOURCE_LEFT = 10;
+            public static final int RED_STAGE_LEFT = 11;
+            public static final int RED_STAGE_RIGHT = 12;
+            public static final int RED_STAGE_CENTER = 13;
+            public static final int BLUE_STAGE_CENTER = 14;
+            public static final int BLUE_STAGE_RIGHT = 15;
+            public static final int BLUE_STAGE_LEFT = 16;
         }
     }
 }
