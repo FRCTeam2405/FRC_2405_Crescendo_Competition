@@ -37,6 +37,14 @@ public class SwerveContainer implements Subsystem {
     // Set the verbosity before initializing the swerve drive.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
 
+    // TODO! Prefer removing test config before competition
+    File swerveConfig = 
+      // If the team number is 9998, use the testbot config
+      // Otherwise, use the competition config
+      robotTeamNumber == 9998
+        ? new File(Filesystem.getDeployDirectory(), "swerve/test")
+        : new File(Filesystem.getDeployDirectory(), "swerve/competition");
+
     // Try to init the swerve drive, and send an error if it fails.
     try {
       inner = new SwerveParser(new File(Filesystem.getDeployDirectory(), "swerve"))
