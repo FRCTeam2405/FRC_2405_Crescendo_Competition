@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 2.0,
+      "y": 7.0
+    },
+    "rotation": 180.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "collectSpike1Blue1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "rotateSpike1Blue1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "collectSpike2Blue1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "rotateSpike2Blue1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "collectSpike3Blue1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "rotateSpike3Blue1"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "New Test Autos",
+  "choreoAuto": false
+}
