@@ -80,6 +80,7 @@ public class RobotContainer {
     autonChooser.addOption("Small square test rotate", new PathPlannerAuto("Small Rotating Square"));
     autonChooser.addOption("SmallSimpleSquareRotate", new PathPlannerAuto("SmallSimpleSquareRotate"));
     autonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
+    autonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
 
     SmartDashboard.putData("autonDropdown", autonChooser);
   }

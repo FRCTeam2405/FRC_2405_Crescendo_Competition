@@ -1,0 +1,67 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 2,
+      "y": 7.0
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Turn90Degrees"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Small Square Segment 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Turn90Degrees"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare4.0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Turn90Degrees"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare6.0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Turn90Degrees"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Old Test Autos",
+  "choreoAuto": false
+}
