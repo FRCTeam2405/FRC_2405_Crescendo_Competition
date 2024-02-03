@@ -4,11 +4,7 @@
 
 package frc.robot.commands.swerve;
 
-import java.io.Console;
 import java.util.function.DoubleSupplier;
-import java.util.logging.Logger;
-
-import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -48,12 +44,6 @@ public class TeleopDrive extends Command {
     double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedTurnTheta = turnTheta.getAsDouble() * Constants.Swerve.MAX_ANGULAR_SPEED;
-
-    SmartDashboard.putNumber("movex", correctedMoveX);
-    SmartDashboard.putNumber("movey", correctedMoveY);
-
-    SmartDashboard.putNumber("movez", correctedTurnTheta);
-
 
     //TODO! Cleanup, test, & improve
     ChassisSpeeds desiredSpeeds = swerve.inner.swerveController.getRawTargetSpeeds(correctedMoveX, correctedMoveY, correctedTurnTheta);
