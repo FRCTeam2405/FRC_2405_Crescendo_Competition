@@ -26,9 +26,9 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1
           }
-        }
+        },
         {
           "type": "path",
           "data": {
@@ -38,9 +38,9 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1
           }
-        }
+        },
         {
           "type": "path",
           "data": {
@@ -50,9 +50,9 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1
           }
-        }
+        },
         {
           "type": "path",
           "data": {
@@ -62,9 +62,9 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1
           }
-        }
+        },
         {
           "type": "path",
           "data": {
@@ -74,9 +74,9 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1
           }
-        }
+        },
         {
           "type": "path",
           "data": {
@@ -86,9 +86,9 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1
           }
-        }
+        },
         {
           "type": "path",
           "data": {
