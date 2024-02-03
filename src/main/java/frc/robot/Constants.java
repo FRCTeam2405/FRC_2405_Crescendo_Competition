@@ -42,6 +42,8 @@ public final class Constants {
             public static final double ROTATE_DEADBAND = 0.05;
 
             public static final int ZERO_GYRO_BUTTON = 7;
+
+            public static final int ROTATE_90_DEGREES = 5;
         }
 
         public static final class Guitar {
