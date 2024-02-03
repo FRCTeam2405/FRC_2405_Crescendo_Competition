@@ -76,7 +76,8 @@ public class RobotContainer {
     autonChooser.addOption("Backwards", new PathPlannerAuto("Backwards")); 
     autonChooser.addOption("Blue1", new PathPlannerAuto("collect3Blue1"));
     autonChooser.addOption("Small square test rotate", new PathPlannerAuto("Small Rotating Square"));
-    autonChooser.addOption("SmallSimpleSquareRotate", new PathPlannerAuto("SmallSimpleSquareRotate"));  
+    autonChooser.addOption("SmallSimpleSquareRotate", new PathPlannerAuto("SmallSimpleSquareRotate"));
+    autonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
 
     SmartDashboard.putData("autonDropdown", autonChooser);
   }
