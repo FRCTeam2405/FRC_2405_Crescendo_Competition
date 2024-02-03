@@ -7,6 +7,7 @@ package frc.robot.subsystems.shooting;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class Shooter implements Subsystem {
+
   /** Creates a new Launcher. */
   public Shooter() {}
 
