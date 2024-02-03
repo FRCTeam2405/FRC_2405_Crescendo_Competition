@@ -24,11 +24,23 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        }
+        {
           "type": "path",
           "data": {
             "pathName": "SmallSimpleRotateSquare2"
           }
         },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        }
         {
           "type": "path",
           "data": {
@@ -36,11 +48,23 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        }
+        {
           "type": "path",
           "data": {
             "pathName": "SmallSimpleRotateSquare4"
           }
         },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        }
         {
           "type": "path",
           "data": {
@@ -48,11 +72,23 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        }
+        {
           "type": "path",
           "data": {
             "pathName": "SmallSimpleRotateSquare6"
           }
         },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        }
         {
           "type": "path",
           "data": {
