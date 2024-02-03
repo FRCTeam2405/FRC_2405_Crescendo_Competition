@@ -1,0 +1,67 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 2.0,
+      "y": 7.0
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare0"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare6"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SmallSimpleRotateSquare7"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Old Test Autos",
+  "choreoAuto": false
+}
