@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
+import frc.robot.commands.Turn90Degrees;
 import frc.robot.commands.swerve.TeleopDrive;
 import frc.robot.commands.swerve.ZeroGyro;
 import frc.robot.controllers.GuitarController;
@@ -49,6 +50,7 @@ public class RobotContainer {
     ));
 
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES).whileTrue(new Turn90Degrees(swerveDrive));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
@@ -78,6 +80,7 @@ public class RobotContainer {
     autonChooser.addOption("Small square test rotate", new PathPlannerAuto("Small Rotating Square"));
     autonChooser.addOption("SmallSimpleSquareRotate", new PathPlannerAuto("SmallSimpleSquareRotate"));
     autonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
+    autonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
 
     SmartDashboard.putData("autonDropdown", autonChooser);
   }
