@@ -43,7 +43,9 @@ public final class Constants {
 
             public static final int ZERO_GYRO_BUTTON = 7;
 
-            public static final int ROTATE_90_DEGREES = 5;
+            public static final int ROTATE_90_DEGREES_BUTTON = 5;
+
+            public static final int ROTATE_TO_APRILTAG_BUTTON = 4;
         }
 
         public static final class Guitar {
