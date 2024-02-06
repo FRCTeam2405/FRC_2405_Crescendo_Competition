@@ -4,12 +4,22 @@
 
 package frc.robot.subsystems.shooting;
 
+import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class Shooter implements Subsystem {
+  //TODO! Give these relevant names based on their position
+  CANSparkFlex shooterOne;
+  CANSparkFlex shooterTwo;
 
   /** Creates a new Launcher. */
-  public Shooter() {}
+  public Shooter() {
+    //TODO! ports
+    shooterOne = new CANSparkFlex(0, MotorType.kBrushless);
+    shooterTwo = new CANSparkFlex(0, MotorType.kBrushless);
+  }
 
   @Override
   public void periodic() {
