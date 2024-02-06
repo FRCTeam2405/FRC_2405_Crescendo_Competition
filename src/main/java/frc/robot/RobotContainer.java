@@ -18,6 +18,7 @@ import frc.robot.commands.swerve.TeleopDrive;
 import frc.robot.commands.swerve.Turn90Degrees;
 import frc.robot.commands.swerve.ZeroGyro;
 import frc.robot.controllers.GuitarController;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 
 public class RobotContainer {
@@ -31,6 +32,7 @@ public class RobotContainer {
 
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
+  private Limelight limelight = new Limelight();
 
   // Initialization code for our robot
   public RobotContainer() {
@@ -52,7 +54,7 @@ public class RobotContainer {
 
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
     driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Turn90Degrees(swerveDrive));
-    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new RotateToApriltag(swerveDrive, null));
+    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new RotateToApriltag(swerveDrive, limelight));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
