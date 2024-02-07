@@ -37,7 +37,7 @@ public class RotateToApriltag extends Command {
   public void execute() {
     
     // Gets apriltag position, if the Limelight returns null (tag not found), return early
-    desiredPose = limelight.getTargetPose(7);
+    desiredPose = -limelight.getTargetPose(7);
     if(desiredPose == 0) {
       return;
     }
