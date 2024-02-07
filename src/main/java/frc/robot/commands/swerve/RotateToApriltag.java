@@ -4,8 +4,6 @@
 
 package frc.robot.commands.swerve;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveContainer;
@@ -13,7 +11,7 @@ import frc.robot.subsystems.Limelight;
 
 public class RotateToApriltag extends Command {
 
-  double desiredYaw;
+  double[] desiredPose;
   SwerveContainer swerveDrive;
   Limelight limelight;
 
@@ -36,11 +34,16 @@ public class RotateToApriltag extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    desiredYaw = limelight.getTargetPose(7)[5];
+    // Gets apriltag position, if the Limelight returns null (tag not found), return early
+    desiredPose = limelight.getTargetPose(7);
+    if(desiredPose == null) {
+      return;
+    }
+    double desiredYaw = desiredPose[5];
 
-        ChassisSpeeds desiredSpeeds = swerveDrive.inner.swerveController.getRawTargetSpeeds(
+    ChassisSpeeds desiredSpeeds = swerveDrive.inner.swerveController.getRawTargetSpeeds(
       0, 0,
-      desiredYaw*Math.PI/180,
+      desiredYaw * Math.PI/180,
       swerveDrive.inner.getPose().getRotation().getRadians()
     );
     swerveDrive.inner.drive(desiredSpeeds);
