@@ -22,12 +22,12 @@ public class Limelight extends SubsystemBase {
   public double[] getRobotPose() {
   return networkTable.getEntry("botpose").getDoubleArray(new double[6]);
   }
-  public double[] getTargetPose(int tid) {
+  public double getTargetPose(int tid) {
     if(networkTable.getEntry("tid").getInteger(-1) != tid) {
-      return null;
+      return 0;
     }
 
-    return networkTable.getEntry("targetpose_robotspace").getDoubleArray(new double[6]);
+    return networkTable.getEntry("tx").getDouble(0);
   }
 
   @Override

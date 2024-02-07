@@ -12,7 +12,7 @@ import frc.robot.subsystems.Limelight;
 
 public class RotateToApriltag extends Command {
 
-  double[] desiredPose;
+  double desiredPose;
   SwerveContainer swerveDrive;
   Limelight limelight;
 
@@ -38,13 +38,13 @@ public class RotateToApriltag extends Command {
     
     // Gets apriltag position, if the Limelight returns null (tag not found), return early
     desiredPose = limelight.getTargetPose(7);
-    if(desiredPose == null) {
+    if(desiredPose == 0) {
       return;
     }
 
-    SmartDashboard.putNumberArray("testDisiredPose", desiredPose);
+    SmartDashboard.putNumber("testDisiredPose", desiredPose);
 
-    double desiredYaw = desiredPose[5];
+    double desiredYaw = desiredPose;
 
     ChassisSpeeds desiredSpeeds = swerveDrive.inner.swerveController.getRawTargetSpeeds(
       0, 0,
