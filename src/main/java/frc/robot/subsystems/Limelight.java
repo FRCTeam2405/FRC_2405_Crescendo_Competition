@@ -12,7 +12,7 @@ public class Limelight extends SubsystemBase {
   /** Creates a new Limelight. */
   public Limelight() {}
   
-  NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("Limelight");
+  NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("limelight");
 
   public void initialize(){
   networkTable.getEntry("ledMode").setNumber(0);

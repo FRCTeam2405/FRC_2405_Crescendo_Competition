@@ -35,14 +35,14 @@ public class RotateToApriltag extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    SmartDashboard.putNumberArray("testDisiredPose", desiredPose);
-
+    
     // Gets apriltag position, if the Limelight returns null (tag not found), return early
     desiredPose = limelight.getTargetPose(7);
     if(desiredPose == null) {
       return;
     }
+
+    SmartDashboard.putNumberArray("testDisiredPose", desiredPose);
 
     double desiredYaw = desiredPose[5];
 
