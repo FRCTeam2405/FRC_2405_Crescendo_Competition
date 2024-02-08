@@ -48,7 +48,7 @@ public class RotateToApriltag extends Command {
 
     ChassisSpeeds desiredSpeeds = swerveDrive.inner.swerveController.getRawTargetSpeeds(
       0, 0,
-      desiredYaw * Math.PI/180,
+      swerveDrive.inner.getPose().getRotation().getRadians() + (desiredYaw * Math.PI/180),
       swerveDrive.inner.getPose().getRotation().getRadians()
     );
     swerveDrive.inner.drive(desiredSpeeds);
