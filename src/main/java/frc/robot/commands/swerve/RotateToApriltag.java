@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveContainer;
+import swervelib.SwerveController;
 import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 
@@ -62,7 +63,8 @@ public class RotateToApriltag extends Command {
       swerveDrive.inner.getPose().getRotation().getRadians() + (desiredYaw * Math.PI/180),
       swerveDrive.inner.getPose().getRotation().getRadians()
     );
-    swerveDrive.inner.drive(desiredSpeeds);
+    swerveDrive.inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
+
   }
 
   // Called once the command ends or is interrupted.
