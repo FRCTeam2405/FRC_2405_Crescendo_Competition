@@ -73,17 +73,20 @@ public class RobotContainer {
     //TODO! Set this to an autonomous that will still get us points
     autonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
 
-    autonChooser.addOption("Square Test", new PathPlannerAuto("Square Test Path"));
+    /** Uneccessary autos
+     * autonChooser.addOption("Square Test", new PathPlannerAuto("Square Test Path"));
     autonChooser.addOption("Square Test Rotate", new PathPlannerAuto("Square Test Path, rotate after drive"));
     autonChooser.addOption("Circle Test", new PathPlannerAuto("Circle Test Path"));
     autonChooser.addOption("Circle Test Rotate", new PathPlannerAuto("Circle Test Path, rotate during drive"));
-    autonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
+    */autonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
     autonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
+    /** Uneccessary autos
     autonChooser.addOption("Backwards", new PathPlannerAuto("Backwards")); 
     autonChooser.addOption("Blue1", new PathPlannerAuto("collect3Blue1"));
     autonChooser.addOption("Small square test rotate", new PathPlannerAuto("Small Rotating Square"));
     autonChooser.addOption("SmallSimpleSquareRotate", new PathPlannerAuto("SmallSimpleSquareRotate"));
     autonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
+    */
     autonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
 
     SmartDashboard.putData("autonDropdown", autonChooser);
