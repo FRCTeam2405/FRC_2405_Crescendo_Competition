@@ -51,20 +51,23 @@ public class RotateToApriltag extends Command {
     // Gets apriltag position, if the Limelight returns null (tag not found), return early
     desiredPose = -limelight.getTargetPose(7);
     if(desiredPose == 0) {
-      return;
+      ChassisSpeeds desiredSpeeds = swerveDrive.inner.swerveController.getRawTargetSpeeds(correctedMoveX, correctedMoveY, correctedTurnTheta);
+      swerveDrive.inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
+
     }
+    else {
+     SmartDashboard.putNumber("testDisiredPose", desiredPose);
 
-    SmartDashboard.putNumber("testDisiredPose", desiredPose);
+     double desiredYaw = desiredPose;
 
-    double desiredYaw = desiredPose;
+     ChassisSpeeds desiredSpeeds = swerveDrive.inner.swerveController.getRawTargetSpeeds(
+       correctedMoveX, correctedMoveY,
+       swerveDrive.inner.getPose().getRotation().getRadians() + (desiredYaw * Math.PI/180),
+       swerveDrive.inner.getPose().getRotation().getRadians()
+     );
+     swerveDrive.inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
 
-    ChassisSpeeds desiredSpeeds = swerveDrive.inner.swerveController.getRawTargetSpeeds(
-      correctedMoveX, correctedMoveY,
-      swerveDrive.inner.getPose().getRotation().getRadians() + (desiredYaw * Math.PI/180),
-      swerveDrive.inner.getPose().getRotation().getRadians()
-    );
-    swerveDrive.inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
-
+    }
   }
 
   // Called once the command ends or is interrupted.
