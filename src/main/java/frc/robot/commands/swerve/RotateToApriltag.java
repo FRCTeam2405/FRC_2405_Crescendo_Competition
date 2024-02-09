@@ -4,10 +4,13 @@
 
 package frc.robot.commands.swerve;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveContainer;
+import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 
 public class RotateToApriltag extends Command {
@@ -15,12 +18,16 @@ public class RotateToApriltag extends Command {
   double desiredPose;
   SwerveContainer swerveDrive;
   Limelight limelight;
+  private DoubleSupplier moveX, moveY, turnTheta;
 
   /** Creates a new RotateToApriltag. */
-  public RotateToApriltag(SwerveContainer swerveDrive, Limelight limelight) {
+  public RotateToApriltag(SwerveContainer swerveDrive, Limelight limelight, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier rotate) {
   this.swerveDrive = swerveDrive;
   this.limelight = limelight;
 
+  moveX = vX;
+  moveY = vY;
+  turnTheta = rotate;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(swerveDrive, limelight);
@@ -35,7 +42,11 @@ public class RotateToApriltag extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+
+    double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
+    double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
+    double correctedTurnTheta = turnTheta.getAsDouble() * Constants.Swerve.MAX_ANGULAR_SPEED;
+
     // Gets apriltag position, if the Limelight returns null (tag not found), return early
     desiredPose = -limelight.getTargetPose(7);
     if(desiredPose == 0) {
@@ -47,7 +58,7 @@ public class RotateToApriltag extends Command {
     double desiredYaw = desiredPose;
 
     ChassisSpeeds desiredSpeeds = swerveDrive.inner.swerveController.getRawTargetSpeeds(
-      0, 0,
+      correctedMoveX, correctedMoveY,
       swerveDrive.inner.getPose().getRotation().getRadians() + (desiredYaw * Math.PI/180),
       swerveDrive.inner.getPose().getRotation().getRadians()
     );
