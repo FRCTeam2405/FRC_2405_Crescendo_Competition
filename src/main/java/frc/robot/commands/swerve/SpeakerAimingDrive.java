@@ -50,6 +50,8 @@ public class SpeakerAimingDrive extends Command {
 
     if(measuredPose != null && measuredPose.getX() != 0) {
       swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp);
+    } else {
+      swerveDrive.inner.updateOdometry();
     }
 
     // Post the pose to dashboard
