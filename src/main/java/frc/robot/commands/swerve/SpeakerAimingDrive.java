@@ -6,6 +6,8 @@ package frc.robot.commands.swerve;
 
 import java.util.Optional;
 
+import org.opencv.core.Mat;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -46,12 +48,12 @@ public class SpeakerAimingDrive extends Command {
     double timestamp = Timer.getFPGATimestamp();
     Pose2d measuredPose = limelight.getMeasuredPose();
 
-    if(measuredPose != null) {
+    if(measuredPose != null && measuredPose.getX() != 0) {
       swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp);
     }
 
     // Post the pose to dashboard
-    Pose2d pose = swerveDrive.inner.getPose();
+    Pose2d pose = swerveDrive.getPose();
     Optional<Alliance> alliance = DriverStation.getAlliance();
 
     SmartDashboard.putNumber("poseX", pose.getX());
@@ -75,12 +77,16 @@ public class SpeakerAimingDrive extends Command {
       offsetY = Constants.Field.RED_SPEAKER_Y - pose.getY();
     }
 
+    SmartDashboard.putNumber("offsetX", offsetX);
+    SmartDashboard.putNumber("offsetY", offsetY);
+
     Rotation2d desiredYaw = new Rotation2d(offsetX, offsetY);
+    SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
 
     ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
       0, 0,
-      desiredYaw.getRadians(),
-      pose.getRotation().getRadians(),
+      desiredYaw.getRadians() % (Math.PI * 2),
+      pose.getRotation().getRadians() % (Math.PI * 2),
       Constants.Swerve.MAX_SPEED
     );
     swerveDrive.inner.drive(chassisSpeeds);

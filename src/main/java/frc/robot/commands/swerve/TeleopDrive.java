@@ -6,28 +6,33 @@ package frc.robot.commands.swerve;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 import swervelib.SwerveController;
 
 public class TeleopDrive extends Command {
   private SwerveContainer swerve;
+  private Limelight limelight;
 
   private DoubleSupplier moveX, moveY, turnTheta;
 
   /** Drive command for typical teleop movement. */
-  public TeleopDrive(SwerveContainer swerveContainer, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier rotate) {
+  public TeleopDrive(SwerveContainer swerveContainer, Limelight limelight, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier rotate) {
     swerve = swerveContainer;
+    this.limelight = limelight;
 
     moveX = vX;
     moveY = vY;
     turnTheta = rotate;
 
     // Required subsystems
-    addRequirements(swerve);
+    addRequirements(swerve, limelight);
   }
 
   // Called when the command is initially scheduled.
@@ -35,6 +40,7 @@ public class TeleopDrive extends Command {
   public void initialize() {
     // Set the motors to coast
     swerve.inner.setMotorIdleMode(false);
+    limelight.initialize();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -48,6 +54,14 @@ public class TeleopDrive extends Command {
     //TODO! Cleanup, test, & improve
     ChassisSpeeds desiredSpeeds = swerve.inner.swerveController.getRawTargetSpeeds(correctedMoveX, correctedMoveY, correctedTurnTheta);
     swerve.inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
+
+    // Vision measurement
+    double timestamp = Timer.getFPGATimestamp();
+    Pose2d measuredPose = limelight.getMeasuredPose();
+
+    if(measuredPose != null && measuredPose.getX() != 0) {
+      swerve.inner.addVisionMeasurement(measuredPose, timestamp);
+    }
   }
 
   // Called once the command ends or is interrupted.
