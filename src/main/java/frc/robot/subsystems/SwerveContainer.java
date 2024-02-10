@@ -7,6 +7,7 @@
 package frc.robot.subsystems;
 
 import java.io.File;
+import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -28,11 +29,8 @@ public class SwerveContainer implements Subsystem {
 
   public SwerveDrive inner;
 
-  // Gets team number
-  private int robotTeamNumber = HALUtil.getTeamNumber();
-
-  // Gets allance color
-  alliance = DriverStation.getAlliance();
+  public static int robotTeamNumber;
+  public static Alliance allianceColor;
 
   /** Creates a new SwerveContainer. */
   public SwerveContainer() {

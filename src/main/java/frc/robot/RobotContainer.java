@@ -8,6 +8,9 @@ import java.util.function.DoubleSupplier;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.hal.HALUtil;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -37,6 +40,14 @@ public class RobotContainer {
 
   // Initialization code for our robot
   public RobotContainer() {
+
+    SwerveContainer.robotTeamNumber = HALUtil.getTeamNumber();
+    if(DriverStation.getAlliance().isPresent()) {
+      SwerveContainer.allianceColor = DriverStation.getAlliance().get();
+    } else {
+      SwerveContainer.allianceColor = null;
+    }
+
     configureBindings();
     configureAutonomous();
   }
