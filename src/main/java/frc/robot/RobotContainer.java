@@ -40,8 +40,6 @@ public class RobotContainer {
 
   // Initialization code for our robot
   public RobotContainer() {
-
-    SwerveContainer.robotTeamNumber = HALUtil.getTeamNumber();
     if(DriverStation.getAlliance().isPresent()) {
       SwerveContainer.allianceColor = DriverStation.getAlliance().get();
     } else {

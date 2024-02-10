@@ -29,7 +29,7 @@ public class SwerveContainer implements Subsystem {
 
   public SwerveDrive inner;
 
-  public static int robotTeamNumber;
+  public static int robotTeamNumber = HALUtil.getTeamNumber();
   public static Alliance allianceColor;
 
   /** Creates a new SwerveContainer. */
