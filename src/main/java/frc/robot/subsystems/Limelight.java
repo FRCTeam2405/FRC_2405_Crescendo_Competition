@@ -25,11 +25,11 @@ public class Limelight extends SubsystemBase {
   
   /** Gets the measured pose according to the Limelight MegaTag pipeline. */
   public Pose2d getMeasuredPose() {
-    double[] rawPose = networkTable.getEntry("botpose").getDoubleArray(new double[6]);
+    double[] rawPose = networkTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
 
     // Convert raw pose (X, Y, Z, Roll, Pitch, Yaw)
     // into a Pose2d. We don't typically use 3D coords,
-    // so those are discarded here.
+    // so Z, Roll, and Pitch are discarded here.
     return new Pose2d(new Translation2d(rawPose[0], rawPose[1]), new Rotation2d(rawPose[5]));
   }
 
