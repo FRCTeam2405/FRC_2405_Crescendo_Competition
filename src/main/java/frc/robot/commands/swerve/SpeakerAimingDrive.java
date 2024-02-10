@@ -5,11 +5,21 @@
 package frc.robot.commands.swerve;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.SwerveContainer;
 
 public class SpeakerAimingDrive extends Command {
+
+  Limelight limelight;
+  SwerveContainer swerveDrive;
+
   /** Drive command for aiming at the speaker while moving. */
-  public SpeakerAimingDrive() {
+  public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive) {
+    this.limelight = limelight;
+    this.swerveDrive = swerveDrive;
+
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(limelight, swerveDrive);
   }
 
   // Called when the command is initially scheduled.
