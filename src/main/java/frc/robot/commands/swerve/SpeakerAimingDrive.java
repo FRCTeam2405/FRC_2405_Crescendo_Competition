@@ -54,6 +54,10 @@ public class SpeakerAimingDrive extends Command {
     Pose2d pose = swerveDrive.inner.getPose();
     Optional<Alliance> alliance = DriverStation.getAlliance();
 
+    SmartDashboard.putNumber("poseX", pose.getX());
+    SmartDashboard.putNumber("poseY", pose.getY());
+    SmartDashboard.putNumber("poseYaw", pose.getRotation().getDegrees());
+
     if(alliance.isEmpty()) {
       return;
     }
