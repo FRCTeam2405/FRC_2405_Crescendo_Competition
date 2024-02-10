@@ -4,10 +4,13 @@
 
 package frc.robot.commands.swerve;
 
+import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,6 +49,14 @@ public class TeleopDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    // Post the pose to dashboard
+    Pose2d pose = swerve.getPose();
+
+    SmartDashboard.putNumber("poseX", pose.getX());
+    SmartDashboard.putNumber("poseY", pose.getY());
+    SmartDashboard.putNumber("poseYaw", pose.getRotation().getDegrees());
+
     // Cube input of XY movement, multiply by max speed
     double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
