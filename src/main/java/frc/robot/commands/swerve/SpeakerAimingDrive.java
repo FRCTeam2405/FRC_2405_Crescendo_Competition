@@ -4,6 +4,8 @@
 
 package frc.robot.commands.swerve;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
@@ -28,7 +30,17 @@ public class SpeakerAimingDrive extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    // Get measured pose from the limelight and add it to our pose
+    // If the measured pose is null, we cannot detect any Apriltags
+    double timestamp = Timer.getFPGATimestamp();
+    Pose2d measuredPose = limelight.getMeasuredPose();
+
+    if(measuredPose != null) {
+      swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp);
+    }
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
