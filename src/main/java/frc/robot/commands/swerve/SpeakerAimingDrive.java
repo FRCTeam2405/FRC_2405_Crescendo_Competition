@@ -6,6 +6,7 @@ package frc.robot.commands.swerve;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
@@ -40,6 +41,11 @@ public class SpeakerAimingDrive extends Command {
       swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp);
     }
 
+    // Post the pose to dashboard
+    Pose2d pose = swerveDrive.inner.getPose();
+    SmartDashboard.putNumber("poseX", pose.getX());
+    SmartDashboard.putNumber("poseY", pose.getY());
+    SmartDashboard.putNumber("poseZ", pose.getRotation().getDegrees());
   }
 
   // Called once the command ends or is interrupted.
