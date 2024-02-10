@@ -18,7 +18,7 @@ public class TeleopDrive extends Command {
 
   private DoubleSupplier moveX, moveY, turnTheta;
 
-  /** Creates a new TeleopDrive. */
+  /** Drive command for typical teleop movement. */
   public TeleopDrive(SwerveContainer swerveContainer, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier rotate) {
     swerve = swerveContainer;
 
