@@ -21,7 +21,7 @@ public class RotateToApriltag extends Command {
   Limelight limelight;
   private DoubleSupplier moveX, moveY, turnTheta;
 
-  /** Creates a new RotateToApriltag. */
+  /** Beta command for aiming at an apriltag. */
   public RotateToApriltag(SwerveContainer swerveDrive, Limelight limelight, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier rotate) {
   this.swerveDrive = swerveDrive;
   this.limelight = limelight;
