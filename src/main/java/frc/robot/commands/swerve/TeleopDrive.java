@@ -72,6 +72,9 @@ public class TeleopDrive extends Command {
 
     if(measuredPose != null && measuredPose.getX() != 0) {
       swerve.inner.addVisionMeasurement(measuredPose, timestamp);
+      swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
+    } else {
+      swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }
   }
 

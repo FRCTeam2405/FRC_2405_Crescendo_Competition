@@ -8,9 +8,11 @@ import java.util.Optional;
 
 import org.opencv.core.Mat;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -24,6 +26,7 @@ public class SpeakerAimingDrive extends Command {
 
   Limelight limelight;
   SwerveContainer swerveDrive;
+  SwerveDrivePoseEstimator swerveDrivePoseEstimator;
 
   /** Drive command for aiming at the speaker while moving. */
   public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive) {
@@ -50,8 +53,9 @@ public class SpeakerAimingDrive extends Command {
 
     if(measuredPose != null && measuredPose.getX() != 0) {
       swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp);
+      swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
     } else {
-      swerveDrive.inner.updateOdometry();
+      swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
     }
 
     // Post the pose to dashboard
