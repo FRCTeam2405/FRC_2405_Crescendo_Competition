@@ -53,7 +53,7 @@ public class SpeakerAimingDrive extends Command {
 
     if(measuredPose != null && measuredPose.getX() != 0) {
       swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp);
-      swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
+      swerveDrive.inner.swerveDrivePoseEstimator.resetPosition(measuredPose.getRotation(), swerveDrive.inner.getModulePositions(), measuredPose);
     } else {
       swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
     }
