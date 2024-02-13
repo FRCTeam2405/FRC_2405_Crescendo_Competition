@@ -16,6 +16,7 @@ public class Limelight extends SubsystemBase {
   /** Creates a new Limelight. */
   public Limelight() {}
   
+
   NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("limelight");
 
   public void initialize(){
@@ -23,6 +24,20 @@ public class Limelight extends SubsystemBase {
   networkTable.getEntry("pipeline").setNumber(4);
   }
   
+  public double getLatency() {
+    double tl = networkTable.getEntry("tl").getDouble(0);
+    double cl = networkTable.getEntry("cl").getDouble(0);
+    return (tl + cl) / 1000;
+  }
+
+  public boolean hasTarget() {
+    double tv = networkTable.getEntry("tv").getDouble(0);
+    if (tv == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   /** Gets the measured pose according to the Limelight MegaTag pipeline. */
   public Pose2d getMeasuredPose() {
     double[] rawPose = networkTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);

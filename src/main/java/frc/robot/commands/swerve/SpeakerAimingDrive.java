@@ -48,10 +48,10 @@ public class SpeakerAimingDrive extends Command {
   public void execute() {
     // Get measured pose from the limelight and add it to our pose
     // If the measured pose is null, we cannot detect any Apriltags
-    double timestamp = Timer.getFPGATimestamp();
+    double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
     Pose2d measuredPose = limelight.getMeasuredPose();
-
-    if(measuredPose != null && measuredPose.getX() != 0) {
+    
+    if(limelight.hasTarget()) {
       swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp);
       swerveDrive.inner.swerveDrivePoseEstimator.resetPosition(measuredPose.getRotation(), swerveDrive.inner.getModulePositions(), measuredPose);
     } else {
