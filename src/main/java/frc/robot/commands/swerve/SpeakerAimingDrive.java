@@ -8,6 +8,10 @@ import java.util.Optional;
 
 import org.opencv.core.Mat;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -21,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
+
 
 public class SpeakerAimingDrive extends Command {
 
@@ -37,6 +42,9 @@ public class SpeakerAimingDrive extends Command {
     addRequirements(limelight, swerveDrive);
   }
 
+  // Standard deviation for apriltag position setting
+  private Matrix<N3, N1> visionMeasurmentStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -52,7 +60,7 @@ public class SpeakerAimingDrive extends Command {
     Pose2d measuredPose = limelight.getMeasuredPose();
     
     if(limelight.hasTarget()) {
-      swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp);
+      swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp, visionMeasurmentStdDevs);
       swerveDrive.inner.swerveDrivePoseEstimator.resetPosition(measuredPose.getRotation(), swerveDrive.inner.getModulePositions(), measuredPose);
     } else {
       swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());

@@ -7,6 +7,10 @@ package frc.robot.commands.swerve;
 import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -37,6 +41,9 @@ public class TeleopDrive extends Command {
     // Required subsystems
     addRequirements(swerve, limelight);
   }
+
+  // Standard deviation for apriltag position setting
+  private Matrix<N3, N1> visionMeasurmentStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
 
   // Called when the command is initially scheduled.
   @Override
@@ -71,7 +78,7 @@ public class TeleopDrive extends Command {
     Pose2d measuredPose = limelight.getMeasuredPose();
 
     if(limelight.hasTarget()) {
-      swerve.inner.addVisionMeasurement(measuredPose, timestamp);
+      swerve.inner.addVisionMeasurement(measuredPose, timestamp, visionMeasurmentStdDevs);
       swerve.inner.swerveDrivePoseEstimator.resetPosition(measuredPose.getRotation(), swerve.inner.getModulePositions(), measuredPose);
     } else {
       swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
