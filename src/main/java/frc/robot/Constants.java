@@ -30,6 +30,11 @@ public final class Constants {
             );
     }
 
+    public static final class Shooter {
+        //TODO! adjust for shooter
+        public static final double SHOOTER_HEIGHT = 0;
+    }
+
     public static final class Field {
         public static final double BLUE_SPEAKER_X = 0;
         public static final double BLUE_SPEAKER_Y = 5.547879;

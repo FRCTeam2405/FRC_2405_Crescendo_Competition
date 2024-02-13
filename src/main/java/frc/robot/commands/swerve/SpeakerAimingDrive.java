@@ -6,8 +6,6 @@ package frc.robot.commands.swerve;
 
 import java.util.Optional;
 
-import org.opencv.core.Mat;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -64,23 +62,35 @@ public class SpeakerAimingDrive extends Command {
       return;
     }
 
+    // Relative positions from the robot to the speaker.
     double offsetX;
     double offsetY;
+    double offsetZ;
 
     // Calculate XY offset between robot and speaker,
     // convert to angle, then convert to field-centric angle
     if(alliance.get() == Alliance.Blue) {
       offsetX = Constants.Field.BLUE_SPEAKER_X - pose.getX();
       offsetY = Constants.Field.BLUE_SPEAKER_Y - pose.getY();
+      offsetZ = Constants.Field.BLUE_SPEAKER_Z - Constants.Shooter.SHOOTER_HEIGHT;
     } else {
       offsetX = Constants.Field.RED_SPEAKER_X - pose.getX();
       offsetY = Constants.Field.RED_SPEAKER_Y - pose.getY();
+      offsetZ = Constants.Field.RED_SPEAKER_Z - Constants.Shooter.SHOOTER_HEIGHT;
     }
 
     SmartDashboard.putNumber("offsetX", offsetX);
     SmartDashboard.putNumber("offsetY", offsetY);
+    SmartDashboard.putNumber("offsetZ", offsetZ);
 
+    // calculate direct distance and ground distance to the speaker
+    double floorDistance = Math.hypot(offsetX, offsetY);
+    double directDistance = Math.hypot(floorDistance, offsetZ);
+
+    // calculate pitch and yaw from the shooter to the speaker
+    Rotation2d desiredPitch = new Rotation2d(floorDistance, offsetZ);
     Rotation2d desiredYaw = new Rotation2d(offsetX, offsetY);
+
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
 
     ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
