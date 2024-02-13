@@ -4,7 +4,10 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
 public final class Constants {
+
     public static final class Swerve {
         /** Swerve drive max speed, in meters per second. */
         public static final double MAX_SPEED = 0.5;
@@ -25,6 +28,22 @@ public final class Constants {
                 14.778574017813,
                 new ReplanningConfig(false, true)
             );
+    }
+
+    public static final class Shooter {
+        //TODO! adjust for shooter
+        public static final double SHOOTER_HEIGHT = 0;
+    }
+
+    public static final class Field {
+        public static final double BLUE_SPEAKER_X = 0;
+        public static final double BLUE_SPEAKER_Y = 5.547879;
+        public static final double BLUE_SPEAKER_Z = 2.032004;
+
+        public static final double RED_SPEAKER_X = 16.57938;
+        public static final double RED_SPEAKER_Y = 5.547879;
+        public static final double RED_SPEAKER_Z = 2.032004;
+
     }
 
     public static final class Controllers {

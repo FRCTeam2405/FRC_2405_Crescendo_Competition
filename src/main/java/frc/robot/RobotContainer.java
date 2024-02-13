@@ -8,12 +8,16 @@ import java.util.function.DoubleSupplier;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.hal.HALUtil;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import frc.robot.commands.swerve.RotateToApriltag;
+import frc.robot.commands.swerve.SpeakerAimingDrive;
 import frc.robot.commands.swerve.TeleopDrive;
 import frc.robot.commands.swerve.Turn90Degrees;
 import frc.robot.commands.swerve.ZeroGyro;
@@ -36,6 +40,12 @@ public class RobotContainer {
 
   // Initialization code for our robot
   public RobotContainer() {
+    if(DriverStation.getAlliance().isPresent()) {
+      SwerveContainer.allianceColor = DriverStation.getAlliance().get();
+    } else {
+      SwerveContainer.allianceColor = null;
+    }
+
     configureBindings();
     configureAutonomous();
   }
@@ -44,7 +54,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Temporary controls for testing
     //TODO! Competition controls
-    swerveDrive.setDefaultCommand(new TeleopDrive(swerveDrive,
+    swerveDrive.setDefaultCommand(new TeleopDrive(swerveDrive, limelight,
       // Invert X Axis - WPIlib is forward-positive, joystick is down-positive
       axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
       // Invert Y Axis - WPILib is left-positive, joystick is right-positive
@@ -54,7 +64,7 @@ public class RobotContainer {
 
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
     driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Turn90Degrees(swerveDrive));
-    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new RotateToApriltag(swerveDrive, limelight));
+    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
@@ -73,17 +83,20 @@ public class RobotContainer {
     //TODO! Set this to an autonomous that will still get us points
     autonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
 
-    autonChooser.addOption("Square Test", new PathPlannerAuto("Square Test Path"));
+    /** Uneccessary autos
+     * autonChooser.addOption("Square Test", new PathPlannerAuto("Square Test Path"));
     autonChooser.addOption("Square Test Rotate", new PathPlannerAuto("Square Test Path, rotate after drive"));
     autonChooser.addOption("Circle Test", new PathPlannerAuto("Circle Test Path"));
     autonChooser.addOption("Circle Test Rotate", new PathPlannerAuto("Circle Test Path, rotate during drive"));
-    autonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
+    */autonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
     autonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
+    /** Uneccessary autos
     autonChooser.addOption("Backwards", new PathPlannerAuto("Backwards")); 
     autonChooser.addOption("Blue1", new PathPlannerAuto("collect3Blue1"));
     autonChooser.addOption("Small square test rotate", new PathPlannerAuto("Small Rotating Square"));
     autonChooser.addOption("SmallSimpleSquareRotate", new PathPlannerAuto("SmallSimpleSquareRotate"));
     autonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
+    */
     autonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
 
     SmartDashboard.putData("autonDropdown", autonChooser);

@@ -7,6 +7,7 @@
 package frc.robot.subsystems;
 
 import java.io.File;
+import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -15,6 +16,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -27,8 +29,8 @@ public class SwerveContainer implements Subsystem {
 
   public SwerveDrive inner;
 
-  // Gets team number
-  private int robotTeamNumber = HALUtil.getTeamNumber();
+  public static int robotTeamNumber = HALUtil.getTeamNumber();
+  public static Alliance allianceColor;
 
   /** Creates a new SwerveContainer. */
   public SwerveContainer() {
