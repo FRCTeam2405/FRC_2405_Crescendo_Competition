@@ -12,6 +12,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -22,10 +23,13 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 import swervelib.SwerveController;
+import swervelib.imu.SwerveIMU;
 
 public class TeleopDrive extends Command {
   private SwerveContainer swerve;
   private Limelight limelight;
+  Rotation3d rotation3d;
+  SwerveIMU imu;
 
   private DoubleSupplier moveX, moveY, turnTheta;
 
@@ -60,6 +64,9 @@ public class TeleopDrive extends Command {
     // Post the pose to dashboard
     Pose2d pose = swerve.getPose();
 
+    imu = swerve.inner.getGyro();
+    rotation3d = imu.getRawRotation3d();
+
     SmartDashboard.putNumber("poseX", pose.getX());
     SmartDashboard.putNumber("poseY", pose.getY());
     SmartDashboard.putNumber("poseYaw", pose.getRotation().getDegrees());
@@ -79,7 +86,7 @@ public class TeleopDrive extends Command {
 
     if(limelight.hasTarget()) {
       swerve.inner.addVisionMeasurement(measuredPose, timestamp, visionMeasurmentStdDevs);
-      swerve.inner.swerveDrivePoseEstimator.resetPosition(measuredPose.getRotation(), swerve.inner.getModulePositions(), measuredPose);
+      swerve.inner.setGyro(new Rotation3d(rotation3d.getX(), rotation3d.getY(), measuredPose.getRotation().getRadians()));
     } else {
       swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }

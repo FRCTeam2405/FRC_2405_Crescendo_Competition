@@ -15,6 +15,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -25,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
+import swervelib.imu.SwerveIMU;
 
 
 public class SpeakerAimingDrive extends Command {
@@ -32,12 +34,14 @@ public class SpeakerAimingDrive extends Command {
   Limelight limelight;
   SwerveContainer swerveDrive;
   SwerveDrivePoseEstimator swerveDrivePoseEstimator;
+  Rotation3d rotation3d;
+  SwerveIMU imu;
 
   /** Drive command for aiming at the speaker while moving. */
   public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive) {
     this.limelight = limelight;
     this.swerveDrive = swerveDrive;
-
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(limelight, swerveDrive);
   }
@@ -58,10 +62,12 @@ public class SpeakerAimingDrive extends Command {
     // If the measured pose is null, we cannot detect any Apriltags
     double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
     Pose2d measuredPose = limelight.getMeasuredPose();
+    imu = swerveDrive.inner.getGyro();
+    rotation3d = imu.getRawRotation3d();
     
     if(limelight.hasTarget()) {
       swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp, visionMeasurmentStdDevs);
-      swerveDrive.inner.swerveDrivePoseEstimator.resetPosition(measuredPose.getRotation(), swerveDrive.inner.getModulePositions(), measuredPose);
+      swerveDrive.inner.setGyro(new Rotation3d(rotation3d.getX(), rotation3d.getY(), measuredPose.getRotation().getRadians()));
     } else {
       swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
     }
@@ -106,6 +112,8 @@ public class SpeakerAimingDrive extends Command {
     // calculate pitch and yaw from the shooter to the speaker
     Rotation2d desiredPitch = new Rotation2d(floorDistance, offsetZ);
     Rotation2d desiredYaw = new Rotation2d(offsetX, offsetY);
+
+    
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
 
