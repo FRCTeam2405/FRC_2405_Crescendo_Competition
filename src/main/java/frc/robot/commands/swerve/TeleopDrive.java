@@ -45,10 +45,10 @@ public class TeleopDrive extends Command {
     // Required subsystems
     addRequirements(swerve, limelight);
   }
-
+  /** 
   // Standard deviation for apriltag position setting
   private Matrix<N3, N1> visionMeasurmentStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
-
+  */
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -85,7 +85,7 @@ public class TeleopDrive extends Command {
     Pose2d measuredPose = limelight.getMeasuredPose();
 
     if(limelight.hasTarget()) {
-      swerve.inner.addVisionMeasurement(measuredPose, timestamp, visionMeasurmentStdDevs);
+      swerve.inner.addVisionMeasurement(measuredPose, timestamp/**, visionMeasurmentStdDevs*/);
       swerve.inner.setGyro(new Rotation3d(rotation3d.getX(), rotation3d.getY(), measuredPose.getRotation().getRadians()));
     } else {
       swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());

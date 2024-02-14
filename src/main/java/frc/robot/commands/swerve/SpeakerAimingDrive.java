@@ -45,10 +45,10 @@ public class SpeakerAimingDrive extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(limelight, swerveDrive);
   }
-
+  /**
   // Standard deviation for apriltag position setting
   private Matrix<N3, N1> visionMeasurmentStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
-
+  */
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -67,7 +67,7 @@ public class SpeakerAimingDrive extends Command {
     
     if(limelight.hasTarget()) {
       //TODO! adjust measured pose based on limelight mount position
-      swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp, visionMeasurmentStdDevs);
+      swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp/**, visionMeasurmentStdDevs*/);
     }
     
     swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
