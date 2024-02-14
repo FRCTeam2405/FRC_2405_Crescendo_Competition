@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LimelightHelpers;
 
 public class Limelight extends SubsystemBase {
   /** Creates a new Limelight. */
@@ -18,6 +19,11 @@ public class Limelight extends SubsystemBase {
   
 
   NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("limelight");
+
+  public int tagCount() {
+    LimelightHelpers.LimelightResults llResults = LimelightHelpers.getLatestResults("");
+    return llResults.targetingResults.targets_Fiducials.length;
+  }
 
   public void initialize(){
   networkTable.getEntry("ledMode").setNumber(0);
