@@ -67,11 +67,10 @@ public class SpeakerAimingDrive extends Command {
     rotation3d = imu.getRawRotation3d();
     
     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
-      //TODO! adjust measured pose based on limelight mount position
       swerveDrive.inner.addVisionMeasurement(measuredPose, timestamp/**, visionMeasurmentStdDevs*/);
     }
     
-    swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
+    // swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
 
     // Post the pose to dashboard
     Pose2d pose = swerveDrive.getPose();
