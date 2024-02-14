@@ -30,6 +30,18 @@ public final class Constants {
             );
     }
 
+    public static final class Intake {
+
+        public static final class Motors {
+
+            public static final int RIGHT_INTAKE_PORTID = 45;
+
+            public static final boolean RIGHT_INTAKE_INVERTED = false;
+
+            public static final double RIGHT_INTAKE_SPEED_MAX = 0.70;
+        }
+    }
+
     public static final class Shooter {
         //TODO! adjust for shooter
         public static final double SHOOTER_HEIGHT = 0;
@@ -65,6 +77,8 @@ public final class Constants {
             public static final int ROTATE_90_DEGREES_BUTTON = 5;
 
             public static final int ROTATE_TO_APRILTAG_BUTTON = 4;
+
+            public static final int INTAKE_NOTE_BUTTON = 1;
         }
 
         public static final class Guitar {

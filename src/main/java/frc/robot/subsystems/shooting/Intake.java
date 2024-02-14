@@ -8,17 +8,30 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 
 public class Intake implements Subsystem {
   //TODO! Give these relevant names based on their position
-  CANSparkMax intakeOne;
-  CANSparkMax intakeTwo;
+  private CANSparkMax motorIntakeRight;
 
   /** Creates a new Intake. */
   public Intake() {
     //TODO! ports
-    intakeOne = new CANSparkMax(0, MotorType.kBrushless);
-    intakeTwo = new CANSparkMax(0, MotorType.kBrushless);
+    motorIntakeRight = new CANSparkMax(Constants.Intake.Motors.RIGHT_INTAKE_PORTID, MotorType.kBrushless);
+    motorIntakeRight.setInverted(Constants.Intake.Motors.RIGHT_INTAKE_INVERTED);
+
+  }
+
+  public void runIntake(double speedRight) {
+    motorIntakeRight.set(speedRight);
+  }
+
+  public void runIntake() {
+    motorIntakeRight.set(Constants.Intake.Motors.RIGHT_INTAKE_SPEED_MAX);
+  }
+
+  public void stopIntake() {
+    motorIntakeRight.set(0);
   }
 
   @Override
