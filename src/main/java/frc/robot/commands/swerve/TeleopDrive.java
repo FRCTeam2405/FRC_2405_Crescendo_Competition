@@ -85,7 +85,7 @@ public class TeleopDrive extends Command {
     Pose2d measuredPose = limelight.getMeasuredPose();
 
     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
-      swerve.inner.addVisionMeasurement(measuredPose, timestamp/**, visionMeasurmentStdDevs*/);
+      swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
     }
     // swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }
