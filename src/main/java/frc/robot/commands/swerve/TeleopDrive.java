@@ -86,11 +86,9 @@ public class TeleopDrive extends Command {
 
     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
       swerve.inner.addVisionMeasurement(measuredPose, timestamp/**, visionMeasurmentStdDevs*/);
-      swerve.inner.setGyro(new Rotation3d(rotation3d.getX(), rotation3d.getY(), measuredPose.getRotation().getRadians()));
-    } else {
-      swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }
-  }
+    swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
+    }
 
   // Called once the command ends or is interrupted.
   @Override
