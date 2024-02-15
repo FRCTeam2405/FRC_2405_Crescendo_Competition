@@ -16,7 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
+import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
+import frc.robot.commands.shooting.IntakeOnly;
 import frc.robot.commands.swerve.RotateToApriltag;
 import frc.robot.commands.swerve.SpeakerAimingDrive;
 import frc.robot.commands.swerve.TeleopDrive;
@@ -27,6 +29,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 import frc.robot.subsystems.shooting.Feeder;
 import frc.robot.subsystems.shooting.Intake;
+import frc.robot.subsystems.shooting.Shooter;
 
 public class RobotContainer {
   // Initialize drive-team controllers
@@ -40,8 +43,11 @@ public class RobotContainer {
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
+  // Below systems only on competition bot
   private Intake intake = new Intake();
-  private Feeder feeder = new Feeder();
+  //TODO! enable when shooter and feeder are ready
+  // private Feeder feeder = new Feeder();
+  // private Shooter shooter = new Shooter();
 
   // Initialization code for our robot
   public RobotContainer() {
@@ -70,9 +76,17 @@ public class RobotContainer {
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
     driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Turn90Degrees(swerveDrive));
     driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive));
+    //TODO! switch intake only with intake note when feeder is available
+    // driverController.button(
+    //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
+    //   .whileTrue(new IntakeNote(intake, feeder));
     driverController.button(
       Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-      .whileTrue(new IntakeNote(intake, feeder));
+      .whileTrue(new IntakeOnly(intake));
+    //TODO! enable when shooter and feeder are ready
+    // driverController.button(
+    //   Constants.Controllers.Taranis.FIRE_WHEN_READY_BUTTON)
+    //   .whileTrue(new FireWhenReadyVelocity(shooter, feeder));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {

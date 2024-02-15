@@ -6,7 +6,9 @@ package frc.robot.commands.shooting;
 
 import java.util.function.DoubleSupplier;
 
+
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.shooting.Intake;
 
 public class IntakeOnly extends Command {
@@ -17,6 +19,13 @@ public class IntakeOnly extends Command {
   public IntakeOnly(Intake sysIntake, DoubleSupplier speedIntakeRight) {
     this.sysIntake = sysIntake;
     this.speedIntakeRight = speedIntakeRight;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(sysIntake);
+  }
+
+  public IntakeOnly(Intake sysIntake) {
+    this.sysIntake = sysIntake;
+    this.speedIntakeRight = () -> Constants.Intake.Motors.RIGHT_INTAKE_SPEED_MAX;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysIntake);
   }

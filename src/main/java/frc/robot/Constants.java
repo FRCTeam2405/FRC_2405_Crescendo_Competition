@@ -123,6 +123,7 @@ public final class Constants {
             public static final int ROTATE_TO_APRILTAG_BUTTON = 4;
 
             public static final int INTAKE_NOTE_BUTTON = 1;
+            public static final int FIRE_WHEN_READY_BUTTON = 2; //To be mapped to guitar
         }
 
         public static final class Guitar {
