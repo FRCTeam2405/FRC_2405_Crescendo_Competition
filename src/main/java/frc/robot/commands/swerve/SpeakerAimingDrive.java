@@ -10,8 +10,10 @@ import org.opencv.core.Mat;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -27,6 +29,7 @@ import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
+import swervelib.SwerveController;
 import swervelib.imu.SwerveIMU;
 
 
@@ -46,6 +49,9 @@ public class SpeakerAimingDrive extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(limelight, swerveDrive);
   }
+
+  private final TrapezoidProfile.Constraints AIM_PID_CONSTRAINT = new TrapezoidProfile.Constraints(2160.0, 2160.0);
+
   /**
   // Standard deviation for apriltag position setting
   private Matrix<N3, N1> visionMeasurmentStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
@@ -67,6 +73,11 @@ public class SpeakerAimingDrive extends Command {
     rotation3d = imu.getRawRotation3d();
     Pose2d pose = swerveDrive.getPose();
     double yawCorrection = 0;
+    ProfiledPIDController anglePID;
+    // setup PID controller for aiming
+    anglePID = new ProfiledPIDController(1, 0, 0.1, AIM_PID_CONSTRAINT);
+    anglePID.enableContinuousInput(-180, +180);
+    anglePID.setTolerance(1);
     
     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
       swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
@@ -116,6 +127,8 @@ public class SpeakerAimingDrive extends Command {
     
 
     desiredYaw = new Rotation2d(desiredYaw.getRadians() - yawCorrection);
+
+    double adjustedSpeed = anglePID.calculate(pose.getRotation().getRadians(), desiredYaw.getRadians());
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
 
