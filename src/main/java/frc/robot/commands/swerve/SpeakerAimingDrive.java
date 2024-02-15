@@ -132,13 +132,18 @@ public class SpeakerAimingDrive extends Command {
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
 
-    ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
+    /**ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
       0, 0,
       desiredYaw.getRadians() % (Math.PI * 2),
       pose.getRotation().getRadians() % (Math.PI * 2),
       Constants.Swerve.MAX_SPEED
     );
-    swerveDrive.inner.drive(chassisSpeeds);
+    swerveDrive.inner.drive(chassisSpeeds);*/
+    ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getRawTargetSpeeds(
+      0, 0,
+      swerveDrive.inner.getSwerveController().headingCalculate(pose.getRotation().getRadians(), desiredYaw.getRadians())
+      );
+      swerveDrive.inner.drive(chassisSpeeds);
   }
 
   // Called once the command ends or is interrupted.
