@@ -11,12 +11,10 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 
 public class Intake implements Subsystem {
-  //TODO! Give these relevant names based on their position
   private CANSparkMax motorIntakeRight;
 
   /** Creates a new Intake. */
   public Intake() {
-    //TODO! ports
     motorIntakeRight = new CANSparkMax(Constants.Intake.Motors.RIGHT_INTAKE_PORTID, MotorType.kBrushless);
     motorIntakeRight.setInverted(Constants.Intake.Motors.RIGHT_INTAKE_INVERTED);
 
