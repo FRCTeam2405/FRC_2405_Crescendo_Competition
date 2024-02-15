@@ -45,6 +45,50 @@ public final class Constants {
     public static final class Shooter {
         //TODO! adjust for shooter
         public static final double SHOOTER_HEIGHT = 0;
+
+        public static final class Motors {
+
+            public static final int TOP_SHOOTER_PORTID = 41;
+            public static final int BOTTOM_SHOOTER_PORTID = 42;
+
+            public static final boolean TOP_SHOOTER_INVERTED = false;
+            public static final boolean BOTTOM_SHOOTER_INVERTED = false;
+
+            public static final double TOP_SHOOTER_PERCENT_OUTPUT_MAX = 0.75;
+            public static final double BOTTOM_SHOOTER_PERCENT_OUTPUT_MAX = 0.75;
+
+            public static final double TOP_SHOOTER_VELOCITY_MAX = 6500;
+            public static final double BOTTOM_SHOOTER_VELOCITY_MAX = 6500;
+
+            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 5000;
+            public static final double BOTTOM_SHOOTER_VELOCITY_DEFAULT = 5000;
+        }
+
+        public static final class Encoder {
+
+            public static final double GAIN_P = 0.0005;
+            public static final double GAIN_I = 0.0;
+            public static final double GAIN_D = 0.0;
+            public static final double ZONE_I = 0.0;
+            public static final double FEED_FORWARD = 0.000182;
+            public static final double OUTPUT_RANGE_MIN = -1.0;
+            public static final double OUTPUT_RANGE_MAX = 1.0;
+        }
+    }
+
+    public static final class Feeder {
+
+        public static final class Motors {
+
+            public static final int TOP_FEEDER_PORTID = 43;
+            public static final int BOTTOM_FEEDER_PORTID = 44;
+
+            public static final boolean TOP_FEEDER_INVERTED = true;
+            public static final boolean BOTTOM_FEEDER_INVERTED = true;
+
+            public static final double TOP_FEEDER_SPEED_MAX = 0.75;
+            public static final double BOTTOM_FEEDER_SPEED_MAX = 0.75;
+        }
     }
 
     public static final class Field {
