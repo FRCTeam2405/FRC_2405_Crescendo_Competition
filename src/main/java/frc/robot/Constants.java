@@ -36,7 +36,7 @@ public final class Constants {
 
             public static final int RIGHT_INTAKE_PORTID = 45;
 
-            public static final boolean RIGHT_INTAKE_INVERTED = false;
+            public static final boolean RIGHT_INTAKE_INVERTED = true;
 
             public static final double RIGHT_INTAKE_SPEED_MAX = 0.70;
         }
