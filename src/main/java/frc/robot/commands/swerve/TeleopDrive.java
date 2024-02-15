@@ -83,9 +83,11 @@ public class TeleopDrive extends Command {
     // Vision measurement
     double timestamp = Timer.getFPGATimestamp();
     Pose2d measuredPose = limelight.getMeasuredPose();
+    double yawCorrection = 0;
 
     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
       swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
+      yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
     }
     // swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }

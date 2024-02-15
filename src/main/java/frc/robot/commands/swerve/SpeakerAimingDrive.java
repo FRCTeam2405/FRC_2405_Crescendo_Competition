@@ -66,9 +66,11 @@ public class SpeakerAimingDrive extends Command {
     imu = swerveDrive.inner.getGyro();
     rotation3d = imu.getRawRotation3d();
     Pose2d pose = swerveDrive.getPose();
+    double yawCorrection = 0;
     
     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
       swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
+      yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
     }
     
     // swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
@@ -111,8 +113,9 @@ public class SpeakerAimingDrive extends Command {
     // calculate pitch and yaw from the shooter to the speaker
     Rotation2d desiredPitch = new Rotation2d(floorDistance, offsetZ);
     Rotation2d desiredYaw = new Rotation2d(offsetX, offsetY);
-
     
+
+    desiredYaw = new Rotation2d(desiredYaw.getRadians() - yawCorrection);
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
 
