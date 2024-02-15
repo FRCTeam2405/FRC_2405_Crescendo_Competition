@@ -74,6 +74,7 @@ public class SpeakerAimingDrive extends Command {
     Pose2d pose = swerveDrive.getPose();
     double yawCorrection = 0;
     ProfiledPIDController anglePID;
+    double omega = 0;
     // setup PID controller for aiming
     anglePID = new ProfiledPIDController(1, 0, 0.1, AIM_PID_CONSTRAINT);
     anglePID.enableContinuousInput(-180, +180);
@@ -139,11 +140,13 @@ public class SpeakerAimingDrive extends Command {
       Constants.Swerve.MAX_SPEED
     );
     swerveDrive.inner.drive(chassisSpeeds);*/
-    ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getRawTargetSpeeds(
-      0, 0,
-      swerveDrive.inner.getSwerveController().headingCalculate(pose.getRotation().getRadians(), desiredYaw.getRadians())
-      );
-      swerveDrive.inner.drive(chassisSpeeds);
+    if (Math.abs(pose.getRotation().getDegrees() - desiredYaw.getDegrees()) > 1) {
+     omega = swerveDrive.inner.getSwerveController().headingCalculate(pose.getRotation().getRadians(), desiredYaw.getRadians());
+    } else {
+      omega = 0;
+    }
+    ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getRawTargetSpeeds(0, 0, omega);
+    swerveDrive.inner.drive(chassisSpeeds);
   }
 
   // Called once the command ends or is interrupted.
