@@ -78,6 +78,11 @@ public final class Constants {
 
     public static final class Feeder {
 
+        public static final class Sensors {
+
+            public static final int NOTE_LIMIT_PORTID = 0;
+        }
+        
         public static final class Motors {
 
             public static final int TOP_FEEDER_PORTID = 43;
@@ -88,6 +93,34 @@ public final class Constants {
 
             public static final double TOP_FEEDER_SPEED_MAX = 0.75;
             public static final double BOTTOM_FEEDER_SPEED_MAX = 0.75;
+        }
+    }
+
+    public static final class Arm {
+
+        public static final class Motors {
+            public static final int ARM_PORTID = 40;
+
+            public static final boolean ARM_INVERTED = true;
+
+            public static final double ARM_SPEED_MAX = 0.50;
+            public static final double ARM_VELOCITY = 30;
+        }
+
+        public static final class Encoder {
+
+            public static final class ProfileZero {
+
+                public static final int PROFILE_ID = 0;
+                public static final double GAIN_P = 0.005;
+
+            }
+        }
+
+        public static final class SetPoints {
+
+            public static final double HOME = 0.0;
+            public static final double AMP = 200.0;
         }
     }
 
