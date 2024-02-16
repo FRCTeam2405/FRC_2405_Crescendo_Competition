@@ -40,6 +40,9 @@ public class SpeakerAimingDrive extends Command {
   SwerveDrivePoseEstimator swerveDrivePoseEstimator;
   Rotation3d rotation3d;
   SwerveIMU imu;
+  double yawCorrection = 0;
+  Pose2d measuredPose = limelight.getMeasuredPose();
+  Pose2d pose = swerveDrive.getPose();
 
   /** Drive command for aiming at the speaker while moving. */
   public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive) {
@@ -62,17 +65,19 @@ public class SpeakerAimingDrive extends Command {
     swerveDrive.inner.setHeadingCorrection(true);
   }
 
+  public void yawAfterCorrection() {
+   yawCorrection = pose.getRotation().getRadians() + yawCorrection;
+  }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // Get measured pose from the limelight and add it to our pose
     // If the measured pose is null, we cannot detect any Apriltags
     double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
-    Pose2d measuredPose = limelight.getMeasuredPose();
+    measuredPose = limelight.getMeasuredPose();
     imu = swerveDrive.inner.getGyro();
     rotation3d = imu.getRawRotation3d();
-    Pose2d pose = swerveDrive.getPose();
-    double yawCorrection = 0;
+    pose = swerveDrive.getPose();
     ProfiledPIDController anglePID;
     double omega = 0;
     // setup PID controller for aiming
@@ -132,7 +137,7 @@ public class SpeakerAimingDrive extends Command {
     double adjustedSpeed = anglePID.calculate(pose.getRotation().getRadians(), desiredYaw.getRadians());
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
-
+    SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + yawCorrection - desiredYaw.getDegrees()));
     /**ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
       0, 0,
       desiredYaw.getRadians() % (Math.PI * 2),
