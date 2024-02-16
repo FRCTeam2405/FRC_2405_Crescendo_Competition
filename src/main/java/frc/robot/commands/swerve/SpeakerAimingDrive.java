@@ -127,7 +127,7 @@ public class SpeakerAimingDrive extends Command {
     Rotation2d desiredYaw = new Rotation2d(offsetX, offsetY);
     
 
-    desiredYaw = new Rotation2d(desiredYaw.getRadians() - yawCorrection);
+    // desiredYaw = new Rotation2d(desiredYaw.getRadians() - yawCorrection);
 
     double adjustedSpeed = anglePID.calculate(pose.getRotation().getRadians(), desiredYaw.getRadians());
 
@@ -140,8 +140,8 @@ public class SpeakerAimingDrive extends Command {
       Constants.Swerve.MAX_SPEED
     );
     swerveDrive.inner.drive(chassisSpeeds);*/
-    if (Math.abs(pose.getRotation().getDegrees() - desiredYaw.getDegrees()) > 1) {
-     omega = swerveDrive.inner.getSwerveController().headingCalculate(pose.getRotation().getRadians(), desiredYaw.getRadians());
+    if (Math.abs(pose.getRotation().getDegrees() + yawCorrection - desiredYaw.getDegrees()) > 1) {
+     omega = swerveDrive.inner.getSwerveController().headingCalculate(pose.getRotation().getRadians() + yawCorrection, desiredYaw.getRadians());
     } else {
       omega = 0;
     }
