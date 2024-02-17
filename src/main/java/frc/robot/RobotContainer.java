@@ -44,7 +44,7 @@ public class RobotContainer {
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
   // Below systems only on competition bot
-  private Intake intake = new Intake();
+  // private Intake intake = new Intake();
   //TODO! enable when shooter and feeder are ready
   // private Feeder feeder = new Feeder();
   // private Shooter shooter = new Shooter();
@@ -80,9 +80,9 @@ public class RobotContainer {
     // driverController.button(
     //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
     //   .whileTrue(new IntakeNote(intake, feeder));
-    driverController.button(
-      Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-      .whileTrue(new IntakeOnly(intake));
+    // driverController.button(
+    //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
+    //   .whileTrue(new IntakeOnly(intake));
     //TODO! enable when shooter and feeder are ready
     // driverController.button(
     //   Constants.Controllers.Taranis.FIRE_WHEN_READY_BUTTON)
