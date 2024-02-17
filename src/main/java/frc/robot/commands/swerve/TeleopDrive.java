@@ -95,7 +95,7 @@ public class TeleopDrive extends Command {
 
     // puts yawCorrected on the dashboard
     SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + Math.toDegrees(yawCorrection)) % 360);
-    SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees());
+    SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 360);
 
     // swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }

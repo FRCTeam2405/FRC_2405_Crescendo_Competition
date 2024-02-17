@@ -148,7 +148,7 @@ public class SpeakerAimingDrive extends Command {
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
     SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + Math.toDegrees(yawCorrection)) % (360));
     SmartDashboard.putNumber("yawCorrection", yawCorrection);
-    SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees());
+    SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 360);
     
     if (Math.abs(pose.getRotation().getDegrees()  + Math.toDegrees(yawCorrection) - desiredYaw.getDegrees()) > 1) {
     ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
