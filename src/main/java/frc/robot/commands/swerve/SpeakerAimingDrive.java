@@ -65,9 +65,9 @@ public class SpeakerAimingDrive extends Command {
     swerveDrive.inner.setHeadingCorrection(true);
   }
 
-  public void yawAfterCorrection() {
-   yawCorrection = pose.getRotation().getRadians() + yawCorrection;
-  }
+  // public void yawAfterCorrection() {
+  //  yawCorrection = pose.getRotation().getRadians() + yawCorrection;
+  // }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
