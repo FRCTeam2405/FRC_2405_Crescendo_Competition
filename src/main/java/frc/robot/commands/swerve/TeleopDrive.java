@@ -89,6 +89,10 @@ public class TeleopDrive extends Command {
       swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
       yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
     }
+
+    // puts yawCorrected on the dashboard
+    SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + yawCorrection));
+
     // swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }
 
