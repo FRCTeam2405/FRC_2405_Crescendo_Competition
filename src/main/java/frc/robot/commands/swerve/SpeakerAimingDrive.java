@@ -141,7 +141,7 @@ public class SpeakerAimingDrive extends Command {
     double adjustedSpeed = anglePID.calculate(pose.getRotation().getRadians(), desiredYaw.getRadians());
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
-    SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + yawCorrection));
+    SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + Math.toDegrees(yawCorrection)));
     /**ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
       0, 0,
       desiredYaw.getRadians() % (Math.PI * 2),
@@ -149,7 +149,7 @@ public class SpeakerAimingDrive extends Command {
       Constants.Swerve.MAX_SPEED
     );
     swerveDrive.inner.drive(chassisSpeeds);*/
-    if (Math.abs(pose.getRotation().getDegrees() + yawCorrection - desiredYaw.getDegrees()) > 1) {
+    if (Math.abs(pose.getRotation().getDegrees()  + Math.toDegrees(yawCorrection) - desiredYaw.getDegrees()) > 1) {
      omega = swerveDrive.inner.getSwerveController().headingCalculate(pose.getRotation().getRadians() + yawCorrection, desiredYaw.getRadians());
     } else {
       omega = 0;
