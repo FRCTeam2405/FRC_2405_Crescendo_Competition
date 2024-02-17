@@ -41,14 +41,18 @@ public class SpeakerAimingDrive extends Command {
   Rotation3d rotation3d;
   SwerveIMU imu;
   double yawCorrection = 0;
-  Pose2d measuredPose = limelight.getMeasuredPose();
-  Pose2d pose = swerveDrive.getPose();
+  Pose2d measuredPose;
+  Pose2d pose;
 
   /** Drive command for aiming at the speaker while moving. */
   public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive) {
     this.limelight = limelight;
     this.swerveDrive = swerveDrive;
-    
+
+
+    measuredPose = limelight.getMeasuredPose();
+    pose = swerveDrive.getPose();
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(limelight, swerveDrive);
   }
