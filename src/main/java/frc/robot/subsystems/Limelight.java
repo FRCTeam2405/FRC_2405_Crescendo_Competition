@@ -51,7 +51,7 @@ public class Limelight extends SubsystemBase {
     // Convert raw pose (X, Y, Z, Roll, Pitch, Yaw)
     // into a Pose2d. We don't typically use 3D coords,
     // so Z, Roll, and Pitch are discarded here.
-    return new Pose2d(new Translation2d(rawPose[0], rawPose[1]), new Rotation2d(rawPose[5]));
+    return new Pose2d(new Translation2d(rawPose[0], rawPose[1]), new Rotation2d(Math.toRadians(rawPose[5])));
   }
 
   public Rotation3d getMeasuredRotation() {
