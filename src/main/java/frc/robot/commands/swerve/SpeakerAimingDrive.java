@@ -5,6 +5,7 @@
 package frc.robot.commands.swerve;
 
 import java.util.Optional;
+import java.util.function.DoubleSupplier;
 
 import org.opencv.core.Mat;
 
@@ -43,15 +44,19 @@ public class SpeakerAimingDrive extends Command {
   double yawCorrection = 0;
   Pose2d measuredPose;
   Pose2d pose;
+  private DoubleSupplier moveX, moveY, turnTheta;
 
   /** Drive command for aiming at the speaker while moving. */
-  public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive) {
+  public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, DoubleSupplier vX, DoubleSupplier vY) {
     this.limelight = limelight;
     this.swerveDrive = swerveDrive;
 
 
     measuredPose = limelight.getMeasuredPose();
     pose = swerveDrive.getPose();
+
+      moveX = vX;
+      moveY = vY;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(limelight, swerveDrive);
@@ -69,9 +74,6 @@ public class SpeakerAimingDrive extends Command {
     swerveDrive.inner.setHeadingCorrection(true);
   }
 
-  // public void yawAfterCorrection() {
-  //  yawCorrection = pose.getRotation().getRadians() + yawCorrection;
-  // }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -84,6 +86,9 @@ public class SpeakerAimingDrive extends Command {
     pose = swerveDrive.getPose();
     ProfiledPIDController anglePID;
     double omega = 0;
+    double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
+    double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
+
     // setup PID controller for aiming
     anglePID = new ProfiledPIDController(1, 0, 0.1, AIM_PID_CONSTRAINT);
     anglePID.enableContinuousInput(-180, +180);
@@ -141,21 +146,28 @@ public class SpeakerAimingDrive extends Command {
     double adjustedSpeed = anglePID.calculate(pose.getRotation().getRadians(), desiredYaw.getRadians());
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
-    SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + yawCorrection - desiredYaw.getDegrees()));
-    /**ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
-      0, 0,
+    SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + Math.toDegrees(yawCorrection)) % (360));
+    SmartDashboard.putNumber("yawCorrection", yawCorrection);
+    SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 180);
+    
+    if (Math.abs(pose.getRotation().getDegrees()  + Math.toDegrees(yawCorrection) - desiredYaw.getDegrees()) > 1) {
+    ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
+      correctedMoveX, correctedMoveY,
       desiredYaw.getRadians() % (Math.PI * 2),
-      pose.getRotation().getRadians() % (Math.PI * 2),
+      (pose.getRotation().getRadians() + yawCorrection) % (Math.PI * 2),
       Constants.Swerve.MAX_SPEED
     );
-    swerveDrive.inner.drive(chassisSpeeds);*/
-    if (Math.abs(pose.getRotation().getDegrees() + yawCorrection - desiredYaw.getDegrees()) > 1) {
-     omega = swerveDrive.inner.getSwerveController().headingCalculate(pose.getRotation().getRadians() + yawCorrection, desiredYaw.getRadians());
-    } else {
-      omega = 0;
-    }
-    ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getRawTargetSpeeds(0, 0, omega);
     swerveDrive.inner.drive(chassisSpeeds);
+    }
+
+    // if (Math.abs(pose.getRotation().getDegrees()  + Math.toDegrees(yawCorrection) - desiredYaw.getDegrees()) > 1) {
+    //  omega = swerveDrive.inner.getSwerveController().headingCalculate(pose.getRotation().getRadians() + yawCorrection, desiredYaw.getRadians());
+    // } else {
+    //   omega = 0;
+    // }
+
+    // ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getRawTargetSpeeds(0, 0, omega);
+    // swerveDrive.inner.drive(chassisSpeeds);
   }
 
   // Called once the command ends or is interrupted.

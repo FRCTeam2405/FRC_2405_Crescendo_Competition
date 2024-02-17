@@ -41,10 +41,14 @@ public class TeleopDrive extends Command {
     moveX = vX;
     moveY = vY;
     turnTheta = rotate;
+    
 
     // Required subsystems
     addRequirements(swerve, limelight);
   }
+
+  double yawCorrection = 0;
+
   /** 
   // Standard deviation for apriltag position setting
   private Matrix<N3, N1> visionMeasurmentStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
@@ -83,12 +87,16 @@ public class TeleopDrive extends Command {
     // Vision measurement
     double timestamp = Timer.getFPGATimestamp();
     Pose2d measuredPose = limelight.getMeasuredPose();
-    double yawCorrection = 0;
 
     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
       swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
       yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
     }
+
+    // puts yawCorrected on the dashboard
+    SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + Math.toDegrees(yawCorrection)) % 360);
+    SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 180);
+
     // swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }
 
