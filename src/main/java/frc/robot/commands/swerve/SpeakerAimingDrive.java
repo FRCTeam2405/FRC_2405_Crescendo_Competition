@@ -5,6 +5,7 @@
 package frc.robot.commands.swerve;
 
 import java.util.Optional;
+import java.util.function.DoubleSupplier;
 
 import org.opencv.core.Mat;
 
@@ -43,15 +44,19 @@ public class SpeakerAimingDrive extends Command {
   double yawCorrection = 0;
   Pose2d measuredPose;
   Pose2d pose;
+  private DoubleSupplier moveX, moveY, turnTheta;
 
   /** Drive command for aiming at the speaker while moving. */
-  public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive) {
+  public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, DoubleSupplier vX, DoubleSupplier vY) {
     this.limelight = limelight;
     this.swerveDrive = swerveDrive;
 
 
     measuredPose = limelight.getMeasuredPose();
     pose = swerveDrive.getPose();
+
+      moveX = vX;
+      moveY = vY;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(limelight, swerveDrive);
@@ -84,6 +89,9 @@ public class SpeakerAimingDrive extends Command {
     pose = swerveDrive.getPose();
     ProfiledPIDController anglePID;
     double omega = 0;
+    double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
+    double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
+
     // setup PID controller for aiming
     anglePID = new ProfiledPIDController(1, 0, 0.1, AIM_PID_CONSTRAINT);
     anglePID.enableContinuousInput(-180, +180);
@@ -142,10 +150,11 @@ public class SpeakerAimingDrive extends Command {
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
     SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + Math.toDegrees(yawCorrection)));
+    SmartDashboard.putNumber("yawCorrection", yawCorrection);
     
     if (Math.abs(pose.getRotation().getDegrees()  + Math.toDegrees(yawCorrection) - desiredYaw.getDegrees()) > 1) {
     ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
-      0, 0,
+      correctedMoveX, correctedMoveY,
       desiredYaw.getRadians() % (Math.PI * 2),
       (pose.getRotation().getRadians() + yawCorrection) % (Math.PI * 2),
       Constants.Swerve.MAX_SPEED
