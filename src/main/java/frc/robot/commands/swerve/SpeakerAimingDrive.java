@@ -45,6 +45,7 @@ public class SpeakerAimingDrive extends Command {
   Pose2d measuredPose;
   Pose2d pose;
   private DoubleSupplier moveX, moveY, turnTheta;
+  double lastUpdateTime = 0;
 
   /** Drive command for aiming at the speaker while moving. */
   public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, DoubleSupplier vX, DoubleSupplier vY) {
@@ -95,10 +96,11 @@ public class SpeakerAimingDrive extends Command {
     anglePID.enableContinuousInput(-180, +180);
     anglePID.setTolerance(1);
     
-    if(limelight.hasTarget() && limelight.tagCount() >= 2) {
+    if(limelight.hasTarget() && limelight.tagCount() >= 2 && lastUpdateTime <= timestamp - 1000) {
       swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
       // only use for yawCorrection + pose
       yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
+      lastUpdateTime = timestamp;
     }
     
     swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
