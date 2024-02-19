@@ -28,6 +28,7 @@ import swervelib.imu.SwerveIMU;
 public class TeleopDrive extends Command {
   private SwerveContainer swerve;
   private Limelight limelight;
+  Optional<Alliance> alliance;
   Rotation3d rotation3d;
   SwerveIMU imu;
 
@@ -42,15 +43,14 @@ public class TeleopDrive extends Command {
     moveY = vY;
     turnTheta = rotate;
     
-
     // Required subsystems
     addRequirements(swerve, limelight);
   }
 
   double yawCorrection = 0;
 
-  /** 
-  // Standard deviation for apriltag position setting
+  /*
+  Standard deviation for apriltag position setting
   private Matrix<N3, N1> visionMeasurmentStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
   */
   // Called when the command is initially scheduled.
@@ -58,12 +58,21 @@ public class TeleopDrive extends Command {
   public void initialize() {
     // Set the motors to coast
     swerve.inner.setMotorIdleMode(false);
+
     limelight.initialize();
+    alliance = DriverStation.getAlliance();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Try to get alliance if unavailable
+    if(alliance.isEmpty()) {
+      alliance = DriverStation.getAlliance();
+      if(alliance.isEmpty()) {
+        return;
+      }
+    }
 
     // Post the pose to dashboard
     Pose2d pose = swerve.getPose();
@@ -80,7 +89,14 @@ public class TeleopDrive extends Command {
     double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedTurnTheta = turnTheta.getAsDouble() * Constants.Swerve.MAX_ANGULAR_SPEED;
 
-    //TODO! Cleanup, test, & improve
+    // Invert inputs if we're on the red side of the field
+    // so that movement is still relative to driver
+    if(alliance.get() == Alliance.Red) {
+      correctedMoveX *= -1;
+      correctedMoveY *= -1;
+      correctedTurnTheta *= -1;
+    }
+
     ChassisSpeeds desiredSpeeds = swerve.inner.swerveController.getRawTargetSpeeds(correctedMoveX, correctedMoveY, correctedTurnTheta);
     swerve.inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
 
