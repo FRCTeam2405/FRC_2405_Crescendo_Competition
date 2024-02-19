@@ -94,7 +94,6 @@ public class TeleopDrive extends Command {
     if(alliance.get() == Alliance.Red) {
       correctedMoveX *= -1;
       correctedMoveY *= -1;
-      correctedTurnTheta *= -1;
     }
 
     ChassisSpeeds desiredSpeeds = swerve.inner.swerveController.getRawTargetSpeeds(correctedMoveX, correctedMoveY, correctedTurnTheta);
