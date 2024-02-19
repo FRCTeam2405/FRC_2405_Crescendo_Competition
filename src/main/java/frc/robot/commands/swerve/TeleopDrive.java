@@ -88,7 +88,7 @@ public class TeleopDrive extends Command {
     // Vision measurement
     double timestamp = Timer.getFPGATimestamp();
     Pose2d measuredPose = limelight.getMeasuredPose();
-    if(limelight.hasTarget() && limelight.tagCount() >= 2 && lastUpdateTime <= timestamp - 1000) {
+    if(limelight.hasTarget() && limelight.tagCount() >= 2 && lastUpdateTime - timestamp >= 1000) {
       swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
       yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
       lastUpdateTime = timestamp;
