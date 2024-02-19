@@ -91,6 +91,7 @@ public class TeleopDrive extends Command {
     if(limelight.hasTarget() && limelight.tagCount() >= 2 && lastUpdateTime <= timestamp - 1000) {
       swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
       yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
+      lastUpdateTime = timestamp;
     }
 
     // puts yawCorrected on the dashboard
