@@ -77,6 +77,7 @@ public class SpeakerAimingDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // When does this happen??
     // Get measured pose from the limelight and add it to our pose
     // If the measured pose is null, we cannot detect any Apriltags
     double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
@@ -95,11 +96,12 @@ public class SpeakerAimingDrive extends Command {
     anglePID.setTolerance(1);
     
     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
-      swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
+      swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
+      // only use for yawCorrection + pose
       yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
     }
     
-    // swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
+    swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
 
     Optional<Alliance> alliance = DriverStation.getAlliance();
 
@@ -146,14 +148,17 @@ public class SpeakerAimingDrive extends Command {
     double adjustedSpeed = anglePID.calculate(pose.getRotation().getRadians(), desiredYaw.getRadians());
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
+    // yawCorrected is the same as measuredPose
     SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + Math.toDegrees(yawCorrection)) % (360));
     SmartDashboard.putNumber("yawCorrection", yawCorrection);
     SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 180);
     
+    // pose + yawCorrection = measuredPose. This is measuredPose - desiredYaw
     if (Math.abs(pose.getRotation().getDegrees()  + Math.toDegrees(yawCorrection) - desiredYaw.getDegrees()) > 1) {
     ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
       correctedMoveX, correctedMoveY,
       desiredYaw.getRadians() % (Math.PI * 2),
+      // measuredPose
       (pose.getRotation().getRadians() + yawCorrection) % (Math.PI * 2),
       Constants.Swerve.MAX_SPEED
     );
