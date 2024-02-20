@@ -106,7 +106,7 @@ public class RobotContainer {
   private void configureAutonomous() {
     // Register named commands for pathplanner
     // This must be done before initializing autos
-    NamedCommands.registerCommand("turn90Degrees", new Turn90Degrees(swerveDrive));
+    NamedCommands.registerCommand("Turn90Degrees", new Turn90Degrees(swerveDrive));
 
     // Set a default autonomous to prevent errors
     //TODO! Consider setting this to an autonomous that will still get us points
