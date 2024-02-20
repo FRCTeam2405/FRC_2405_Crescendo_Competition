@@ -41,7 +41,6 @@ public class SpeakerAimingDrive extends Command {
   SwerveDrivePoseEstimator swerveDrivePoseEstimator;
   Rotation3d rotation3d;
   SwerveIMU imu;
-  double yawCorrection = 0;
   Pose2d measuredPose;
   Pose2d pose;
   private DoubleSupplier moveX, moveY, turnTheta;
@@ -86,20 +85,11 @@ public class SpeakerAimingDrive extends Command {
     imu = swerveDrive.inner.getGyro();
     rotation3d = imu.getRawRotation3d();
     pose = swerveDrive.getPose();
-    ProfiledPIDController anglePID;
-    double omega = 0;
     double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
-
-    // setup PID controller for aiming
-    anglePID = new ProfiledPIDController(1, 0, 0.1, AIM_PID_CONSTRAINT);
-    anglePID.enableContinuousInput(-180, +180);
-    anglePID.setTolerance(1);
     
     if(limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1) {
       swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
-      // only use for yawCorrection + pose
-      yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
       lastUpdateTime = timestamp;
     }
     
@@ -143,40 +133,21 @@ public class SpeakerAimingDrive extends Command {
     double directDistance = Math.hypot(floorDistance, offsetZ);
 
     // calculate pitch and yaw from the shooter to the speaker
-    Rotation2d desiredPitch = new Rotation2d(floorDistance, offsetZ);
     Rotation2d desiredYaw = new Rotation2d(offsetX, offsetY);
-    
-
-    // desiredYaw = new Rotation2d(desiredYaw.getRadians() - yawCorrection);
-
-    double adjustedSpeed = anglePID.calculate(pose.getRotation().getRadians(), desiredYaw.getRadians());
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
-    // yawCorrected is the same as measuredPose
-    SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + Math.toDegrees(yawCorrection)) % (360));
-    SmartDashboard.putNumber("yawCorrection", yawCorrection);
     SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 180);
     
-    // pose + yawCorrection = measuredPose. This is measuredPose - desiredYaw
-    if (Math.abs(pose.getRotation().getDegrees()  + Math.toDegrees(yawCorrection) - desiredYaw.getDegrees()) > 1) {
+    if (Math.abs(pose.getRotation().getDegrees() - desiredYaw.getDegrees()) > 1) {
     ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
       correctedMoveX, correctedMoveY,
       desiredYaw.getRadians() % (Math.PI * 2),
-      // measuredPose
-      (pose.getRotation().getRadians() + yawCorrection) % (Math.PI * 2),
+      (pose.getRotation().getRadians() % (Math.PI * 2)),
       Constants.Swerve.MAX_SPEED
     );
     swerveDrive.inner.drive(chassisSpeeds);
     }
 
-    // if (Math.abs(pose.getRotation().getDegrees()  + Math.toDegrees(yawCorrection) - desiredYaw.getDegrees()) > 1) {
-    //  omega = swerveDrive.inner.getSwerveController().headingCalculate(pose.getRotation().getRadians() + yawCorrection, desiredYaw.getRadians());
-    // } else {
-    //   omega = 0;
-    // }
-
-    // ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getRawTargetSpeeds(0, 0, omega);
-    // swerveDrive.inner.drive(chassisSpeeds);
   }
 
   // Called once the command ends or is interrupted.
