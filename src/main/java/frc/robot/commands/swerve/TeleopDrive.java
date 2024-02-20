@@ -31,6 +31,7 @@ public class TeleopDrive extends Command {
   Optional<Alliance> alliance;
   Rotation3d rotation3d;
   SwerveIMU imu;
+  double lastUpdateTime = 0;
 
   private DoubleSupplier moveX, moveY, turnTheta;
 
@@ -47,8 +48,6 @@ public class TeleopDrive extends Command {
     addRequirements(swerve, limelight);
   }
 
-  double yawCorrection = 0;
-
   /*
   Standard deviation for apriltag position setting
   private Matrix<N3, N1> visionMeasurmentStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
@@ -60,6 +59,7 @@ public class TeleopDrive extends Command {
     swerve.inner.setMotorIdleMode(false);
 
     limelight.initialize();
+    lastUpdateTime = 0;
     alliance = DriverStation.getAlliance();
   }
 
@@ -102,17 +102,18 @@ public class TeleopDrive extends Command {
     // Vision measurement
     double timestamp = Timer.getFPGATimestamp();
     Pose2d measuredPose = limelight.getMeasuredPose();
-
-    if(limelight.hasTarget() && limelight.tagCount() >= 2) {
+    if(limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1) {
       swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
-      yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
+      lastUpdateTime = timestamp;
     }
 
-    // puts yawCorrected on the dashboard
-    SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + Math.toDegrees(yawCorrection)) % 360);
+
     SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 180);
 
-    // swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
+    SmartDashboard.putNumber("lastUpdateTime", lastUpdateTime);
+    SmartDashboard.putNumber("timestamp", timestamp);
+
+    swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }
 
   // Called once the command ends or is interrupted.
