@@ -39,7 +39,7 @@ public class RobotContainer {
   private GuitarController codriverController = new GuitarController(Constants.Controllers.CODRIVER_CONTROLLER_PORT);
 
   // Autonomous chooser for SmartDashboard
-  private SendableChooser<Command> autonChooser = new SendableChooser<>();
+  private SendableChooser<Command> testAutonChooser = new SendableChooser<>();
 
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
@@ -110,28 +110,18 @@ public class RobotContainer {
 
     // Set a default autonomous to prevent errors
     //TODO! Consider setting this to an autonomous that will still get us points
-    autonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
+    testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
 
-    /** Unnecessary autos
-     * autonChooser.addOption("Square Test", new PathPlannerAuto("Square Test Path"));
-    autonChooser.addOption("Square Test Rotate", new PathPlannerAuto("Square Test Path, rotate after drive"));
-    autonChooser.addOption("Circle Test", new PathPlannerAuto("Circle Test Path"));
-    autonChooser.addOption("Circle Test Rotate", new PathPlannerAuto("Circle Test Path, rotate during drive"));
-    */autonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
-    autonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
-    /** Unnecessary autos
-    autonChooser.addOption("Backwards", new PathPlannerAuto("Backwards")); 
-    autonChooser.addOption("Blue1", new PathPlannerAuto("collect3Blue1"));
-    autonChooser.addOption("Small square test rotate", new PathPlannerAuto("Small Rotating Square"));
-    autonChooser.addOption("SmallSimpleSquareRotate", new PathPlannerAuto("SmallSimpleSquareRotate"));
-    autonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
-    */
-    autonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
 
-    SmartDashboard.putData("autonDropdown", autonChooser);
+    testAutonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
+    testAutonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
+    testAutonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
+    testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
+
+    SmartDashboard.putData("autonDropdown", testAutonChooser);
   }
 
   public Command getAutonomousCommand() {
-    return autonChooser.getSelected();
+    return testAutonChooser.getSelected();
   }
 }
