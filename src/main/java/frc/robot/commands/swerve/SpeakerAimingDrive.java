@@ -96,7 +96,7 @@ public class SpeakerAimingDrive extends Command {
     anglePID.enableContinuousInput(-180, +180);
     anglePID.setTolerance(1);
     
-    if(limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1000) {
+    if(limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1) {
       swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
       // only use for yawCorrection + pose
       yawCorrection = measuredPose.getRotation().getRadians() - pose.getRotation().getRadians();
