@@ -100,6 +100,7 @@ public class TeleopDrive extends Command {
     SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 180);
 
     SmartDashboard.putNumber("lastUpdateTime", lastUpdateTime);
+    SmartDashboard.putNumber("timestamp", timestamp);
 
     swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }

@@ -111,6 +111,7 @@ public class SpeakerAimingDrive extends Command {
     SmartDashboard.putNumber("poseY", pose.getY());
     SmartDashboard.putNumber("poseYaw", pose.getRotation().getDegrees());
     SmartDashboard.putNumber("lastUpdateTime", lastUpdateTime);
+    SmartDashboard.putNumber("timestamp", timestamp);
 
     if(alliance.isEmpty()) {
       return;
