@@ -54,6 +54,6 @@ public class Turn90Degrees extends Command {
   public boolean isFinished() {
    double desiredYaw = desiredPose.getRotation().getDegrees();
    double currentYaw = swerveDrive.getPose().getRotation().getDegrees();
-   return Math.abs(desiredYaw - currentYaw) <= 1;
+   return Math.abs(desiredYaw - currentYaw) <= 5;
   }
 }
