@@ -45,7 +45,7 @@ public class SpeakerAimingDrive extends Command {
   Pose2d measuredPose;
   Pose2d pose;
   private DoubleSupplier moveX, moveY, turnTheta;
-  double lastUpdateTime = 0;
+  double lastUpdateTime;
 
   /** Drive command for aiming at the speaker while moving. */
   public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, DoubleSupplier vX, DoubleSupplier vY) {
@@ -110,6 +110,7 @@ public class SpeakerAimingDrive extends Command {
     SmartDashboard.putNumber("poseX", pose.getX());
     SmartDashboard.putNumber("poseY", pose.getY());
     SmartDashboard.putNumber("poseYaw", pose.getRotation().getDegrees());
+    SmartDashboard.putNumber("lastUpdateTime", lastUpdateTime);
 
     if(alliance.isEmpty()) {
       return;

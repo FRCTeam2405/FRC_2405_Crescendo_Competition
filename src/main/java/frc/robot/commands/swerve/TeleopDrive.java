@@ -48,7 +48,7 @@ public class TeleopDrive extends Command {
     addRequirements(swerve, limelight);
   }
 
-  double yawCorrection = 0;
+  double yawCorrection;
 
   /** 
   // Standard deviation for apriltag position setting
@@ -60,6 +60,7 @@ public class TeleopDrive extends Command {
     // Set the motors to coast
     swerve.inner.setMotorIdleMode(false);
     limelight.initialize();
+    lastUpdateTime = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -98,7 +99,9 @@ public class TeleopDrive extends Command {
     SmartDashboard.putNumber("yawCorrected", (pose.getRotation().getDegrees() + Math.toDegrees(yawCorrection)) % 360);
     SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 180);
 
-     swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
+    SmartDashboard.putNumber("lastUpdateTime", lastUpdateTime);
+
+    swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }
 
   // Called once the command ends or is interrupted.
