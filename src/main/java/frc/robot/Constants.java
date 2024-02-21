@@ -12,6 +12,7 @@ public final class Constants {
         /** Swerve drive max speed, in meters per second. */
         public static final double MAX_SPEED = 0.5;
         /** Swerve drive max angular speed, in radians per second. */
+        // Max speed: ~1.5 rotations per second
         public static final double MAX_ANGULAR_SPEED = 0.05 * (2 * Math.PI);
 
         //TODO! Configure the path follower
