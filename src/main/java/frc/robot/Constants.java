@@ -48,8 +48,8 @@ public final class Constants {
 
         public static final class Motors {
 
-            public static final int TOP_SHOOTER_PORTID = 41;
-            public static final int BOTTOM_SHOOTER_PORTID = 42;
+            public static final int TOP_SHOOTER_PORTID = 43;
+            public static final int BOTTOM_SHOOTER_PORTID = 41;
 
             public static final boolean TOP_SHOOTER_INVERTED = false;
             public static final boolean BOTTOM_SHOOTER_INVERTED = false;
@@ -85,7 +85,7 @@ public final class Constants {
         
         public static final class Motors {
 
-            public static final int TOP_FEEDER_PORTID = 43;
+            public static final int TOP_FEEDER_PORTID = 42;
             public static final int BOTTOM_FEEDER_PORTID = 44;
 
             public static final boolean TOP_FEEDER_INVERTED = true;

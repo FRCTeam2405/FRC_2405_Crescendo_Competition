@@ -84,20 +84,20 @@ public class RobotContainer {
     driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive));
 
     //TODO! switch intake only with intake note when feeder is available
-    // driverController.button(
-    //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-    //   .whileTrue(new IntakeNote(sysIntake, sysFeeder));
+    driverController.button(
+      Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
+      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
     // driverController.button(
     //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
     //   .whileTrue(new IntakeOnly(sysIntake));
     //TODO! enable when shooter and feeder are ready
-    // driverController.button(
-    //   Constants.Controllers.Taranis.FIRE_WHEN_READY_BUTTON)
-    //   .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder));
-    driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_AMP)
-                        .whileTrue(new MoveArmToPosition(sysArm,() -> Constants.Arm.SetPoints.AMP));
-    driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_HOME)
-                        .whileTrue(new MoveArmToPosition(sysArm,() -> Constants.Arm.SetPoints.HOME));
+    driverController.button(
+      Constants.Controllers.Taranis.FIRE_WHEN_READY_BUTTON)
+      .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
+    // driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_AMP)
+    //                     .whileTrue(new MoveArmToPosition(sysArm,() -> Constants.Arm.SetPoints.AMP));
+    // driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_HOME)
+    //                     .whileTrue(new MoveArmToPosition(sysArm,() -> Constants.Arm.SetPoints.HOME));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {

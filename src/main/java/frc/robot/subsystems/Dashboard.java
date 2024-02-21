@@ -122,6 +122,26 @@ public class Dashboard extends SubsystemBase {
               .getEntry();
   }
 
+  public double getTopShooterVelocityDashboard() {
+    return dashboardEntryTopShooterVelocitySetting.getDouble(0);
+  }
+
+  public double getBottomShooterVelocityDashboard() {
+    return dashboardEntryBottomShooterVelocitySetting.getDouble(0);
+  }
+
+  public double getTopFeederSpeedDashboard() {
+    return dashboardEntryTopFeederSpeedSetting.getDouble(0);
+  }
+
+  public double getBottomFeederSpeedDashboard() {
+    return dashboardEntryBottomFeederSpeedSetting.getDouble(0);
+  }
+
+  public double getRightIntakeSpeedDashboard() {
+    return dashboardEntryRightIntakeSpeed.getDouble(0);
+  }
+
   @Override
   public void periodic() {
 
