@@ -12,9 +12,16 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.shooting.Feeder;
+import frc.robot.subsystems.shooting.Intake;
+import frc.robot.subsystems.shooting.Shooter;
 
 public class Dashboard extends SubsystemBase {
 
+  private final Shooter sysShooter;
+  private final Feeder sysFeeder;
+  private final Intake sysIntake;
+  private final Arm sysArm;
   private ShuffleboardTab dashboardTabMain, dashboardTabUtility;
   private GenericEntry  dashboardEntryTopShooterVelocity, dashboardEntryBottomShooterVelocity, 
                         dashboardEntryTopShooterVelocitySetting, dashboardEntryBottomShooterVelocitySetting,
@@ -23,7 +30,12 @@ public class Dashboard extends SubsystemBase {
                         dashboardEntryArmPosition;
 
   /** Creates a new Dashboard. */
-  public Dashboard() {
+  public Dashboard(Shooter sysShooter, Feeder sysFeeder, Intake sysIntake, Arm sysArm) {
+
+    this.sysShooter = sysShooter;
+    this.sysFeeder = sysFeeder;
+    this.sysIntake = sysIntake;
+    this.sysArm = sysArm;
 
     dashboardTabMain = Shuffleboard.getTab(Constants.Dashboard.Main.TAB_NAME);
     dashboardTabUtility = Shuffleboard.getTab(Constants.Dashboard.Utility.TAB_NAME);
@@ -113,6 +125,8 @@ public class Dashboard extends SubsystemBase {
   @Override
   public void periodic() {
 
+    dashboardEntryTopShooterVelocity.setDouble(sysShooter.getShooterVelocity(Constants.Shooter.Motors.TOP_SHOOTER_PORTID));
+    dashboardEntryBottomShooterVelocity.setDouble(sysShooter.getShooterVelocity(Constants.Shooter.Motors.BOTTOM_SHOOTER_PORTID));
 
     // This method will be called once per scheduler run
   }

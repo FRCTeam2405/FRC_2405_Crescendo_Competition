@@ -101,7 +101,7 @@ public final class Constants {
         public static final class Motors {
             public static final int ARM_PORTID = 40;
 
-            public static final boolean ARM_INVERTED = true;
+            public static final boolean ARM_INVERTED = false;
 
             public static final double ARM_SPEED_MAX = 0.50;
             public static final double ARM_VELOCITY = 30;
@@ -121,7 +121,8 @@ public final class Constants {
         public static final class SetPoints {
 
             public static final double HOME = 0.0;
-            public static final double AMP = 200.0;
+            public static final double AMP = 150.0;
+            public static final double OVERRIDE = 50;
         }
     }
 
@@ -158,6 +159,8 @@ public final class Constants {
 
             public static final int INTAKE_NOTE_BUTTON = 1;
             public static final int FIRE_WHEN_READY_BUTTON = 2; //To be mapped to guitar
+            public static final int MOVE_ARM_TO_AMP = 3;
+            public static final int MOVE_ARM_TO_HOME = 6;
         }
 
         public static final class Guitar {
