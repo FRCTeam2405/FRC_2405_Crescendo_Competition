@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
+import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
 import frc.robot.commands.shooting.IntakeOnly;
@@ -40,6 +41,7 @@ public class RobotContainer {
 
   // Autonomous chooser for SmartDashboard
   private SendableChooser<Command> testAutonChooser = new SendableChooser<>();
+  private SendableChooser<Command> startPoseChooser = new SendableChooser<>();
 
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
@@ -117,6 +119,8 @@ public class RobotContainer {
     testAutonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
     testAutonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
     testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
+
+    // startPoseChooser.addOption("blue1", AutonChooser.startPoseChooser(1));
 
     SmartDashboard.putData("autonDropdown", testAutonChooser);
   }
