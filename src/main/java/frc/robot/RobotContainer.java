@@ -10,8 +10,13 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.hal.HALUtil;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -41,7 +46,8 @@ public class RobotContainer {
 
   // Autonomous chooser for SmartDashboard
   private SendableChooser<Command> testAutonChooser = new SendableChooser<>();
-  private SendableChooser<Command> startPoseChooser = new SendableChooser<>();
+  private SendableChooser<String> startPoseChooser = new SendableChooser<>();
+  private SendableChooser<String> firstNoteChooser = new SendableChooser<>();
 
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
@@ -104,6 +110,10 @@ public class RobotContainer {
     }; 
   }
 
+  private ShuffleboardTab dashboardTabAuto;
+  private ComplexWidget dashboardEntryRobotStartPose;
+  private ComplexWidget dashboardEntryFirstNote;
+
   // Set up the autonomous routines
   private void configureAutonomous() {
     // Register named commands for pathplanner
@@ -120,7 +130,32 @@ public class RobotContainer {
     testAutonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
     testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
 
-    // startPoseChooser.addOption("blue1", AutonChooser.startPoseChooser(1));
+    startPoseChooser.addOption("blue1", "blue1");
+    startPoseChooser.addOption("blue2", "blue2");
+    startPoseChooser.addOption("blue3", "blue3");
+    startPoseChooser.addOption("red1", "red1");
+    startPoseChooser.addOption("red2", "red2");
+    startPoseChooser.addOption("red3", "red3");
+
+    dashboardTabAuto = Shuffleboard.getTab(("Auto"));
+    dashboardEntryRobotStartPose = dashboardTabAuto.add(
+      "Robots starting position", startPoseChooser)
+     .withWidget(BuiltInWidgets.kComboBoxChooser)
+     .withPosition(0, 0)
+     .withSize(2, 1);
+
+    firstNoteChooser.addOption("note1", "note1");
+    firstNoteChooser.addOption("note2", "note2");
+    firstNoteChooser.addOption("note3", "note3");
+    firstNoteChooser.addOption("note4", "note4");
+    firstNoteChooser.addOption("note8", "note8");
+
+    dashboardTabAuto = Shuffleboard.getTab(("Auto"));
+    dashboardEntryFirstNote = dashboardTabAuto.add(
+      "First Note In Auto", startPoseChooser)
+     .withWidget(BuiltInWidgets.kComboBoxChooser)
+     .withPosition(0, 1)
+     .withSize(2, 1);
 
     SmartDashboard.putData("autonDropdown", testAutonChooser);
   }
