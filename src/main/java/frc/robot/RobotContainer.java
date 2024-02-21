@@ -25,6 +25,7 @@ import frc.robot.commands.swerve.TeleopDrive;
 import frc.robot.commands.swerve.Turn90Degrees;
 import frc.robot.commands.swerve.ZeroGyro;
 import frc.robot.controllers.GuitarController;
+import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 import frc.robot.subsystems.shooting.Feeder;
@@ -41,6 +42,7 @@ public class RobotContainer {
   private SendableChooser<Command> autonChooser = new SendableChooser<>();
 
   // Initialize subsystems
+  private Dashboard dashboard = new Dashboard();
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
   // Below systems only on competition bot

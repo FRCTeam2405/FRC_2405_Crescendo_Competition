@@ -105,6 +105,7 @@ public final class Constants {
 
             public static final double ARM_SPEED_MAX = 0.50;
             public static final double ARM_VELOCITY = 30;
+            public static final double ARM_VELOCITY_MAX = 40;
         }
 
         public static final class Encoder {
@@ -198,6 +199,32 @@ public final class Constants {
             public static final int BLUE_STAGE_CENTER = 14;
             public static final int BLUE_STAGE_RIGHT = 15;
             public static final int BLUE_STAGE_LEFT = 16;
+        }
+    }
+
+    public static final class Dashboard {
+
+        public static final class Main {
+            public static final String TAB_NAME = "Main";
+        }
+
+        public static final class Utility {
+            public static final String TAB_NAME = "Utility";
+
+            public static final class Widgets {
+                public static final String TOP_SHOOTER_VELOCITY_SETTING_NAME = "Top Shooter Velocity Setting";
+                public static final String BOTTOM_SHOOTER_VELOCITY_SETTING_NAME = "Bottom Shooter Velocity Setting";
+                public static final String TOP_SHOOTER_VELOCITY_NAME = "Top Shooter Velocity";
+                public static final String BOTTOM_SHOOTER_VELOCITY_NAME = "Bottom Shooter Velocity";
+
+                public static final String TOP_FEEDER_OUTPUT_SETTING_NAME = "Top Feeder Output Setting";
+                public static final String BOTTOM_FEEDER_OUTPUT_SETTING_NAME = "Bottom Feeder Output Setting";
+                
+                public static final String RIGHT_INTAKE_OUTPUT_SETTING_NAME = "Right Intake Output Setting";
+                
+                public static final String ARM_VELOCITY_SETTING_NAME = "Arm Velocity Setting";
+                public static final String ARM_POSITION_NAME = "Arm Position";
+            }
         }
     }
 }
