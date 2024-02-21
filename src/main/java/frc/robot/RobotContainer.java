@@ -129,6 +129,7 @@ public class RobotContainer {
     testAutonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
     testAutonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
     testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
+    testAutonChooser.addOption("Left Turn", new PathPlannerAuto("Left Turn"));
 
     startPoseChooser.addOption("blue1", "blue1");
     startPoseChooser.addOption("blue2", "blue2");
