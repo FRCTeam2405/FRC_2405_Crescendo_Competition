@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.DirectDriveArm;
 import frc.robot.commands.MoveArmToPosition;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
@@ -98,6 +99,11 @@ public class RobotContainer {
     //                     .whileTrue(new MoveArmToPosition(sysArm,() -> Constants.Arm.SetPoints.AMP));
     // driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_HOME)
     //                     .whileTrue(new MoveArmToPosition(sysArm,() -> Constants.Arm.SetPoints.HOME));
+    // codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
+    //  .whileTrue(new DirectDriveArm(sysArm, 
+    //  axisDeadband(codriverController, 
+    //  Constants.Controllers.Guitar.JOYSTICK_X, 
+    //  Constants.Controllers.Guitar.X_DEADBAND, Constants.Controllers.Guitar.X_INVERTED)));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {

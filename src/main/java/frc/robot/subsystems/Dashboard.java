@@ -148,6 +148,8 @@ public class Dashboard extends SubsystemBase {
     dashboardEntryTopShooterVelocity.setDouble(sysShooter.getShooterVelocity(Constants.Shooter.Motors.TOP_SHOOTER_PORTID));
     dashboardEntryBottomShooterVelocity.setDouble(sysShooter.getShooterVelocity(Constants.Shooter.Motors.BOTTOM_SHOOTER_PORTID));
 
+    dashboardEntryArmPosition.setDouble(sysArm.getArmPosition());
+
     // This method will be called once per scheduler run
   }
 }

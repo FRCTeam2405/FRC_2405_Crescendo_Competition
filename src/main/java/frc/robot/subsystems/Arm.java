@@ -46,6 +46,10 @@ public class Arm extends SubsystemBase {
     motorArm.setControl(motorPositionDutyCycle.withPosition(-newSetPoint));
   }
 
+  public double getArmPosition() {
+    return motorArm.getPosition().getValue();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

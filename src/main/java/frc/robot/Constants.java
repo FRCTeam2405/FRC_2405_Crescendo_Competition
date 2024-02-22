@@ -98,6 +98,8 @@ public final class Constants {
 
     public static final class Arm {
 
+        public static final double DIRECT_DRIVE_MOD = 10.0;
+
         public static final class Motors {
             public static final int ARM_PORTID = 40;
 
@@ -177,6 +179,12 @@ public final class Constants {
             // Port IDs for the axes on the controller (joystick)
             public static final int JOYSTICK_X = 0;
             public static final int JOYSTICK_Y = 1;
+
+            public static final double X_DEADBAND = 0.05;
+            public static final double Y_DEADBAND = 0.05;
+
+            public static final boolean X_INVERTED = true;
+            public static final boolean Y_INVERTED = true;
 
             // Angles for the POV system on the controller (strum bar)
             public static final int STRUM_UP = 0;
