@@ -49,12 +49,12 @@ public class RobotContainer {
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
   // Below systems only on competition bot
-  private Intake sysIntake = new Intake();
+  // private Intake sysIntake = new Intake();
   //TODO! enable when shooter and feeder are ready
-  private Feeder sysFeeder = new Feeder();
-  private Shooter sysShooter = new Shooter();
-  private Arm sysArm = new Arm();
-  private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
+  // private Feeder sysFeeder = new Feeder();
+  // private Shooter sysShooter = new Shooter();
+  // private Arm sysArm = new Arm();
+  // private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
 
   // Initialization code for our robot
   public RobotContainer() {
@@ -85,16 +85,16 @@ public class RobotContainer {
     driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive));
 
     //TODO! switch intake only with intake note when feeder is available
-    driverController.button(
-      Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+    // driverController.button(
+    //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
+    //   .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
     // driverController.button(
     //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
     //   .whileTrue(new IntakeOnly(sysIntake));
     //TODO! enable when shooter and feeder are ready
-    driverController.button(
-      Constants.Controllers.Taranis.FIRE_WHEN_READY_BUTTON)
-      .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
+    // driverController.button(
+    //   Constants.Controllers.Taranis.FIRE_WHEN_READY_BUTTON)
+    //   .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
     // driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_AMP)
     //                     .whileTrue(new MoveArmToPosition(sysArm,() -> Constants.Arm.SetPoints.AMP));
     // driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_HOME)
