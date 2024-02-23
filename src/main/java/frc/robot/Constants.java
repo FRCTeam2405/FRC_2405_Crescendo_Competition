@@ -48,8 +48,8 @@ public final class Constants {
 
         public static final class Motors {
 
-            public static final int TOP_SHOOTER_PORTID = 41;
-            public static final int BOTTOM_SHOOTER_PORTID = 42;
+            public static final int TOP_SHOOTER_PORTID = 43;
+            public static final int BOTTOM_SHOOTER_PORTID = 41;
 
             public static final boolean TOP_SHOOTER_INVERTED = false;
             public static final boolean BOTTOM_SHOOTER_INVERTED = false;
@@ -85,7 +85,7 @@ public final class Constants {
         
         public static final class Motors {
 
-            public static final int TOP_FEEDER_PORTID = 43;
+            public static final int TOP_FEEDER_PORTID = 42;
             public static final int BOTTOM_FEEDER_PORTID = 44;
 
             public static final boolean TOP_FEEDER_INVERTED = true;
@@ -98,13 +98,16 @@ public final class Constants {
 
     public static final class Arm {
 
+        public static final double DIRECT_DRIVE_MOD = 10.0;
+
         public static final class Motors {
             public static final int ARM_PORTID = 40;
 
-            public static final boolean ARM_INVERTED = true;
+            public static final boolean ARM_INVERTED = false;
 
             public static final double ARM_SPEED_MAX = 0.50;
             public static final double ARM_VELOCITY = 30;
+            public static final double ARM_VELOCITY_MAX = 40;
         }
 
         public static final class Encoder {
@@ -120,7 +123,8 @@ public final class Constants {
         public static final class SetPoints {
 
             public static final double HOME = 0.0;
-            public static final double AMP = 200.0;
+            public static final double AMP = 150.0;
+            public static final double OVERRIDE = 50;
         }
     }
 
@@ -157,6 +161,8 @@ public final class Constants {
 
             public static final int INTAKE_NOTE_BUTTON = 1;
             public static final int FIRE_WHEN_READY_BUTTON = 2; //To be mapped to guitar
+            public static final int MOVE_ARM_TO_AMP = 3;
+            public static final int MOVE_ARM_TO_HOME = 6;
         }
 
         public static final class Guitar {
@@ -173,6 +179,12 @@ public final class Constants {
             // Port IDs for the axes on the controller (joystick)
             public static final int JOYSTICK_X = 0;
             public static final int JOYSTICK_Y = 1;
+
+            public static final double X_DEADBAND = 0.05;
+            public static final double Y_DEADBAND = 0.05;
+
+            public static final boolean X_INVERTED = true;
+            public static final boolean Y_INVERTED = true;
 
             // Angles for the POV system on the controller (strum bar)
             public static final int STRUM_UP = 0;
@@ -209,10 +221,9 @@ public final class Constants {
         public static final class LED_COLORS {
 
             //These are imported colors from last season.
-            
             //This color will be what the LEDs set to when the robot is turned on
             public static final double LED_SETTING_DEFAULT = -0.95;
-            
+
             public static final double STROBE_RED = -0.11;
             public static final double HEARTBEAT_RED = -0.25;
             public static final double SOLID_RED = 0.61;
@@ -221,6 +232,32 @@ public final class Constants {
             public static final double YELLOW = 0;
             public static final double AQUA = 0.81;
             public static final double BLUE = 0.87;
+        }
+    }
+
+    public static final class Dashboard {
+
+        public static final class Main {
+            public static final String TAB_NAME = "Main";
+        }
+
+        public static final class Utility {
+            public static final String TAB_NAME = "Utility";
+
+            public static final class Widgets {
+                public static final String TOP_SHOOTER_VELOCITY_SETTING_NAME = "Top Shooter Velocity Setting";
+                public static final String BOTTOM_SHOOTER_VELOCITY_SETTING_NAME = "Bottom Shooter Velocity Setting";
+                public static final String TOP_SHOOTER_VELOCITY_NAME = "Top Shooter Velocity";
+                public static final String BOTTOM_SHOOTER_VELOCITY_NAME = "Bottom Shooter Velocity";
+
+                public static final String TOP_FEEDER_OUTPUT_SETTING_NAME = "Top Feeder Output Setting";
+                public static final String BOTTOM_FEEDER_OUTPUT_SETTING_NAME = "Bottom Feeder Output Setting";
+                
+                public static final String RIGHT_INTAKE_OUTPUT_SETTING_NAME = "Right Intake Output Setting";
+                
+                public static final String ARM_VELOCITY_SETTING_NAME = "Arm Velocity Setting";
+                public static final String ARM_POSITION_NAME = "Arm Position";
+            }
         }
     }
 }
