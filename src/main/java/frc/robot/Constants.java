@@ -213,6 +213,29 @@ public final class Constants {
         }
     }
 
+    public static final class LEDs {
+        //we have 2 sets of LED lights, meaning we're going to need to set both in each command
+        public static final int LED_PORT_ONE = 0;
+        public static final int LED_PORT_TWO = 1;
+
+        public static final class LED_COLORS {
+
+            //These are imported colors from last season.
+
+            //This color will be what the LEDs set to when the robot is turned on
+            public static final double LED_SETTING_DEFAULT = -0.95;
+
+            public static final double STROBE_RED = -0.11;
+            public static final double HEARTBEAT_RED = -0.25;
+            public static final double SOLID_RED = 0.61;
+            public static final double SHOT_BLUE = -0.83;
+            public static final double GREEN = 0.77;
+            public static final double YELLOW = 0;
+            public static final double AQUA = 0.81;
+            public static final double BLUE = 0.87;
+        }
+    }
+
     public static final class Dashboard {
 
         public static final class Main {
@@ -236,29 +259,6 @@ public final class Constants {
                 public static final String ARM_VELOCITY_SETTING_NAME = "Arm Velocity Setting";
                 public static final String ARM_POSITION_NAME = "Arm Position";
             }
-        }
-    }
-
-    public static final class LEDs {
-        //we have 2 sets of LED lights, meaning we're going to need to set both in each command
-        public static final int LED_PORT_ONE = 0;
-        public static final int LED_PORT_TWO = 1;
-
-        public static final class LED_COLORS {
-
-            //These are imported colors from last season.
-
-            //This color will be what the LEDs set to when the robot is turned on
-            public static final double LED_SETTING_DEFAULT = -0.95;
-
-            public static final double STROBE_RED = -0.11;
-            public static final double HEARTBEAT_RED = -0.25;
-            public static final double SOLID_RED = 0.61;
-            public static final double SHOT_BLUE = -0.83;
-            public static final double GREEN = 0.77;
-            public static final double YELLOW = 0;
-            public static final double AQUA = 0.81;
-            public static final double BLUE = 0.87;
         }
     }
 }
