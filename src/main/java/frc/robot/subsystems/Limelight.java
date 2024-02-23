@@ -17,25 +17,29 @@ public class Limelight extends SubsystemBase {
   /** Creates a new Limelight. */
   public Limelight() {}
   
-
+  // Gets network table from limelight
   NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("limelight");
 
+  // Counts the number of tags seen by the limelight
   public int tagCount() {
     LimelightHelpers.LimelightResults llResults = LimelightHelpers.getLatestResults("");
     return llResults.targetingResults.targets_Fiducials.length;
   }
 
+  // Turns off the limelight LEDs and sets the pipeline to 4
   public void initialize(){
   networkTable.getEntry("ledMode").setNumber(0);
   networkTable.getEntry("pipeline").setNumber(4);
   }
   
+  // Measures total latency
   public double getLatency() {
     double tl = networkTable.getEntry("tl").getDouble(0);
     double cl = networkTable.getEntry("cl").getDouble(0);
     return (tl + cl) / 1000;
   }
 
+  // Tells whether or not the limelight sees a target
   public boolean hasTarget() {
     double tv = networkTable.getEntry("tv").getDouble(0);
     if (tv == 1) {
@@ -44,6 +48,7 @@ public class Limelight extends SubsystemBase {
       return false;
     }
   }
+
   /** Gets the measured pose according to the Limelight MegaTag pipeline. */
   public Pose2d getMeasuredPose() {
     double[] rawPose = networkTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
@@ -51,16 +56,10 @@ public class Limelight extends SubsystemBase {
     // Convert raw pose (X, Y, Z, Roll, Pitch, Yaw)
     // into a Pose2d. We don't typically use 3D coords,
     // so Z, Roll, and Pitch are discarded here.
-    return new Pose2d(new Translation2d(rawPose[0], rawPose[1]), new Rotation2d(rawPose[5]));
+    return new Pose2d(new Translation2d(rawPose[0], rawPose[1]), new Rotation2d(Math.toRadians(rawPose[5])));
   }
 
-  public Rotation3d getMeasuredRotation() {
-    double[] rawPose = networkTable.getEntry("botpose").getDoubleArray(new double[6]);
-
-    // Convert raw pose (X, Y, Z, Roll, Pitch, Yaw) to Rotation3D.
-    return new Rotation3d(rawPose[3], rawPose[4], rawPose[5]);
-  }
-
+  // Gets pose of target relative to bot
   public double getTargetPose(int tid) {
     if(networkTable.getEntry("tid").getInteger(-1) != tid) {
       return 0;

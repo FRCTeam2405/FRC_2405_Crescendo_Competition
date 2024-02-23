@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.function.DoubleSupplier;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.hal.HALUtil;
@@ -82,7 +83,10 @@ public class RobotContainer {
 
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
     driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Turn90Degrees(swerveDrive));
-    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
+     axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
+     axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
+    ));
 
     //TODO! switch intake only with intake note when feeder is available
     // driverController.button(
@@ -116,20 +120,22 @@ public class RobotContainer {
 
   // Set up the autonomous routines
   private void configureAutonomous() {
-    //TODO! configure all the autons
+    // Register named commands for pathplanner
+    // This must be done before initializing autos
+    NamedCommands.registerCommand("turn90Degrees", new Turn90Degrees(swerveDrive));
 
     // Set a default autonomous to prevent errors
-    //TODO! Set this to an autonomous that will still get us points
+    //TODO! Consider setting this to an autonomous that will still get us points
     autonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
 
-    /** Uneccessary autos
+    /** Unnecessary autos
      * autonChooser.addOption("Square Test", new PathPlannerAuto("Square Test Path"));
     autonChooser.addOption("Square Test Rotate", new PathPlannerAuto("Square Test Path, rotate after drive"));
     autonChooser.addOption("Circle Test", new PathPlannerAuto("Circle Test Path"));
     autonChooser.addOption("Circle Test Rotate", new PathPlannerAuto("Circle Test Path, rotate during drive"));
     */autonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
     autonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
-    /** Uneccessary autos
+    /** Unnecessary autos
     autonChooser.addOption("Backwards", new PathPlannerAuto("Backwards")); 
     autonChooser.addOption("Blue1", new PathPlannerAuto("collect3Blue1"));
     autonChooser.addOption("Small square test rotate", new PathPlannerAuto("Small Rotating Square"));

@@ -221,7 +221,6 @@ public final class Constants {
         public static final class LED_COLORS {
 
             //These are imported colors from last season.
-
             //This color will be what the LEDs set to when the robot is turned on
             public static final double LED_SETTING_DEFAULT = -0.95;
 
