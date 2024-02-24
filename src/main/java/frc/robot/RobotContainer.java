@@ -128,8 +128,7 @@ public class RobotContainer {
     */
     autonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
 
-    SmartDashboard.putData("autonDropdown", autonChooser);
-  }
+    SmartDashboard.putData("autonDropdown", autonChooser);  }
 
   public Command getAutonomousCommand() {
     return autonChooser.getSelected();
