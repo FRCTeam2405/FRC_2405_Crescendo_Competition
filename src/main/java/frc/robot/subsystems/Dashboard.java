@@ -30,7 +30,7 @@ public class Dashboard extends SubsystemBase {
   private final Intake sysIntake;
   private final Arm sysArm;
   private ShuffleboardTab dashboardTabMain, dashboardTabUtility, dashboardTabAuto;
-  private SendableChooser<Command> testAutonChooser = new SendableChooser<>();
+  private SendableChooser<Command> testAutonChooser = new SendableChooser<>(), autonChooser = new SendableChooser<>();
   private SendableChooser<String> startPoseChooser = new SendableChooser<>(), firstNoteChooser = new SendableChooser<>();
   private GenericEntry  dashboardEntryTopShooterVelocity, dashboardEntryBottomShooterVelocity, 
                         dashboardEntryTopShooterVelocitySetting, dashboardEntryBottomShooterVelocitySetting,
@@ -171,7 +171,37 @@ public class Dashboard extends SubsystemBase {
       .withPosition(0, 1)
       .withSize(2, 1);
 
-    SmartDashboard.putData("autonDropdown", testAutonChooser);
+    switch (startPoseChooser.getSelected()) {
+      case "blue1":
+       switch (firstNoteChooser.getSelected()) {
+
+       }
+      case "blue2":
+       switch (firstNoteChooser.getSelected()) {
+        
+       }
+      case "blue3":
+       switch (firstNoteChooser.getSelected()) {
+        
+       }
+      case "red1":
+       switch (firstNoteChooser.getSelected()) {
+        
+       }
+      case "red2":
+       switch (firstNoteChooser.getSelected()) {
+        
+       }
+      case "red3":
+       switch (firstNoteChooser.getSelected()) {
+        
+       }
+    }
+
+    SmartDashboard.putData("testAutonDropdown", testAutonChooser);
+    SmartDashboard.putData("autonDropdown", autonChooser);
+    SmartDashboard.putData("startPoseDropdown", startPoseChooser);
+    SmartDashboard.putData("firstNoteDropdown", firstNoteChooser);
   }
 
   public double getTopShooterVelocityDashboard() {
