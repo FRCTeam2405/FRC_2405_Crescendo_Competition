@@ -23,9 +23,9 @@ public final class Constants {
                 new PIDConstants(4.5, 0, 0.05),
                 new PIDConstants(3.14, 0, 0.1),
                 */
-                new PIDConstants(1, 0, 0.01),
-                new PIDConstants(1, 0, 0.01),
-                MAX_SPEED,
+                new PIDConstants(1, 0, 0.1),
+                new PIDConstants(2, 0, 0.8),
+                4.5,
                 0.4,
                 new ReplanningConfig(false, true)
             );
