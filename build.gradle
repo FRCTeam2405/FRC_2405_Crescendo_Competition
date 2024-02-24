@@ -72,6 +72,8 @@ compileJava.finalizedBy checkAkitInstall
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 5.
 dependencies {
+    implementation files("src/main/java/pixy2-java-api-javadoc.jar")
+
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
 
