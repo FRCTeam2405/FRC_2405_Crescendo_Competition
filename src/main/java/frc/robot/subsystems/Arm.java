@@ -43,7 +43,11 @@ public class Arm extends SubsystemBase {
 
   public void MoveArmToPosition(double newSetPoint) {
 
-    motorArm.setControl(motorPositionDutyCycle.withPosition(newSetPoint));
+    motorArm.setControl(motorPositionDutyCycle.withPosition(-newSetPoint));
+  }
+
+  public double getArmPosition() {
+    return motorArm.getPosition().getValue();
   }
 
   @Override
