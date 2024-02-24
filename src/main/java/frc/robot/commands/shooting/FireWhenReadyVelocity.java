@@ -55,8 +55,8 @@ public class FireWhenReadyVelocity extends Command {
     this.sysDashboard = sysDashboard;
     this.rpmShooterTop = () -> sysDashboard.getTopShooterVelocityDashboard();
     this.rpmShooterBottom = () -> sysDashboard.getBottomShooterVelocityDashboard();
-    this.percentOutputFeederTop = () -> sysDashboard.getTopFeederSpeedDashboard();
-    this.percentOutputFeederBottom = () -> sysDashboard.getBottomFeederSpeedDashboard();
+    this.percentOutputFeederTop = () -> sysDashboard.getTopFeederShootingSpeedDashboard();
+    this.percentOutputFeederBottom = () -> sysDashboard.getBottomFeederShootingSpeedDashboard();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysFeeder, sysDashboard);

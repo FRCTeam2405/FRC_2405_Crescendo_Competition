@@ -28,8 +28,8 @@ public class IntakeNote extends Command {
     this.sysFeeder = sysFeeder;
     this.sysDashboard = sysDashboard;
     this.speedIntakeRight = () -> sysDashboard.getRightIntakeSpeedDashboard();
-    this.speedFeederTop = () -> sysDashboard.getTopFeederSpeedDashboard();
-    this.speedFeederBottom = () -> sysDashboard.getBottomFeederSpeedDashboard();
+    this.speedFeederTop = () -> sysDashboard.getTopFeederIntakingSpeedDashboard();
+    this.speedFeederBottom = () -> sysDashboard.getBottomFeederIntakingSpeedDashboard();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysIntake, sysFeeder, sysDashboard);
