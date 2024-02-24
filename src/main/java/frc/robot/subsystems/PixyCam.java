@@ -4,14 +4,34 @@
 
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.pixy2_library.Pixy2;
+import frc.robot.pixy2_library.Pixy2.LinkType;
+import frc.robot.pixy2_library.Pixy2CCC.Block;
+import frc.robot.pixy2_library.links.Link;
 
 public class PixyCam extends SubsystemBase {
+
+  private Pixy2 pixy;
+
   /** Creates a new PixyCam. */
-  public PixyCam() {}
+  public PixyCam() {
+    pixy = Pixy2.createInstance(LinkType.SPI);
+  }
+
+  public void initialize() {
+    pixy.init();
+  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // Tell the Pixy2 to get the viewed blocks
+    pixy.getCCC().getBlocks();
+  }
+
+  public ArrayList<Block> getBlocks() {
+    return pixy.getCCC().getBlockCache();
   }
 }
