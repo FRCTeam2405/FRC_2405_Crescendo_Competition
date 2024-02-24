@@ -49,11 +49,6 @@ public class RobotContainer {
   private CommandGenericHID driverController = new CommandGenericHID(Constants.Controllers.DRIVER_CONTROLLER_PORT);
   private GuitarController codriverController = new GuitarController(Constants.Controllers.CODRIVER_CONTROLLER_PORT);
 
-  // Autonomous chooser for SmartDashboard
-  private SendableChooser<Command> testAutonChooser = new SendableChooser<>();
-  private SendableChooser<String> startPoseChooser = new SendableChooser<>();
-  private SendableChooser<String> firstNoteChooser = new SendableChooser<>();
-
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
@@ -126,58 +121,14 @@ public class RobotContainer {
     }; 
   }
 
-  private ShuffleboardTab dashboardTabAuto;
-  private ComplexWidget dashboardEntryRobotStartPose;
-  private ComplexWidget dashboardEntryFirstNote;
-
   // Set up the autonomous routines
   private void configureAutonomous() {
     // Register named commands for pathplanner
     // This must be done before initializing autos
     NamedCommands.registerCommand("Turn90Degrees", new Turn90Degrees(swerveDrive));
-
-    // Set a default autonomous to prevent errors
-    //TODO! Consider setting this to an autonomous that will still get us points
-    testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
-
-
-    testAutonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
-    testAutonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
-    testAutonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
-    testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
-    testAutonChooser.addOption("Left Turn", new PathPlannerAuto("Left Turn"));
-
-    startPoseChooser.addOption("blue1", "blue1");
-    startPoseChooser.addOption("blue2", "blue2");
-    startPoseChooser.addOption("blue3", "blue3");
-    startPoseChooser.addOption("red1", "red1");
-    startPoseChooser.addOption("red2", "red2");
-    startPoseChooser.addOption("red3", "red3");
-
-    dashboardTabAuto = Shuffleboard.getTab(("Auto"));
-    dashboardEntryRobotStartPose = dashboardTabAuto.add(
-      "Robots starting position", startPoseChooser)
-     .withWidget(BuiltInWidgets.kComboBoxChooser)
-     .withPosition(0, 0)
-     .withSize(2, 1);
-
-    firstNoteChooser.addOption("note1", "note1");
-    firstNoteChooser.addOption("note2", "note2");
-    firstNoteChooser.addOption("note3", "note3");
-    firstNoteChooser.addOption("note4", "note4");
-    firstNoteChooser.addOption("note8", "note8");
-
-    dashboardTabAuto = Shuffleboard.getTab(("Auto"));
-    dashboardEntryFirstNote = dashboardTabAuto.add(
-      "First Note In Auto", startPoseChooser)
-     .withWidget(BuiltInWidgets.kComboBoxChooser)
-     .withPosition(0, 1)
-     .withSize(2, 1);
-
-    SmartDashboard.putData("autonDropdown", testAutonChooser);
   }
 
-  public Command getAutonomousCommand() {
-    return testAutonChooser.getSelected();
-  }
+  // public Command getAutonomousCommand() {
+  //  return testAutonChooser.getSelected();
+  // }
 }
