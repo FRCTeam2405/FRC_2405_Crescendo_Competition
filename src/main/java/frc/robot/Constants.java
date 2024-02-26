@@ -91,8 +91,11 @@ public final class Constants {
             public static final boolean TOP_FEEDER_INVERTED = true;
             public static final boolean BOTTOM_FEEDER_INVERTED = true;
 
-            public static final double TOP_FEEDER_SPEED_MAX = 0.75;
-            public static final double BOTTOM_FEEDER_SPEED_MAX = 0.75;
+            public static final double TOP_FEEDER_SHOOTING_SPEED = 0.75;
+            public static final double BOTTOM_FEEDER_SHOOTING_SPEED = 0.75;
+
+            public static final double TOP_FEEDER_INTAKING_SPEED = 0.75;
+            public static final double BOTTOM_FEEDER_INTAKING_SPEED = 0.75;
         }
     }
 
@@ -123,7 +126,7 @@ public final class Constants {
         public static final class SetPoints {
 
             public static final double HOME = 0.0;
-            public static final double AMP = 150.0;
+            public static final double AMP = 100.0; // 150, original setting
             public static final double OVERRIDE = 50;
         }
     }
@@ -250,13 +253,29 @@ public final class Constants {
                 public static final String TOP_SHOOTER_VELOCITY_NAME = "Top Shooter Velocity";
                 public static final String BOTTOM_SHOOTER_VELOCITY_NAME = "Bottom Shooter Velocity";
 
-                public static final String TOP_FEEDER_OUTPUT_SETTING_NAME = "Top Feeder Output Setting";
-                public static final String BOTTOM_FEEDER_OUTPUT_SETTING_NAME = "Bottom Feeder Output Setting";
+                public static final String TOP_FEEDER_SHOOTING_OUTPUT_SETTING_NAME = "Top Feeder Shooting Output Setting";
+                public static final String BOTTOM_FEEDER_SHOOTING_OUTPUT_SETTING_NAME = "Bottom Feeder Shooting Output Setting";
                 
+                public static final String TOP_FEEDER_INTAKING_OUTPUT_SETTING_NAME = "Top Feeder Intaking Output Setting";
+                public static final String BOTTOM_FEEDER_INTAKING_OUTPUT_SETTING_NAME = "Bottom Feeder Intaking Output Setting";
+                
+                public static final String FEEDER_NOTE_LIMIT_NAME = "Feeder Note Limit";
+
                 public static final String RIGHT_INTAKE_OUTPUT_SETTING_NAME = "Right Intake Output Setting";
                 
                 public static final String ARM_VELOCITY_SETTING_NAME = "Arm Velocity Setting";
+                public static final String ARM_POSITION_SETTING_NAME = "Arm Position Setting";
                 public static final String ARM_POSITION_NAME = "Arm Position";
+            }
+        }
+
+        public static final class MotorControl {
+
+            public static final String TAB_NAME = "Motor Control";
+
+            public static final class Widgets {
+
+                
             }
         }
     }

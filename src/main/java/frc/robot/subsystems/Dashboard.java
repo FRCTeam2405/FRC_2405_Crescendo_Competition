@@ -25,9 +25,11 @@ public class Dashboard extends SubsystemBase {
   private ShuffleboardTab dashboardTabMain, dashboardTabUtility;
   private GenericEntry  dashboardEntryTopShooterVelocity, dashboardEntryBottomShooterVelocity, 
                         dashboardEntryTopShooterVelocitySetting, dashboardEntryBottomShooterVelocitySetting,
-                        dashboardEntryTopFeederSpeedSetting, dashboardEntryBottomFeederSpeedSetting,
-                        dashboardEntryRightIntakeSpeed, dashboardEntryArmSpeed,
-                        dashboardEntryArmPosition;
+                        dashboardEntryTopFeederShootingSpeedSetting, dashboardEntryBottomFeederShootingSpeedSetting,
+                        dashboardEntryTopFeederIntakingSpeedSetting, dashboardEntryBottomFeederIntakingSpeedSetting,
+                        dashboardEntryRightIntakeSpeed, dashboardEntryArmVelocitySetting,
+                        dashboardEntryArmPosition, dashboardEntryArmPositionSetting,
+                        dashboardEntryFeederNoteLimit;
 
   /** Creates a new Dashboard. */
   public Dashboard(Shooter sysShooter, Feeder sysFeeder, Intake sysIntake, Arm sysArm) {
@@ -69,31 +71,55 @@ public class Dashboard extends SubsystemBase {
               0)
               .withWidget(BuiltInWidgets.kTextView)
               .withPosition(2,0)
-              .withSize(2, 1)
+              .withSize(1, 1)
               .getEntry();
     dashboardEntryBottomShooterVelocity = dashboardTabUtility.add(
               Constants.Dashboard.Utility.Widgets.BOTTOM_SHOOTER_VELOCITY_NAME, 
               0)
               .withWidget(BuiltInWidgets.kTextView)
               .withPosition(2,1)
-              .withSize(2, 1)
+              .withSize(1, 1)
               .getEntry();
     // Feeder widgets
-    dashboardEntryTopFeederSpeedSetting = dashboardTabUtility.add(
-                Constants.Dashboard.Utility.Widgets.TOP_FEEDER_OUTPUT_SETTING_NAME, 
-                Constants.Feeder.Motors.TOP_FEEDER_SPEED_MAX)
+    dashboardEntryTopFeederShootingSpeedSetting = dashboardTabUtility.add(
+                Constants.Dashboard.Utility.Widgets.TOP_FEEDER_SHOOTING_OUTPUT_SETTING_NAME, 
+                Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED)
+                .withWidget(BuiltInWidgets.kNumberSlider)
+                .withProperties(Map.of("min", 0, "max", 1))
+                .withPosition(3,0)
+                .withSize(2, 1)
+                .getEntry();
+    dashboardEntryBottomFeederShootingSpeedSetting = dashboardTabUtility.add(
+                Constants.Dashboard.Utility.Widgets.BOTTOM_FEEDER_SHOOTING_OUTPUT_SETTING_NAME,
+                Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED)
+                .withWidget(BuiltInWidgets.kNumberSlider)
+                .withProperties(Map.of("min", 0, "max", 1))
+                .withPosition(3,1)
+                .withSize(2, 1)
+                .getEntry();
+    dashboardEntryTopFeederIntakingSpeedSetting = dashboardTabUtility.add(
+                Constants.Dashboard.Utility.Widgets.TOP_FEEDER_INTAKING_OUTPUT_SETTING_NAME, 
+                Constants.Feeder.Motors.TOP_FEEDER_INTAKING_SPEED)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 1))
                 .withPosition(5,0)
                 .withSize(2, 1)
                 .getEntry();
-    dashboardEntryBottomFeederSpeedSetting = dashboardTabUtility.add(
-                Constants.Dashboard.Utility.Widgets.BOTTOM_FEEDER_OUTPUT_SETTING_NAME,
-                Constants.Feeder.Motors.BOTTOM_FEEDER_SPEED_MAX)
+    dashboardEntryBottomFeederIntakingSpeedSetting = dashboardTabUtility.add(
+                Constants.Dashboard.Utility.Widgets.BOTTOM_FEEDER_INTAKING_OUTPUT_SETTING_NAME,
+                Constants.Feeder.Motors.BOTTOM_FEEDER_INTAKING_SPEED)
                 .withWidget(BuiltInWidgets.kNumberSlider)
                 .withProperties(Map.of("min", 0, "max", 1))
                 .withPosition(5,1)
                 .withSize(2, 1)
+                .getEntry();
+    // Limit switch
+    dashboardEntryFeederNoteLimit = dashboardTabUtility.add(
+                Constants.Dashboard.Utility.Widgets.FEEDER_NOTE_LIMIT_NAME,
+                false)
+                .withWidget(BuiltInWidgets.kBooleanBox)
+                .withPosition(5,2)
+                .withSize(1, 1)
                 .getEntry();
     // Intake widgets
     dashboardEntryRightIntakeSpeed = dashboardTabUtility.add(
@@ -101,27 +127,36 @@ public class Dashboard extends SubsystemBase {
                   Constants.Intake.Motors.RIGHT_INTAKE_SPEED_MAX)
                   .withWidget(BuiltInWidgets.kNumberSlider)
                   .withProperties(Map.of("min", 0, "max", 1))
-                  .withPosition(7,2)
+                  .withPosition(7,0)
                   .withSize(2, 1)
                   .getEntry();
     // Arm widgets
-    dashboardEntryArmSpeed = dashboardTabUtility.add(
+    dashboardEntryArmVelocitySetting = dashboardTabUtility.add(
                   Constants.Dashboard.Utility.Widgets.ARM_VELOCITY_SETTING_NAME, 
                   Constants.Arm.Motors.ARM_VELOCITY)
                   .withWidget(BuiltInWidgets.kNumberSlider)
                   .withProperties(Map.of("min", 0, "max", Constants.Arm.Motors.ARM_VELOCITY_MAX))
-                  .withPosition(7,0)
+                  .withPosition(7,1)
+                  .withSize(2, 1)
+                  .getEntry();
+    dashboardEntryArmPositionSetting = dashboardTabUtility.add(
+                  Constants.Dashboard.Utility.Widgets.ARM_POSITION_SETTING_NAME, 
+                  Constants.Arm.SetPoints.HOME)
+                  .withWidget(BuiltInWidgets.kNumberSlider)
+                  .withProperties(Map.of("min", 0, "max", Constants.Arm.SetPoints.AMP))
+                  .withPosition(7,2)
                   .withSize(2, 1)
                   .getEntry();
     dashboardEntryArmPosition = dashboardTabUtility.add(
               Constants.Dashboard.Utility.Widgets.ARM_POSITION_NAME, 
               0)
               .withWidget(BuiltInWidgets.kTextView)
-              .withPosition(7,1)
-              .withSize(2, 1)
+              .withPosition(2,2)
+              .withSize(1, 1)
               .getEntry();
   }
 
+  // Shooter gets
   public double getTopShooterVelocityDashboard() {
     return dashboardEntryTopShooterVelocitySetting.getDouble(0);
   }
@@ -130,16 +165,31 @@ public class Dashboard extends SubsystemBase {
     return dashboardEntryBottomShooterVelocitySetting.getDouble(0);
   }
 
-  public double getTopFeederSpeedDashboard() {
-    return dashboardEntryTopFeederSpeedSetting.getDouble(0);
+  // Feeder gets
+  public double getTopFeederShootingSpeedDashboard() {
+    return dashboardEntryTopFeederShootingSpeedSetting.getDouble(0);
   }
 
-  public double getBottomFeederSpeedDashboard() {
-    return dashboardEntryBottomFeederSpeedSetting.getDouble(0);
+  public double getBottomFeederShootingSpeedDashboard() {
+    return dashboardEntryBottomFeederShootingSpeedSetting.getDouble(0);
   }
 
+  public double getTopFeederIntakingSpeedDashboard() {
+    return dashboardEntryTopFeederIntakingSpeedSetting.getDouble(0);
+  }
+
+  public double getBottomFeederIntakingSpeedDashboard() {
+    return dashboardEntryBottomFeederIntakingSpeedSetting.getDouble(0);
+  }
+
+  // Intake gets
   public double getRightIntakeSpeedDashboard() {
     return dashboardEntryRightIntakeSpeed.getDouble(0);
+  }
+
+  // Arm gets
+  public double getArmPositionSettingDashboard() {
+    return dashboardEntryArmPositionSetting.getDouble(0);
   }
 
   @Override
@@ -147,6 +197,8 @@ public class Dashboard extends SubsystemBase {
 
     dashboardEntryTopShooterVelocity.setDouble(sysShooter.getShooterVelocity(Constants.Shooter.Motors.TOP_SHOOTER_PORTID));
     dashboardEntryBottomShooterVelocity.setDouble(sysShooter.getShooterVelocity(Constants.Shooter.Motors.BOTTOM_SHOOTER_PORTID));
+
+    dashboardEntryFeederNoteLimit.setBoolean(sysFeeder.getNoteLimit());
 
     dashboardEntryArmPosition.setDouble(sysArm.getArmPosition());
 
