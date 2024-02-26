@@ -126,7 +126,7 @@ public final class Constants {
         public static final class SetPoints {
 
             public static final double HOME = 0.0;
-            public static final double AMP = 150.0;
+            public static final double AMP = 100.0; // 150, original setting
             public static final double OVERRIDE = 50;
         }
     }

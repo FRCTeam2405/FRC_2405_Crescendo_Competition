@@ -55,9 +55,13 @@ public class IntakeNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (sysFeeder.getNoteLimit()) {
+    if (!sysFeeder.getNoteLimit()) {
       sysIntake.runIntake(speedIntakeRight.getAsDouble());
       sysFeeder.runFeeder(speedFeederTop.getAsDouble(), speedFeederBottom.getAsDouble());
+    }
+    else {
+      sysIntake.stopIntake();
+      sysFeeder.stopFeeder();
     }
     
   }
