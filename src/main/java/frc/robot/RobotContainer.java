@@ -76,7 +76,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Temporary controls for testing
     //TODO! Competition controls
-    swerveDrive.setDefaultCommand(new TeleopDrive(swerveDrive, limelight,
+    swerveDrive.setDefaultCommand(new TeleopDrive(swerveDrive,
       // Invert X Axis - WPIlib is forward-positive, joystick is down-positive
       axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
       // Invert Y Axis - WPILib is left-positive, joystick is right-positive
