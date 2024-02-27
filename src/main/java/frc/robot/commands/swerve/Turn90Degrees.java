@@ -26,7 +26,7 @@ public class Turn90Degrees extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    desiredPose = swerveDrive.getPose().rotateBy(new Rotation2d(Math.PI / 2));
+    desiredPose = swerveDrive.getPose().rotateBy(new Rotation2d(-Math.PI / 2));
     swerveDrive.inner.setHeadingCorrection(true);
   }
 
@@ -52,6 +52,8 @@ public class Turn90Degrees extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+   double desiredYaw = desiredPose.getRotation().getDegrees();
+   double currentYaw = swerveDrive.getPose().getRotation().getDegrees();
+   return Math.abs(desiredYaw - currentYaw) <= 5;
   }
 }
