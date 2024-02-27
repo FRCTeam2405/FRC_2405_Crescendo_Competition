@@ -29,11 +29,6 @@ public class Feeder implements Subsystem {
     motorBottomFeeder.set(speedBottom);
   }
 
-  public void runFeeder() {
-    motorTopFeeder.set(Constants.Feeder.Motors.TOP_FEEDER_SPEED_MAX);
-    motorBottomFeeder.set(Constants.Feeder.Motors.BOTTOM_FEEDER_SPEED_MAX);
-  }
-
   public void stopFeeder() {
     motorTopFeeder.set(0);
     motorBottomFeeder.set(0);

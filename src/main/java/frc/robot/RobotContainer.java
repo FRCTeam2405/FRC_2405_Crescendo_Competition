@@ -103,7 +103,7 @@ public class RobotContainer {
     //   Constants.Controllers.Taranis.FIRE_WHEN_READY_BUTTON)
     //   .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
     // driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_AMP)
-    //                     .whileTrue(new MoveArmToPosition(sysArm,() -> Constants.Arm.SetPoints.AMP));
+    //                     .whileTrue(new MoveArmToPosition(sysArm, sysDashboard));
     // driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_HOME)
     //                     .whileTrue(new MoveArmToPosition(sysArm,() -> Constants.Arm.SetPoints.HOME));
     // codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
