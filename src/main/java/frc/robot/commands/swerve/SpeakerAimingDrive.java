@@ -87,7 +87,7 @@ public class SpeakerAimingDrive extends Command {
     if (timestamp - lastUpdateTime >= 1) {
      measuredPose = limelight.getMeasuredPose();
      if(limelight.hasTarget() && limelight.tagCount() >= 2) {
-       swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp, VecBuilder.fill(0.7, 0.7, 999999999));
+       swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
        lastUpdateTime = timestamp;
      }
     }
