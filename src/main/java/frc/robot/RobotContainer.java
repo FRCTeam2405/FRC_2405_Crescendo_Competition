@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DirectDriveArm;
 import frc.robot.commands.MoveArmToPosition;
+import frc.robot.commands.Pixy2TestCommand;
 import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
@@ -38,6 +39,7 @@ import frc.robot.controllers.GuitarController;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.PixyCam;
 import frc.robot.subsystems.SwerveContainer;
 import frc.robot.subsystems.shooting.Feeder;
 import frc.robot.subsystems.shooting.Intake;
@@ -52,6 +54,8 @@ public class RobotContainer {
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
+  private PixyCam pixy = new PixyCam();
+
   // Below systems only on competition bot
   // private Intake sysIntake = new Intake();
   //TODO! enable when shooter and feeder are ready
@@ -85,7 +89,7 @@ public class RobotContainer {
     ));
 
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).whileTrue(new ZeroGyro(swerveDrive));
-    driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Turn90Degrees(swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Pixy2TestCommand(pixy));
     driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
