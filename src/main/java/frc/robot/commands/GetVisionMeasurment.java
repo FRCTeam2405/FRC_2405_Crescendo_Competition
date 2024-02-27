@@ -44,11 +44,13 @@ public class GetVisionMeasurment extends Command {
 
     // Vision measurement
     timestamp = Timer.getFPGATimestamp();
-    Pose2d measuredPose = limelight.getMeasuredPose();
-    if(limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1) {
-      swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp, VecBuilder.fill(0.7, 0.7, 9999999));
-      lastUpdateTime = timestamp;
-    }
+    if (timestamp - lastUpdateTime >= 1) {
+     Pose2d measuredPose = limelight.getMeasuredPose();
+     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
+       swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp, VecBuilder.fill(0.7, 0.7, 999999999));
+       lastUpdateTime = timestamp;
+     }
+   }
   }
 
   // Called once the command ends or is interrupted.

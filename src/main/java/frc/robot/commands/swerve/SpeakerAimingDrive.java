@@ -78,16 +78,18 @@ public class SpeakerAimingDrive extends Command {
   @Override
   public void execute() {
     double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
-    measuredPose = limelight.getMeasuredPose();
     imu = swerveDrive.inner.getGyro();
     rotation3d = imu.getRawRotation3d();
     pose = swerveDrive.getPose();
     double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     
-    if(limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1) {
-      swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp, VecBuilder.fill(0.7, 0.7, 9999999));
-      lastUpdateTime = timestamp;
+    if (timestamp - lastUpdateTime >= 1) {
+     measuredPose = limelight.getMeasuredPose();
+     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
+       swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp, VecBuilder.fill(0.7, 0.7, 999999999));
+       lastUpdateTime = timestamp;
+     }
     }
     
     swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
