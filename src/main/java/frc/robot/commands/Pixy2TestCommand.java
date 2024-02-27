@@ -24,14 +24,15 @@ public class Pixy2TestCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    pixyCam.initialize();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     ArrayList<Block> blocks = pixyCam.getBlocks();
+    if(blocks.isEmpty()) {
+      return;
+    }
     SmartDashboard.putNumber("firstBlockX", blocks.get(0).getX());
     SmartDashboard.putNumber("firstBlockY", blocks.get(0).getY());
   }
