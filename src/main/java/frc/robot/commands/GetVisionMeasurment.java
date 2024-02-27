@@ -19,9 +19,12 @@ public class GetVisionMeasurment extends Command {
   double timestamp;
 
   /** Creates a new GetVisionMeasurment. */
-  public GetVisionMeasurment(SwerveContainer swerveContainer) {
+  public GetVisionMeasurment(SwerveContainer swerve, Limelight limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
-    swerve = swerveContainer;
+    this.limelight = limelight;
+    this.swerve = swerve;
+
+    addRequirements(limelight, swerve);
 
   }
 
