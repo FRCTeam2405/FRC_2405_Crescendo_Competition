@@ -47,14 +47,14 @@ public class Robot extends LoggedRobot {
     CommandScheduler.getInstance().run();
   }
 
-  @Override
-  public void autonomousInit() {
-    autonomousCommand = robotContainer.getAutonomousCommand();
+  // @Override
+  // public void autonomousInit() {
+  //   autonomousCommand = robotContainer.getAutonomousCommand();
 
-    if (autonomousCommand != null) {
-      autonomousCommand.schedule();
-    }
-  }
+  //   if (autonomousCommand != null) {
+  //     autonomousCommand.schedule();
+  //   }
+  // }
 
   @Override
   public void teleopInit() {

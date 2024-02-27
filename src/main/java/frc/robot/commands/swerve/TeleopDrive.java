@@ -27,25 +27,22 @@ import swervelib.imu.SwerveIMU;
 
 public class TeleopDrive extends Command {
   private SwerveContainer swerve;
-  private Limelight limelight;
   Optional<Alliance> alliance;
   Rotation3d rotation3d;
   SwerveIMU imu;
-  double lastUpdateTime = 0;
 
   private DoubleSupplier moveX, moveY, turnTheta;
 
   /** Drive command for typical teleop movement. */
-  public TeleopDrive(SwerveContainer swerveContainer, Limelight limelight, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier rotate) {
+  public TeleopDrive(SwerveContainer swerveContainer, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier rotate) {
     swerve = swerveContainer;
-    this.limelight = limelight;
 
     moveX = vX;
     moveY = vY;
     turnTheta = rotate;
     
     // Required subsystems
-    addRequirements(swerve, limelight);
+    addRequirements(swerve);
   }
 
   /*
@@ -58,8 +55,6 @@ public class TeleopDrive extends Command {
     // Set the motors to coast
     swerve.inner.setMotorIdleMode(false);
 
-    limelight.initialize();
-    lastUpdateTime = 0;
     alliance = DriverStation.getAlliance();
   }
 
@@ -98,20 +93,6 @@ public class TeleopDrive extends Command {
 
     ChassisSpeeds desiredSpeeds = swerve.inner.swerveController.getRawTargetSpeeds(correctedMoveX, correctedMoveY, correctedTurnTheta);
     swerve.inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
-
-    // Vision measurement
-    double timestamp = Timer.getFPGATimestamp();
-    Pose2d measuredPose = limelight.getMeasuredPose();
-    if(limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1) {
-      swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
-      lastUpdateTime = timestamp;
-    }
-
-
-    SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 180);
-
-    SmartDashboard.putNumber("lastUpdateTime", lastUpdateTime);
-    SmartDashboard.putNumber("timestamp", timestamp);
 
     swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
     }

@@ -10,8 +10,13 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.hal.HALUtil;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DirectDriveArm;
 import frc.robot.commands.MoveArmToPosition;
+import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
 import frc.robot.commands.shooting.IntakeOnly;
@@ -42,9 +48,6 @@ public class RobotContainer {
   //TODO! CommandGenericHID may not be optimal. Decide whether we need to make a helper class or other tool.
   private CommandGenericHID driverController = new CommandGenericHID(Constants.Controllers.DRIVER_CONTROLLER_PORT);
   private GuitarController codriverController = new GuitarController(Constants.Controllers.CODRIVER_CONTROLLER_PORT);
-
-  // Autonomous chooser for SmartDashboard
-  private SendableChooser<Command> autonChooser = new SendableChooser<>();
 
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
@@ -73,7 +76,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Temporary controls for testing
     //TODO! Competition controls
-    swerveDrive.setDefaultCommand(new TeleopDrive(swerveDrive, limelight,
+    swerveDrive.setDefaultCommand(new TeleopDrive(swerveDrive,
       // Invert X Axis - WPIlib is forward-positive, joystick is down-positive
       axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
       // Invert Y Axis - WPILib is left-positive, joystick is right-positive
@@ -81,7 +84,7 @@ public class RobotContainer {
       axisDeadband(driverController, Constants.Controllers.Taranis.ROTATE_AXIS, Constants.Controllers.Taranis.ROTATE_DEADBAND, false)
     ));
 
-    driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).whileTrue(new ZeroGyro(swerveDrive));
     driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Turn90Degrees(swerveDrive));
     driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
@@ -122,31 +125,10 @@ public class RobotContainer {
   private void configureAutonomous() {
     // Register named commands for pathplanner
     // This must be done before initializing autos
-    NamedCommands.registerCommand("turn90Degrees", new Turn90Degrees(swerveDrive));
-
-    // Set a default autonomous to prevent errors
-    //TODO! Consider setting this to an autonomous that will still get us points
-    autonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
-
-    /** Unnecessary autos
-     * autonChooser.addOption("Square Test", new PathPlannerAuto("Square Test Path"));
-    autonChooser.addOption("Square Test Rotate", new PathPlannerAuto("Square Test Path, rotate after drive"));
-    autonChooser.addOption("Circle Test", new PathPlannerAuto("Circle Test Path"));
-    autonChooser.addOption("Circle Test Rotate", new PathPlannerAuto("Circle Test Path, rotate during drive"));
-    */autonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
-    autonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
-    /** Unnecessary autos
-    autonChooser.addOption("Backwards", new PathPlannerAuto("Backwards")); 
-    autonChooser.addOption("Blue1", new PathPlannerAuto("collect3Blue1"));
-    autonChooser.addOption("Small square test rotate", new PathPlannerAuto("Small Rotating Square"));
-    autonChooser.addOption("SmallSimpleSquareRotate", new PathPlannerAuto("SmallSimpleSquareRotate"));
-    autonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
-    */
-    autonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
-
-    SmartDashboard.putData("autonDropdown", autonChooser);  }
-
-  public Command getAutonomousCommand() {
-    return autonChooser.getSelected();
+    NamedCommands.registerCommand("Turn90Degrees", new Turn90Degrees(swerveDrive));
   }
+
+  // public Command getAutonomousCommand() {
+  //  return testAutonChooser.getSelected();
+  // }
 }
