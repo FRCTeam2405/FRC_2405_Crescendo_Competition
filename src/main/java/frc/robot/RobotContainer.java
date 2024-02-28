@@ -123,13 +123,15 @@ public class RobotContainer {
     }; 
   }
 
+  DoubleSupplier sup = () -> (0);
+
   // Set up the autonomous routines
   private void configureAutonomous() {
     // Register named commands for pathplanner
     // This must be done before initializing autos
     NamedCommands.registerCommand("Turn90Degrees", new Turn90Degrees(swerveDrive));
-    NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurment(swerveDrive));
-    NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, 0, 0));
+    NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurment(swerveDrive, limelight));
+    NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
   }
 
   // public Command getAutonomousCommand() {
