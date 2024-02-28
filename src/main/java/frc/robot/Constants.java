@@ -12,6 +12,7 @@ public final class Constants {
         /** Swerve drive max speed, in meters per second. */
         public static final double MAX_SPEED = 0.5;
         /** Swerve drive max angular speed, in radians per second. */
+        // Max speed: ~1.5 rotations per second
         public static final double MAX_ANGULAR_SPEED = 0.05 * (2 * Math.PI);
 
         //TODO! Configure the path follower
@@ -22,10 +23,10 @@ public final class Constants {
                 new PIDConstants(4.5, 0, 0.05),
                 new PIDConstants(3.14, 0, 0.1),
                 */
-                new PIDConstants(1, 0, 0.01),
-                new PIDConstants(1, 0, 0.01),
-                MAX_SPEED,
-                14.778574017813,
+                new PIDConstants(1, 0, 0.1),
+                new PIDConstants(2, 0, 0.8),
+                4.5,
+                0.4,
                 new ReplanningConfig(false, true)
             );
     }
@@ -165,7 +166,9 @@ public final class Constants {
 
             public static final int ROTATE_90_DEGREES_BUTTON = 5;
 
-            public static final int ROTATE_TO_APRILTAG_BUTTON = 4;
+            public static final int ROTATE_TO_SPEAKER_BUTTON = 4;
+
+            public static final int ADD_VISION_MEASURMENT_BUTTON = 8;
 
             public static final int INTAKE_NOTE_BUTTON = 1;
         }

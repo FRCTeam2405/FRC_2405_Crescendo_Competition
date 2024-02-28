@@ -27,7 +27,6 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 import swervelib.SwerveController;
@@ -45,6 +44,7 @@ public class SpeakerAimingDrive extends Command {
   Pose2d pose;
   private DoubleSupplier moveX, moveY, turnTheta;
   double lastUpdateTime;
+  Rotation2d desiredYaw;
 
   /** Drive command for aiming at the speaker while moving. */
   public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, DoubleSupplier vX, DoubleSupplier vY) {
@@ -78,16 +78,18 @@ public class SpeakerAimingDrive extends Command {
   @Override
   public void execute() {
     double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
-    measuredPose = limelight.getMeasuredPose();
     imu = swerveDrive.inner.getGyro();
     rotation3d = imu.getRawRotation3d();
     pose = swerveDrive.getPose();
     double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     
-    if(limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1) {
-      swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
-      lastUpdateTime = timestamp;
+    if (timestamp - lastUpdateTime >= 1) {
+     measuredPose = limelight.getMeasuredPose();
+     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
+       swerveDrive.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
+       lastUpdateTime = timestamp;
+     }
     }
     
     swerveDrive.inner.swerveDrivePoseEstimator.update(swerveDrive.inner.getYaw(), swerveDrive.inner.getModulePositions());
@@ -130,12 +132,12 @@ public class SpeakerAimingDrive extends Command {
     double directDistance = Math.hypot(floorDistance, offsetZ);
 
     // calculate pitch and yaw from the shooter to the speaker
-    Rotation2d desiredYaw = new Rotation2d(offsetX, offsetY);
+    desiredYaw = new Rotation2d(offsetX, offsetY);
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
     SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 180);
     
-    if (Math.abs(pose.getRotation().getDegrees() - desiredYaw.getDegrees()) > 1) {
+    if (Math.abs(pose.getRotation().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
     ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
       correctedMoveX, correctedMoveY,
       desiredYaw.getRadians() % (Math.PI * 2),
@@ -156,6 +158,10 @@ public class SpeakerAimingDrive extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (DriverStation.isAutonomousEnabled() && Math.abs(pose.getRotation().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
