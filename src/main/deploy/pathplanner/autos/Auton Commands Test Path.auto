@@ -1,0 +1,80 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 2.0,
+      "y": 7.0
+    },
+    "rotation": -135.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "getVisionMeasurment"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "rotateToZero"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "1mFowards"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "rotateToSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1mDown"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "rotateToZero"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1mBack1mUp"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Auton Command Tests",
+  "choreoAuto": false
+}

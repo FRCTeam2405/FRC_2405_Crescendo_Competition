@@ -2,13 +2,17 @@
   "robotWidth": 0.8128,
   "robotLength": 0.9144,
   "holonomicMode": true,
-  "pathFolders": [],
-  "autoFolders": [
-    "Test Autos"
+  "pathFolders": [
+    "Auton Command Test paths",
+    "Old Test Paths"
   ],
-  "defaultMaxVel": 3,
-  "defaultMaxAccel": 3,
-  "defaultMaxAngVel": 360,
+  "autoFolders": [
+    "Auton Command Tests",
+    "Old Test Autos"
+  ],
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 3.0,
+  "defaultMaxAngVel": 360.0,
   "defaultMaxAngAccel": 720.0,
   "maxModuleSpeed": 0.4
 }
