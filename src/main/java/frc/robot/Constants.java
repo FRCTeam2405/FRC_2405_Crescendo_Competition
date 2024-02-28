@@ -101,7 +101,7 @@ public final class Constants {
 
     public static final class Arm {
 
-        public static final double DIRECT_DRIVE_MOD = 10.0;
+        public static final double DIRECT_DRIVE_MOD = 20.0;
 
         public static final class Motors {
             public static final int ARM_PORTID = 40;
@@ -117,8 +117,13 @@ public final class Constants {
 
             public static final class ProfileZero {
 
-                public static final int PROFILE_ID = 0;
-                public static final double GAIN_P = 0.005;
+                public static final int PROFILE_ID = 0; // Volts
+                public static final double GAIN_P = 2.4;
+                public static final double GAIN_I = 0;
+                public static final double GAIN_D = 0.1;
+                public static final double GAIN_FF_ACCELERATION = 0;
+                public static final double PEAK_FORWARD_VOLTAGE = 8;
+                public static final double PEAK_REVERSE_VOLTAGE = -8;
 
             }
         }
@@ -126,7 +131,7 @@ public final class Constants {
         public static final class SetPoints {
 
             public static final double HOME = 0.0;
-            public static final double AMP = 100.0; // 150, original setting
+            public static final double AMP = 90.0; // 150, original setting
             public static final double OVERRIDE = 50;
         }
     }
@@ -266,6 +271,8 @@ public final class Constants {
                 public static final String ARM_VELOCITY_SETTING_NAME = "Arm Velocity Setting";
                 public static final String ARM_POSITION_SETTING_NAME = "Arm Position Setting";
                 public static final String ARM_POSITION_NAME = "Arm Position";
+
+                public static final String PHANTOM_NAME = "Dont look here";
             }
         }
 
