@@ -7,7 +7,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -15,7 +17,7 @@ import frc.robot.Constants;
 public class Arm extends SubsystemBase {
 
   private TalonFX motorArm;
-  private PositionDutyCycle motorPositionDutyCycle;
+  private PositionVoltage motorPositionVoltage;
   private NeutralOut motorBreak;
   private TalonFXConfiguration motorArmConfig;
 
@@ -24,30 +26,39 @@ public class Arm extends SubsystemBase {
 
     motorArm = new TalonFX(Constants.Arm.Motors.ARM_PORTID);
     motorArm.setInverted(Constants.Arm.Motors.ARM_INVERTED);
+    motorArm.setNeutralMode(NeutralModeValue.Brake);
 
-    motorPositionDutyCycle = new PositionDutyCycle(
+    motorPositionVoltage = new PositionVoltage(
                             0, 
-                            Constants.Arm.Motors.ARM_VELOCITY, 
-                            false,
-                            0,
-                            Constants.Arm.Encoder.ProfileZero.PROFILE_ID,
+                            0, 
                             false, 
+                            0, 
+                            Constants.Arm.Encoder.ProfileZero.PROFILE_ID, 
                             false, 
-                            false);
+                            true, 
+                            true);
+
     motorBreak = new NeutralOut();
     motorArmConfig = new TalonFXConfiguration();
     motorArmConfig.Slot0.kP = Constants.Arm.Encoder.ProfileZero.GAIN_P;
+    motorArmConfig.Slot0.kD = Constants.Arm.Encoder.ProfileZero.GAIN_D;
+    motorArmConfig.Voltage.PeakForwardVoltage = Constants.Arm.Encoder.ProfileZero.PEAK_FORWARD_VOLTAGE;
+    motorArmConfig.Voltage.PeakReverseVoltage = Constants.Arm.Encoder.ProfileZero.PEAK_REVERSE_VOLTAGE;
     motorArm.getConfigurator().apply(motorArmConfig);
     motorArm.setPosition(0);
   }
 
-  public void MoveArmToPosition(double newSetPoint) {
+  public void moveArmToPosition(double newSetPoint) {
 
-    motorArm.setControl(motorPositionDutyCycle.withPosition(-newSetPoint));
+    motorArm.setControl(motorPositionVoltage.withPosition(-newSetPoint));
   }
 
   public double getArmPosition() {
     return motorArm.getPosition().getValue();
+  }
+
+  public void setMotorControlBreak() {
+    motorArm.setControl(motorBreak);
   }
 
   @Override

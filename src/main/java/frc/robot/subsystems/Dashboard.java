@@ -38,8 +38,10 @@ public class Dashboard extends SubsystemBase {
                         dashboardEntryTopFeederIntakingSpeedSetting, dashboardEntryBottomFeederIntakingSpeedSetting,
                         dashboardEntryRightIntakeSpeed, dashboardEntryArmVelocitySetting,
                         dashboardEntryArmPosition, dashboardEntryArmPositionSetting,
-                        dashboardEntryFeederNoteLimit;
+                        dashboardEntryFeederNoteLimit, dashboardEntryPhantom;
+  
   private ComplexWidget dashboardEntryRobotStartPose, dashboardEntryFirstNote;
+
 
   /** Creates a new Dashboard. */
   public Dashboard(Shooter sysShooter, Feeder sysFeeder, Intake sysIntake, Arm sysArm) {
@@ -162,6 +164,14 @@ public class Dashboard extends SubsystemBase {
               0)
               .withWidget(BuiltInWidgets.kTextView)
               .withPosition(2,2)
+              .withSize(1, 1)
+              .getEntry();
+    // extra
+    dashboardEntryPhantom = dashboardTabUtility.add(
+              Constants.Dashboard.Utility.Widgets.PHANTOM_NAME, 
+              0)
+              .withWidget(BuiltInWidgets.kTextView)
+              .withPosition(0,3)
               .withSize(1, 1)
               .getEntry();
   }

@@ -93,26 +93,27 @@ public class RobotContainer {
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
     ));
 
-    //TODO! switch intake only with intake note when feeder is available
+    // intake commands
     // driverController.button(
     //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
     //   .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
-    // driverController.button(
-    //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-    //   .whileTrue(new IntakeOnly(sysIntake));
-    //TODO! enable when shooter and feeder are ready
-    // driverController.button(
-    //   Constants.Controllers.Taranis.FIRE_WHEN_READY_BUTTON)
+
+    // shooter command
+    // codriverController.button(
+    //   Constants.Controllers.Guitar.STRUM_DOWN)
     //   .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
-    // driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_AMP)
-    //                     .whileTrue(new MoveArmToPosition(sysArm, sysDashboard));
-    // driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_HOME)
-    //                     .whileTrue(new MoveArmToPosition(sysArm,() -> Constants.Arm.SetPoints.HOME));
+    
+    // arm commands
+    // codriverController.button(Constants.Controllers.Guitar.RED_FRET)
+    //                     .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
+    // codriverController.button(Constants.Controllers.Guitar.GREEN_FRET)
+    //                     .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
+    // codriverController.button(Constants.Controllers.Guitar.BLUE_FRET)
+    //                     .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
     // codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
     //  .whileTrue(new DirectDriveArm(sysArm, 
-    //  axisDeadband(codriverController, 
-    //  Constants.Controllers.Guitar.JOYSTICK_X, 
-    //  Constants.Controllers.Guitar.X_DEADBAND, Constants.Controllers.Guitar.X_INVERTED)));
+    //  () -> codriverController.getRawAxis(Constants.Controllers.Guitar.JOYSTICK_X),
+    //  () -> sysArm.getArmPosition()));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {

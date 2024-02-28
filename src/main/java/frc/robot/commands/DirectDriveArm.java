@@ -13,13 +13,14 @@ import frc.robot.subsystems.Arm;
 public class DirectDriveArm extends Command {
 
   private final Arm sysArm;
-  private final DoubleSupplier positionArm;
+  private final DoubleSupplier newPositionArm, currentPositionArm;
 
   /** Creates a new DirectDriveArm. */
-  public DirectDriveArm(Arm sysArm, DoubleSupplier positionArm) {
+  public DirectDriveArm(Arm sysArm, DoubleSupplier newPositionArm, DoubleSupplier currentPositionArm) {
 
     this.sysArm = sysArm;
-    this.positionArm = positionArm;
+    this.newPositionArm = newPositionArm;
+    this.currentPositionArm = currentPositionArm;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysArm);
@@ -32,8 +33,7 @@ public class DirectDriveArm extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double currentPosition = sysArm.getArmPosition();
-    sysArm.MoveArmToPosition(currentPosition + (positionArm.getAsDouble() * Constants.Arm.DIRECT_DRIVE_MOD));
+    sysArm.moveArmToPosition(currentPositionArm.getAsDouble() + (newPositionArm.getAsDouble() * Constants.Arm.DIRECT_DRIVE_MOD));
 
   }
 
@@ -41,7 +41,7 @@ public class DirectDriveArm extends Command {
   @Override
   public void end(boolean interrupted) {
 
-
+    sysArm.setMotorControlBreak();
   }
 
   // Returns true when the command should end.

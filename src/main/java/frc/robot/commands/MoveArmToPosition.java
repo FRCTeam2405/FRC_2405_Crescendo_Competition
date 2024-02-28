@@ -45,12 +45,15 @@ public class MoveArmToPosition extends Command {
   @Override
   public void execute() {
 
-    sysArm.MoveArmToPosition(positionArm.getAsDouble());
+    sysArm.moveArmToPosition(positionArm.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+    sysArm.setMotorControlBreak();
+  }
 
   // Returns true when the command should end.
   @Override
