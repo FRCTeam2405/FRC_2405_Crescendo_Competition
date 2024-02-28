@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DirectDriveArm;
+import frc.robot.commands.GetVisionMeasurment;
 import frc.robot.commands.MoveArmToPosition;
 import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
@@ -126,6 +127,8 @@ public class RobotContainer {
     // Register named commands for pathplanner
     // This must be done before initializing autos
     NamedCommands.registerCommand("Turn90Degrees", new Turn90Degrees(swerveDrive));
+    NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurment(swerveDrive));
+    NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, 0, 0));
   }
 
   // public Command getAutonomousCommand() {

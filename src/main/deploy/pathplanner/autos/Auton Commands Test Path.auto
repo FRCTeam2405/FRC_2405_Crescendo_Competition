@@ -14,13 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "getVisionMeasurment"
+            "name": "GetVisionMeasurement"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "rotateToZero"
+            "name": "RotateToZero"
           }
         },
         {
@@ -36,7 +36,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "intake"
+                  "name": "Intake"
                 }
               }
             ]
@@ -45,13 +45,13 @@
         {
           "type": "named",
           "data": {
-            "name": "rotateToSpeaker"
+            "name": "RotateToSpeaker"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "Shoot"
           }
         },
         {
@@ -63,7 +63,7 @@
         {
           "type": "named",
           "data": {
-            "name": "rotateToZero"
+            "name": "RotateToZero"
           }
         },
         {
