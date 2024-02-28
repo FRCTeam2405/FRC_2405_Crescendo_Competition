@@ -168,21 +168,18 @@ public final class Constants {
             public static final int ROTATE_TO_APRILTAG_BUTTON = 4;
 
             public static final int INTAKE_NOTE_BUTTON = 1;
-            public static final int FIRE_WHEN_READY_BUTTON = 2; //To be mapped to guitar
-            public static final int MOVE_ARM_TO_AMP = 3;
-            public static final int MOVE_ARM_TO_HOME = 6;
         }
 
         public static final class Guitar {
             // Port IDs for the buttons on the controller
-            public static final int GREEN_FRET = 3;
-            public static final int RED_FRET = 2;
-            public static final int YELLOW_FRET = 1;
-            public static final int BLUE_FRET = 0;
-            public static final int ORANGE_FRET = 6;
+            public static final int GREEN_FRET = 4;
+            public static final int RED_FRET = 3;
+            public static final int YELLOW_FRET = 2;
+            public static final int BLUE_FRET = 1;
+            public static final int ORANGE_FRET = 7;
 
-            public static final int START_BUTTON = 9;
-            public static final int SELECT_BUTTON = 8;
+            public static final int OPTION_A_BUTTON = 10;
+            public static final int OPTION_B_BUTTON = 9;
 
             // Port IDs for the axes on the controller (joystick)
             public static final int JOYSTICK_X = 0;

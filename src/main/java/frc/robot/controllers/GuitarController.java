@@ -32,10 +32,10 @@ public class GuitarController extends CommandGenericHID {
 
 
     /** @return A Trigger representing the start button (plus) */
-    public Trigger start() { return button(Constants.Controllers.Guitar.START_BUTTON); }
+    public Trigger start() { return button(Constants.Controllers.Guitar.OPTION_A_BUTTON); }
 
     /** @return A Trigger representing the select button (minus) */
-    public Trigger select() { return button(Constants.Controllers.Guitar.SELECT_BUTTON); }
+    public Trigger select() { return button(Constants.Controllers.Guitar.OPTION_B_BUTTON); }
 
 
     /** @return The current x-value of the guitar joystick */

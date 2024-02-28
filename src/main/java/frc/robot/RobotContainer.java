@@ -50,12 +50,12 @@ public class RobotContainer {
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
   // Below systems only on competition bot
-  private Intake sysIntake = new Intake();
+  // private Intake sysIntake = new Intake();
   //TODO! enable when shooter and feeder are ready
-  private Feeder sysFeeder = new Feeder();
-  private Shooter sysShooter = new Shooter();
-  private Arm sysArm = new Arm();
-  private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
+  // private Feeder sysFeeder = new Feeder();
+  // private Shooter sysShooter = new Shooter();
+  // private Arm sysArm = new Arm();
+  // private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
 
   // Initialization code for our robot
   public RobotContainer() {
@@ -73,42 +73,42 @@ public class RobotContainer {
   private void configureBindings() {
     // Temporary controls for testing
     //TODO! Competition controls
-    // swerveDrive.setDefaultCommand(new TeleopDrive(swerveDrive, limelight,
-    //   // Invert X Axis - WPIlib is forward-positive, joystick is down-positive
-    //   axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
-    //   // Invert Y Axis - WPILib is left-positive, joystick is right-positive
-    //   axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
-    //   axisDeadband(driverController, Constants.Controllers.Taranis.ROTATE_AXIS, Constants.Controllers.Taranis.ROTATE_DEADBAND, false)
-    // ));
+    swerveDrive.setDefaultCommand(new TeleopDrive(swerveDrive, limelight,
+      // Invert X Axis - WPIlib is forward-positive, joystick is down-positive
+      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
+      // Invert Y Axis - WPILib is left-positive, joystick is right-positive
+      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
+      axisDeadband(driverController, Constants.Controllers.Taranis.ROTATE_AXIS, Constants.Controllers.Taranis.ROTATE_DEADBAND, false)
+    ));
 
-    // driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
-    // driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Turn90Degrees(swerveDrive));
-    // driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
-    //  axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
-    //  axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
-    // ));
+    driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Turn90Degrees(swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
+     axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
+     axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
+    ));
 
-    //TODO! switch intake only with intake note when feeder is available
+    // intake commands
     // driverController.button(
     //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
     //   .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
-    // driverController.button(
-    //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-    //   .whileTrue(new IntakeOnly(sysIntake));
-    //TODO! enable when shooter and feeder are ready
-    // driverController.button(
-    //   Constants.Controllers.Taranis.FIRE_WHEN_READY_BUTTON)
+
+    // shooter command
+    // codriverController.button(
+    //   Constants.Controllers.Guitar.STRUM_DOWN)
     //   .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
-    driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_AMP)
-                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
-    driverController.button(Constants.Controllers.Taranis.MOVE_ARM_TO_HOME)
-                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
-    codriverController.button(Constants.Controllers.Guitar.GREEN_FRET)
-                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
-    codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
-     .whileTrue(new DirectDriveArm(sysArm, 
-     () -> codriverController.getRawAxis(Constants.Controllers.Guitar.JOYSTICK_X),
-     () -> sysArm.getArmPosition()));
+    
+    // arm commands
+    // codriverController.button(Constants.Controllers.Guitar.RED_FRET)
+    //                     .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
+    // codriverController.button(Constants.Controllers.Guitar.GREEN_FRET)
+    //                     .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
+    // codriverController.button(Constants.Controllers.Guitar.BLUE_FRET)
+    //                     .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
+    // codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
+    //  .whileTrue(new DirectDriveArm(sysArm, 
+    //  () -> codriverController.getRawAxis(Constants.Controllers.Guitar.JOYSTICK_X),
+    //  () -> sysArm.getArmPosition()));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
