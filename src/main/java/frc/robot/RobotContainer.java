@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DirectDriveArm;
+import frc.robot.commands.GetVisionMeasurment;
 import frc.robot.commands.MoveArmToPosition;
 import frc.robot.commands.Pixy2TestCommand;
 import frc.classes.AutonChooser;
@@ -89,8 +90,9 @@ public class RobotContainer {
     ));
 
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).whileTrue(new ZeroGyro(swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ADD_VISION_MEASURMENT_BUTTON).whileTrue(new GetVisionMeasurment(swerveDrive, limelight));
     driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Pixy2TestCommand(pixy));
-    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_APRILTAG_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
+    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_SPEAKER_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
     ));
