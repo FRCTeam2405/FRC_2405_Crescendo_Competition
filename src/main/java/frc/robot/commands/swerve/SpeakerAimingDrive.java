@@ -44,6 +44,7 @@ public class SpeakerAimingDrive extends Command {
   Pose2d pose;
   private DoubleSupplier moveX, moveY, turnTheta;
   double lastUpdateTime;
+  Rotation2d desiredYaw;
 
   /** Drive command for aiming at the speaker while moving. */
   public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, DoubleSupplier vX, DoubleSupplier vY) {
@@ -131,12 +132,12 @@ public class SpeakerAimingDrive extends Command {
     double directDistance = Math.hypot(floorDistance, offsetZ);
 
     // calculate pitch and yaw from the shooter to the speaker
-    Rotation2d desiredYaw = new Rotation2d(offsetX, offsetY);
+    desiredYaw = new Rotation2d(offsetX, offsetY);
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees() % 360);
     SmartDashboard.putNumber("measuredPose", measuredPose.getRotation().getDegrees() % 180);
     
-    if (Math.abs(pose.getRotation().getDegrees() - desiredYaw.getDegrees()) > 1) {
+    if (Math.abs(pose.getRotation().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
     ChassisSpeeds chassisSpeeds = swerveDrive.inner.getSwerveController().getTargetSpeeds(
       correctedMoveX, correctedMoveY,
       desiredYaw.getRadians() % (Math.PI * 2),
@@ -157,7 +158,7 @@ public class SpeakerAimingDrive extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (DriverStation.isAutonomousEnabled()) {
+    if (DriverStation.isAutonomousEnabled() && Math.abs(pose.getRotation().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
       return true;
     } else {
       return false;
