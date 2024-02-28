@@ -161,7 +161,9 @@ public final class Constants {
 
             public static final int ROTATE_90_DEGREES_BUTTON = 5;
 
-            public static final int ROTATE_TO_APRILTAG_BUTTON = 4;
+            public static final int ROTATE_TO_SPEAKER_BUTTON = 4;
+
+            public static final int ADD_VISION_MEASURMENT_BUTTON = 8;
 
             public static final int INTAKE_NOTE_BUTTON = 1;
             public static final int FIRE_WHEN_READY_BUTTON = 2; //To be mapped to guitar

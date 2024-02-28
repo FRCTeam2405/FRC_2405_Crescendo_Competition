@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -19,9 +20,12 @@ public class GetVisionMeasurment extends Command {
   double timestamp;
 
   /** Creates a new GetVisionMeasurment. */
-  public GetVisionMeasurment(SwerveContainer swerveContainer) {
+  public GetVisionMeasurment(SwerveContainer swerve, Limelight limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
-    swerve = swerveContainer;
+    this.limelight = limelight;
+    this.swerve = swerve;
+
+    addRequirements(limelight, swerve);
 
   }
 
@@ -40,11 +44,13 @@ public class GetVisionMeasurment extends Command {
 
     // Vision measurement
     timestamp = Timer.getFPGATimestamp();
-    Pose2d measuredPose = limelight.getMeasuredPose();
-    if(limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1) {
-      swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp/**, visionMeasurmentStdDevs*/);
-      lastUpdateTime = timestamp;
-    }
+    if (timestamp - lastUpdateTime >= 1) {
+     Pose2d measuredPose = limelight.getMeasuredPose();
+     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
+       swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
+       lastUpdateTime = timestamp;
+     }
+   }
   }
 
   // Called once the command ends or is interrupted.
