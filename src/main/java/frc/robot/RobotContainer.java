@@ -50,6 +50,8 @@ public class RobotContainer {
   private CommandGenericHID driverController = new CommandGenericHID(Constants.Controllers.DRIVER_CONTROLLER_PORT);
   private GuitarController codriverController = new GuitarController(Constants.Controllers.CODRIVER_CONTROLLER_PORT);
 
+  private SendableChooser<Command> testAutonChooser = new SendableChooser<>();
+
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
@@ -127,6 +129,16 @@ public class RobotContainer {
 
   // Set up the autonomous routines
   private void configureAutonomous() {
+          // Set a default autonomous to prevent errors
+          testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
+
+          testAutonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
+          testAutonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
+          testAutonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
+          testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
+          testAutonChooser.addOption("Left Turn", new PathPlannerAuto("Left Turn"));
+          testAutonChooser.addOption("right turn", new PathPlannerAuto("rightTurn"));
+
     // Register named commands for pathplanner
     // This must be done before initializing autos
     NamedCommands.registerCommand("Turn90Degrees", new Turn90Degrees(swerveDrive));
@@ -134,7 +146,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
   }
 
-  // public Command getAutonomousCommand() {
-  //  return testAutonChooser.getSelected();
-  // }
+  public Command getAutonomousCommand() {
+   return testAutonChooser.getSelected();
+  }
 }
