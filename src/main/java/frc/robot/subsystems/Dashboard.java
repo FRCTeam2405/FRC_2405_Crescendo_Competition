@@ -168,15 +168,14 @@ public class Dashboard extends SubsystemBase {
 
   private void setDashboardAutonomous() {
       // Set a default autonomous to prevent errors
-    //TODO! Consider setting this to an autonomous that will still get us points
     testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
-
 
     testAutonChooser.addOption("Small Circle Test", new PathPlannerAuto("Small Circle Test Auto"));
     testAutonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
     testAutonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
     testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
     testAutonChooser.addOption("Left Turn", new PathPlannerAuto("Left Turn"));
+    testAutonChooser.addOption("right turn", new PathPlannerAuto("rightTurn"));
 
     startPoseChooser.addOption("blue1", "blue1");
     startPoseChooser.addOption("blue2", "blue2");
