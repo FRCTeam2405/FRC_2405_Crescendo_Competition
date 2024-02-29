@@ -19,10 +19,11 @@ public class PixyCam extends SubsystemBase {
   /** Creates a new PixyCam. */
   public PixyCam() {
     pixy = Pixy2.createInstance(LinkType.SPI);
+    this.initialize();
   }
 
   public void initialize() {
-    pixy.init();
+    pixy.init(4);
   }
 
   @Override

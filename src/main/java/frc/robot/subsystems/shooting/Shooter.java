@@ -71,6 +71,8 @@ public class Shooter implements Subsystem {
     motorBottomShooter.set(0);
   }
 
+  
+
   public double getShooterVelocity(int motorId) {
     switch(motorId){
       case Constants.Shooter.Motors.TOP_SHOOTER_PORTID:
