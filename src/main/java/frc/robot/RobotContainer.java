@@ -38,6 +38,7 @@ import frc.robot.commands.swerve.ZeroGyro;
 import frc.robot.controllers.GuitarController;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Dashboard;
+import frc.robot.subsystems.LEDLights;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 import frc.robot.subsystems.shooting.Feeder;
@@ -53,6 +54,7 @@ public class RobotContainer {
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
+  private LEDLights sysLighting = new LEDLights();
   // Below systems only on competition bot
   private Intake sysIntake = new Intake();
   //TODO! enable when shooter and feeder are ready
@@ -94,13 +96,21 @@ public class RobotContainer {
     ));
 
     // intake commands
-    driverController.button(
-      Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+    if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME + 10) {
+      driverController.button(
+        Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
+        .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+    }
+    else {
+      sysLighting.SetColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+      sysLighting.SetColorTwo(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+    }
 
     driverController.button(
       Constants.Controllers.Taranis.REVERSE_INTAKE_NOTE_BUTTON)
-      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard, () -> Constants.Intake.Motors.RIGHT_INTAKE_REVERSE_SPEED_MAX, () -> Constants.Feeder.Motors.REVERSE_FEEDER_INTAKING_SPEED));
+      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard, 
+      () -> Constants.Intake.Motors.RIGHT_INTAKE_REVERSE_SPEED_MAX, 
+      () -> Constants.Feeder.Motors.REVERSE_FEEDER_INTAKING_SPEED));
 
 
     // shooter command
@@ -108,7 +118,8 @@ public class RobotContainer {
        codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
         .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard,
-        () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED));
+        () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
+        () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED));
     }
     else {
       codriverController.pov(

@@ -249,6 +249,10 @@ public final class Constants {
             public static final double AQUA = 0.81;
             public static final double BLUE = 0.87;
         }
+
+        public static final class LED_ACTIONS {
+            public static final double INTAKE_INVALID = -0.11;
+        }
     }
 
     public static final class Dashboard {
