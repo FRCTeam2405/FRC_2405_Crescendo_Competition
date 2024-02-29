@@ -35,8 +35,8 @@ public class Arm extends SubsystemBase {
                             0, 
                             Constants.Arm.Encoder.ProfileZero.PROFILE_ID, 
                             false, 
-                            true, 
-                            true);
+                            false, 
+                            false);
 
     motorBreak = new NeutralOut();
     motorArmConfig = new TalonFXConfiguration();

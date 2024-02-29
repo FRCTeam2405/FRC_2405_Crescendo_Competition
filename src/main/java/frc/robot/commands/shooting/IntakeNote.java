@@ -48,6 +48,19 @@ public class IntakeNote extends Command {
     addRequirements(sysIntake, sysFeeder, sysDashboard);
   }
 
+  public IntakeNote(Intake sysIntake, Feeder sysFeeder, Dashboard sysDashboard, DoubleSupplier speedIntakeRight, DoubleSupplier speedFeeder) {
+
+    this.sysIntake = sysIntake;
+    this.sysFeeder = sysFeeder;
+    this.sysDashboard = sysDashboard;
+    this.speedIntakeRight = speedIntakeRight;
+    this.speedFeederTop = speedFeeder;
+    this.speedFeederBottom = speedFeeder;
+
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(sysIntake, sysFeeder, sysDashboard);
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}

@@ -40,6 +40,7 @@ public final class Constants {
             public static final boolean RIGHT_INTAKE_INVERTED = true;
 
             public static final double RIGHT_INTAKE_SPEED_MAX = 0.70;
+            public static final double RIGHT_INTAKE_REVERSE_SPEED_MAX = -0.70;
         }
     }
 
@@ -61,8 +62,11 @@ public final class Constants {
             public static final double TOP_SHOOTER_VELOCITY_MAX = 6500;
             public static final double BOTTOM_SHOOTER_VELOCITY_MAX = 6500;
 
-            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 5000;
+            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 5000; 
             public static final double BOTTOM_SHOOTER_VELOCITY_DEFAULT = 5000;
+
+            public static final double TOP_SHOOTER_VELOCITY_AMP = 1000; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_AMP = 1000;
         }
 
         public static final class Encoder {
@@ -95,8 +99,11 @@ public final class Constants {
             public static final double TOP_FEEDER_SHOOTING_SPEED = 0.75;
             public static final double BOTTOM_FEEDER_SHOOTING_SPEED = 0.75;
 
-            public static final double TOP_FEEDER_INTAKING_SPEED = 0.75;
-            public static final double BOTTOM_FEEDER_INTAKING_SPEED = 0.75;
+            public static final double TOP_FEEDER_INTAKING_SPEED = 0.25;
+            public static final double BOTTOM_FEEDER_INTAKING_SPEED = 0.25;
+
+            public static final double REVERSE_FEEDER_INTAKING_SPEED = -0.25;
+            ;
         }
     }
 
@@ -132,7 +139,7 @@ public final class Constants {
         public static final class SetPoints {
 
             public static final double HOME = 0.0;
-            public static final double AMP = 90.0; // 150, original setting
+            public static final double AMP = 100.0; // 150, original setting
             public static final double OVERRIDE = 50;
         }
     }
@@ -171,6 +178,7 @@ public final class Constants {
             public static final int ADD_VISION_MEASURMENT_BUTTON = 8;
 
             public static final int INTAKE_NOTE_BUTTON = 1;
+            public static final int REVERSE_INTAKE_NOTE_BUTTON = 2;
         }
 
         public static final class Guitar {
@@ -196,7 +204,7 @@ public final class Constants {
 
             // Angles for the POV system on the controller (strum bar)
             public static final int STRUM_UP = 0;
-            public static final int STRUM_DOWN = 90;
+            public static final int STRUM_DOWN = 180;
             public static final int STRUM_NEUTRAL = -1;
         }
 
