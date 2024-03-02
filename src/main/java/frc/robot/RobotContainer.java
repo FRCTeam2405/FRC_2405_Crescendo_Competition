@@ -38,6 +38,7 @@ import frc.robot.commands.swerve.ZeroGyro;
 import frc.robot.controllers.GuitarController;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Dashboard;
+import frc.robot.subsystems.LEDLights;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 import frc.robot.subsystems.shooting.Feeder;
@@ -55,13 +56,14 @@ public class RobotContainer {
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
+  private LEDLights sysLighting = new LEDLights();
   // Below systems only on competition bot
-  // private Intake sysIntake = new Intake();
+  private Intake sysIntake = new Intake();
   //TODO! enable when shooter and feeder are ready
-  // private Feeder sysFeeder = new Feeder();
-  // private Shooter sysShooter = new Shooter();
-  // private Arm sysArm = new Arm();
-  // private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
+  private Feeder sysFeeder = new Feeder();
+  private Shooter sysShooter = new Shooter();
+  private Arm sysArm = new Arm();
+  private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
 
   // Initialization code for our robot
   public RobotContainer() {
@@ -96,26 +98,48 @@ public class RobotContainer {
     ));
 
     // intake commands
-    // driverController.button(
-    //   Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-    //   .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+    if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME + 10) {
+      driverController.button(
+        Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
+        .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+    }
+    else {
+      sysLighting.SetColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+      sysLighting.SetColorTwo(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+    }
+
+    driverController.button(
+      Constants.Controllers.Taranis.REVERSE_INTAKE_NOTE_BUTTON)
+      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard, 
+      () -> Constants.Intake.Motors.RIGHT_INTAKE_REVERSE_SPEED_MAX, 
+      () -> Constants.Feeder.Motors.REVERSE_FEEDER_INTAKING_SPEED));
+
 
     // shooter command
-    // codriverController.button(
-    //   Constants.Controllers.Guitar.STRUM_DOWN)
-    //   .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
+    if (sysArm.getArmPosition() >= Constants.Arm.SetPoints.AMP - 10) {
+       codriverController.pov(
+        Constants.Controllers.Guitar.STRUM_DOWN)
+        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard,
+        () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
+        () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED));
+    }
+    else {
+      codriverController.pov(
+        Constants.Controllers.Guitar.STRUM_DOWN)
+        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
+    }
     
     // arm commands
-    // codriverController.button(Constants.Controllers.Guitar.RED_FRET)
-    //                     .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
-    // codriverController.button(Constants.Controllers.Guitar.GREEN_FRET)
-    //                     .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
-    // codriverController.button(Constants.Controllers.Guitar.BLUE_FRET)
-    //                     .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
-    // codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
-    //  .whileTrue(new DirectDriveArm(sysArm, 
-    //  () -> codriverController.getRawAxis(Constants.Controllers.Guitar.JOYSTICK_X),
-    //  () -> sysArm.getArmPosition()));
+    codriverController.button(Constants.Controllers.Guitar.RED_FRET)
+                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
+    codriverController.button(Constants.Controllers.Guitar.GREEN_FRET)
+                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
+    codriverController.button(Constants.Controllers.Guitar.BLUE_FRET)
+                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
+    codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
+     .whileTrue(new DirectDriveArm(sysArm, 
+     () -> codriverController.getRawAxis(Constants.Controllers.Guitar.JOYSTICK_X),
+     () -> sysArm.getArmPosition()));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
