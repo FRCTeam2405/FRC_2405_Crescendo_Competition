@@ -5,6 +5,7 @@
 package frc.robot.commands.swerve;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveContainer;
@@ -26,8 +27,6 @@ public class TurnToBlueSide extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //TODO enter correct rotation to be pointed directly right, to the blue side
-    desiredPose = 1;
     swerveDrive.inner.setHeadingCorrection(true);
   }
 
@@ -38,7 +37,7 @@ public class TurnToBlueSide extends Command {
     // Try ChassiSpeeds discretize
     ChassisSpeeds desiredSpeeds = swerveDrive.inner.swerveController.getRawTargetSpeeds(
       0, 0,
-      desiredPose.getRotation().getRadians(),
+      -Math.PI / 4,
       swerveDrive.inner.getPose().getRotation().getRadians()
     );
     swerveDrive.inner.drive(desiredSpeeds);
