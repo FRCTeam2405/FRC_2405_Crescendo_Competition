@@ -12,6 +12,7 @@ public final class Constants {
         /** Swerve drive max speed, in meters per second. */
         public static final double MAX_SPEED = 0.5;
         /** Swerve drive max angular speed, in radians per second. */
+        // Max speed: ~1.5 rotations per second
         public static final double MAX_ANGULAR_SPEED = 0.05 * (2 * Math.PI);
 
         //TODO! Configure the path follower
@@ -22,10 +23,10 @@ public final class Constants {
                 new PIDConstants(4.5, 0, 0.05),
                 new PIDConstants(3.14, 0, 0.1),
                 */
-                new PIDConstants(1, 0, 0.01),
-                new PIDConstants(1, 0, 0.01),
-                MAX_SPEED,
-                14.778574017813,
+                new PIDConstants(4.5, 0, 0.05),
+                new PIDConstants(5.5, 0, 0.01),
+                4.5,
+                0.4,
                 new ReplanningConfig(false, true)
             );
     }
@@ -39,6 +40,7 @@ public final class Constants {
             public static final boolean RIGHT_INTAKE_INVERTED = true;
 
             public static final double RIGHT_INTAKE_SPEED_MAX = 0.70;
+            public static final double RIGHT_INTAKE_REVERSE_SPEED_MAX = -0.70;
         }
     }
 
@@ -60,8 +62,11 @@ public final class Constants {
             public static final double TOP_SHOOTER_VELOCITY_MAX = 6500;
             public static final double BOTTOM_SHOOTER_VELOCITY_MAX = 6500;
 
-            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 5000;
+            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 5000; 
             public static final double BOTTOM_SHOOTER_VELOCITY_DEFAULT = 5000;
+
+            public static final double TOP_SHOOTER_VELOCITY_AMP = 1000; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_AMP = 1000;
         }
 
         public static final class Encoder {
@@ -91,14 +96,20 @@ public final class Constants {
             public static final boolean TOP_FEEDER_INVERTED = true;
             public static final boolean BOTTOM_FEEDER_INVERTED = true;
 
-            public static final double TOP_FEEDER_SPEED_MAX = 0.75;
-            public static final double BOTTOM_FEEDER_SPEED_MAX = 0.75;
+            public static final double TOP_FEEDER_SHOOTING_SPEED = 0.75;
+            public static final double BOTTOM_FEEDER_SHOOTING_SPEED = 0.75;
+
+            public static final double TOP_FEEDER_INTAKING_SPEED = 0.25;
+            public static final double BOTTOM_FEEDER_INTAKING_SPEED = 0.25;
+
+            public static final double REVERSE_FEEDER_INTAKING_SPEED = -0.25;
+            ;
         }
     }
 
     public static final class Arm {
 
-        public static final double DIRECT_DRIVE_MOD = 10.0;
+        public static final double DIRECT_DRIVE_MOD = 20.0;
 
         public static final class Motors {
             public static final int ARM_PORTID = 40;
@@ -114,8 +125,13 @@ public final class Constants {
 
             public static final class ProfileZero {
 
-                public static final int PROFILE_ID = 0;
-                public static final double GAIN_P = 0.005;
+                public static final int PROFILE_ID = 0; // Volts
+                public static final double GAIN_P = 2.4;
+                public static final double GAIN_I = 0;
+                public static final double GAIN_D = 0.1;
+                public static final double GAIN_FF_ACCELERATION = 0;
+                public static final double PEAK_FORWARD_VOLTAGE = 8;
+                public static final double PEAK_REVERSE_VOLTAGE = -8;
 
             }
         }
@@ -123,7 +139,7 @@ public final class Constants {
         public static final class SetPoints {
 
             public static final double HOME = 0.0;
-            public static final double AMP = 150.0;
+            public static final double AMP = 100.0; // 150, original setting
             public static final double OVERRIDE = 50;
         }
     }
@@ -157,24 +173,24 @@ public final class Constants {
 
             public static final int ROTATE_90_DEGREES_BUTTON = 5;
 
-            public static final int ROTATE_TO_APRILTAG_BUTTON = 4;
+            public static final int ROTATE_TO_SPEAKER_BUTTON = 4;
+
+            public static final int ADD_VISION_MEASURMENT_BUTTON = 8;
 
             public static final int INTAKE_NOTE_BUTTON = 1;
-            public static final int FIRE_WHEN_READY_BUTTON = 2; //To be mapped to guitar
-            public static final int MOVE_ARM_TO_AMP = 3;
-            public static final int MOVE_ARM_TO_HOME = 6;
+            public static final int REVERSE_INTAKE_NOTE_BUTTON = 2;
         }
 
         public static final class Guitar {
             // Port IDs for the buttons on the controller
-            public static final int GREEN_FRET = 3;
-            public static final int RED_FRET = 2;
-            public static final int YELLOW_FRET = 1;
-            public static final int BLUE_FRET = 0;
-            public static final int ORANGE_FRET = 6;
+            public static final int GREEN_FRET = 4;
+            public static final int RED_FRET = 3;
+            public static final int YELLOW_FRET = 2;
+            public static final int BLUE_FRET = 1;
+            public static final int ORANGE_FRET = 7;
 
-            public static final int START_BUTTON = 9;
-            public static final int SELECT_BUTTON = 8;
+            public static final int OPTION_A_BUTTON = 10;
+            public static final int OPTION_B_BUTTON = 9;
 
             // Port IDs for the axes on the controller (joystick)
             public static final int JOYSTICK_X = 0;
@@ -188,7 +204,7 @@ public final class Constants {
 
             // Angles for the POV system on the controller (strum bar)
             public static final int STRUM_UP = 0;
-            public static final int STRUM_DOWN = 90;
+            public static final int STRUM_DOWN = 180;
             public static final int STRUM_NEUTRAL = -1;
         }
 
@@ -233,6 +249,10 @@ public final class Constants {
             public static final double AQUA = 0.81;
             public static final double BLUE = 0.87;
         }
+
+        public static final class LED_ACTIONS {
+            public static final double INTAKE_INVALID = -0.11;
+        }
     }
 
     public static final class Dashboard {
@@ -250,13 +270,31 @@ public final class Constants {
                 public static final String TOP_SHOOTER_VELOCITY_NAME = "Top Shooter Velocity";
                 public static final String BOTTOM_SHOOTER_VELOCITY_NAME = "Bottom Shooter Velocity";
 
-                public static final String TOP_FEEDER_OUTPUT_SETTING_NAME = "Top Feeder Output Setting";
-                public static final String BOTTOM_FEEDER_OUTPUT_SETTING_NAME = "Bottom Feeder Output Setting";
+                public static final String TOP_FEEDER_SHOOTING_OUTPUT_SETTING_NAME = "Top Feeder Shooting Output Setting";
+                public static final String BOTTOM_FEEDER_SHOOTING_OUTPUT_SETTING_NAME = "Bottom Feeder Shooting Output Setting";
                 
+                public static final String TOP_FEEDER_INTAKING_OUTPUT_SETTING_NAME = "Top Feeder Intaking Output Setting";
+                public static final String BOTTOM_FEEDER_INTAKING_OUTPUT_SETTING_NAME = "Bottom Feeder Intaking Output Setting";
+                
+                public static final String FEEDER_NOTE_LIMIT_NAME = "Feeder Note Limit";
+
                 public static final String RIGHT_INTAKE_OUTPUT_SETTING_NAME = "Right Intake Output Setting";
                 
                 public static final String ARM_VELOCITY_SETTING_NAME = "Arm Velocity Setting";
+                public static final String ARM_POSITION_SETTING_NAME = "Arm Position Setting";
                 public static final String ARM_POSITION_NAME = "Arm Position";
+
+                public static final String PHANTOM_NAME = "Dont look here";
+            }
+        }
+
+        public static final class MotorControl {
+
+            public static final String TAB_NAME = "Motor Control";
+
+            public static final class Widgets {
+
+                
             }
         }
     }

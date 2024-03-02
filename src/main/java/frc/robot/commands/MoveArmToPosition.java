@@ -8,20 +8,33 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Dashboard;
 
 public class MoveArmToPosition extends Command {
 
   private final Arm sysArm;
+  private final Dashboard sysDashboard;
   private final DoubleSupplier positionArm;
 
   /** Creates a new MoveArmToPosition. */
-  public MoveArmToPosition(Arm sysArm, DoubleSupplier positionArm) {
+  public MoveArmToPosition(Arm sysArm, Dashboard sysDashboard, DoubleSupplier positionArm) {
 
     this.sysArm = sysArm;
+    this.sysDashboard = sysDashboard;
     this.positionArm = positionArm;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysArm);
+    addRequirements(sysArm, sysDashboard);
+  }
+
+    public MoveArmToPosition(Arm sysArm, Dashboard sysDashboard) {
+
+    this.sysArm = sysArm;
+    this.sysDashboard = sysDashboard;
+    this.positionArm = () -> sysDashboard.getArmPositionSettingDashboard();
+
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(sysArm, sysDashboard);
   }
 
   // Called when the command is initially scheduled.
@@ -32,12 +45,15 @@ public class MoveArmToPosition extends Command {
   @Override
   public void execute() {
 
-    sysArm.MoveArmToPosition(positionArm.getAsDouble());
+    sysArm.moveArmToPosition(positionArm.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+    sysArm.setMotorControlBreak();
+  }
 
   // Returns true when the command should end.
   @Override

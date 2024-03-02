@@ -14,12 +14,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Circle Test Path"
+            "pathName": "Left Turn"
           }
         }
       ]
     }
   },
-  "folder": "Test Autos",
+  "folder": "Old Test Autos",
   "choreoAuto": false
 }

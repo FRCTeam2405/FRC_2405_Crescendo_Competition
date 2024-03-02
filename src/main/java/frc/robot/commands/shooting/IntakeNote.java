@@ -28,8 +28,8 @@ public class IntakeNote extends Command {
     this.sysFeeder = sysFeeder;
     this.sysDashboard = sysDashboard;
     this.speedIntakeRight = () -> sysDashboard.getRightIntakeSpeedDashboard();
-    this.speedFeederTop = () -> sysDashboard.getTopFeederSpeedDashboard();
-    this.speedFeederBottom = () -> sysDashboard.getBottomFeederSpeedDashboard();
+    this.speedFeederTop = () -> sysDashboard.getTopFeederIntakingSpeedDashboard();
+    this.speedFeederBottom = () -> sysDashboard.getBottomFeederIntakingSpeedDashboard();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysIntake, sysFeeder, sysDashboard);
@@ -48,6 +48,19 @@ public class IntakeNote extends Command {
     addRequirements(sysIntake, sysFeeder, sysDashboard);
   }
 
+  public IntakeNote(Intake sysIntake, Feeder sysFeeder, Dashboard sysDashboard, DoubleSupplier speedIntakeRight, DoubleSupplier speedFeeder) {
+
+    this.sysIntake = sysIntake;
+    this.sysFeeder = sysFeeder;
+    this.sysDashboard = sysDashboard;
+    this.speedIntakeRight = speedIntakeRight;
+    this.speedFeederTop = speedFeeder;
+    this.speedFeederBottom = speedFeeder;
+
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(sysIntake, sysFeeder, sysDashboard);
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -55,9 +68,13 @@ public class IntakeNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (sysFeeder.getNoteLimit()) {
+    if (!sysFeeder.getNoteLimit()) {
       sysIntake.runIntake(speedIntakeRight.getAsDouble());
       sysFeeder.runFeeder(speedFeederTop.getAsDouble(), speedFeederBottom.getAsDouble());
+    }
+    else {
+      sysIntake.stopIntake();
+      sysFeeder.stopFeeder();
     }
     
   }
