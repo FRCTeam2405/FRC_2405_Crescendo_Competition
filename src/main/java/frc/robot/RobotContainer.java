@@ -56,10 +56,10 @@ public class RobotContainer {
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
+
+  // Comp bot only
   private LEDLights sysLighting = new LEDLights();
-  // Below systems only on competition bot
   private Intake sysIntake = new Intake();
-  //TODO! enable when shooter and feeder are ready
   private Feeder sysFeeder = new Feeder();
   private Shooter sysShooter = new Shooter();
   private Arm sysArm = new Arm();
@@ -96,6 +96,9 @@ public class RobotContainer {
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
     ));
+
+
+    // Comp bot only
 
     // intake commands
     driverController.button(
@@ -161,8 +164,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("Turn90Degrees", new Turn90Degrees(swerveDrive));
     NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurment(swerveDrive, limelight));
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
-    // NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
-    // NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+    
+    // Comp bot only
+    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
+    NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysDashboard));
 
     // Set a default autonomous to prevent errors
     testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
