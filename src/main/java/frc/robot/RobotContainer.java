@@ -98,15 +98,17 @@ public class RobotContainer {
     ));
 
     // intake commands
-    if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME + 10) {
-      driverController.button(
+    driverController.button(
         Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
         .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
-    }
-    else {
-      sysLighting.SetColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
-      sysLighting.SetColorTwo(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
-    }
+    // figure out later
+    // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME - 10) {
+      
+    // }
+    // else {
+    //   sysLighting.SetColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+    //   sysLighting.SetColorTwo(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+    // }
 
     driverController.button(
       Constants.Controllers.Taranis.REVERSE_INTAKE_NOTE_BUTTON)
@@ -116,7 +118,7 @@ public class RobotContainer {
 
 
     // shooter command
-    if (sysArm.getArmPosition() >= Constants.Arm.SetPoints.AMP - 10) {
+    if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.AMP + 10) {
        codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
         .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard,
