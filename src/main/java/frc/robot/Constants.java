@@ -23,7 +23,7 @@ public final class Constants {
                 new PIDConstants(4.5, 0, 0.05),
                 new PIDConstants(3.14, 0, 0.1),
                 */
-                new PIDConstants(4.5, 0, 0.05),
+                new PIDConstants(4.5, 0, 0.06),
                 new PIDConstants(5.5, 0, 0.01),
                 4.5,
                 0.4,
