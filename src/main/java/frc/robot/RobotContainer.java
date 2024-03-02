@@ -51,7 +51,7 @@ public class RobotContainer {
   private CommandGenericHID driverController = new CommandGenericHID(Constants.Controllers.DRIVER_CONTROLLER_PORT);
   private GuitarController codriverController = new GuitarController(Constants.Controllers.CODRIVER_CONTROLLER_PORT);
 
-  private SendableChooser<Command> testAutonChooser = new SendableChooser<>();
+  private SendableChooser<Command> testAutonChooser = new SendableChooser<>(), autonChooser = new SendableChooser<>();
 
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
@@ -183,6 +183,20 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-   return testAutonChooser.getSelected();
+   if (autonChooser.getSelected() != null && testAutonChooser.getSelected() != null) {
+    Commands.print("2 autonomous commands selected");
+    return null;
+   } else {
+    if (testAutonChooser.getSelected() != null) {
+     return testAutonChooser.getSelected();
+    } else {
+     if (autonChooser.getSelected() != null) {
+      return autonChooser.getSelected();
+     } else {
+      Commands.print("No autonomous commands selected");
+      return null;
+     }
+    }
+   }
   }
 }
