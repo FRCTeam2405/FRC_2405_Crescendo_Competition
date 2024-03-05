@@ -29,7 +29,13 @@ public class SpeakerAimingDrive extends Command {
   double lastUpdateTime;
   Rotation2d desiredYaw;
 
-  /** Drive command for aiming at the speaker while moving. */
+  /** Drive command for aiming at the speaker while moving. 
+   * measuredPose = pose measured from Limelight
+   * currentPose = the pose the robot believes it is at
+   * 
+   * moveX = main driver x axis joystick inputs
+   * moveY = main driver y axis joystick inputs
+  */
   public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, DoubleSupplier vX, DoubleSupplier vY) {
     this.limelight = limelight;
     this.swerveDrive = swerveDrive;
@@ -46,14 +52,17 @@ public class SpeakerAimingDrive extends Command {
 
   @Override
   public void initialize() {
+    // allows the robot to use rotate to pose
     swerveDrive.setHeadingCorrection(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Sets time measurement recieved
     double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
 
+    // Makes joystick inputs useable for command
     double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     
@@ -70,17 +79,16 @@ public class SpeakerAimingDrive extends Command {
 
     swerveDrive.updatePose();
 
-    Optional<Alliance> alliance = DriverStation.getAlliance();
-
-    // Can't aim towards our shooter if we don't know what team we're on.
-    if(alliance.isEmpty()) {
-      return;
-    }
-
     // Relative positions from the robot to the speaker.
     double offsetX;
     double offsetY;
     double offsetZ;
+
+    // Can't aim towards our shooter if we don't know what team we're on.
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+    if(alliance.isEmpty()) {
+      return;
+    }
 
     // Calculate XY offset between robot and speaker,
     // convert to angle, then convert to field-centric angle
@@ -114,7 +122,7 @@ public class SpeakerAimingDrive extends Command {
     swerveDrive.setHeadingCorrection(false);
   }
 
-  // Returns true when the command should end.
+  // Returns true when the command should end during autonomous.
   @Override
   public boolean isFinished() {
     if (DriverStation.isAutonomousEnabled() && Math.abs(swerveDrive.getYaw().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
