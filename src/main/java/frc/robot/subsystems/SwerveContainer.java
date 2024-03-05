@@ -104,16 +104,38 @@ public class SwerveContainer implements Subsystem {
     inner.setMotorIdleMode(brakeEnabled);
   }
 
-  /** Drive the robot using user input.
+  /** Drive the robot using relative rotation (turning left and right).
    *  Do not use for autonomous driving.
    * 
    * @param moveX X velocity in meters per second
    * @param moveY Y velocity in meters per second
    * @param turnTheta Angular velocity in radians per second
    */
-  public void driveTeleop(double moveX, double moveY, double turnTheta) {
+  public void driveRelative(double moveX, double moveY, double turnTheta) {
     ChassisSpeeds desiredSpeeds = inner.swerveController.getRawTargetSpeeds(moveX, moveY, turnTheta);
     inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
+  }
+
+  /** Drive the robot using absolute rotation (point towards a direction).
+   * Use for assisted or autonomous driving.
+   * 
+   * @param moveX X velocity in meters per second
+   * @param moveY Y velocity in meters per second
+   * @param rotation2d Desired rotation
+   */
+  public void driveAbsolute(double moveX, double moveY, Rotation2d rotation2d) {
+    ChassisSpeeds desiredSpeeds = inner.swerveController.getRawTargetSpeeds(
+      moveX,
+      moveY,
+      rotation2d.getRadians(),
+      getYaw().getRadians()
+    );
+    inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
+  }
+
+  //TODO! Document
+  public void setHeadingCorrection(boolean correctionEnabled) {
+    inner.setHeadingCorrection(correctionEnabled);
   }
 
   /** Update the pose estimator without a vision reading. */
