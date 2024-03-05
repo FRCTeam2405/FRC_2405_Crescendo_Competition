@@ -10,13 +10,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.LEDLights;
 
 public class TestLEDLightsTwo extends Command {
-  /** Creates a new TestLEDLights. */
-  
+
   final LEDLights sysLEDLights;
   final double LEDSetting;
   
+  /** Test command for the second LED strip on the robot. */
   public TestLEDLightsTwo(LEDLights insysLEDLights, double inLEDSetting) {
-    // Use addRequirements() here to declare subsystem dependencies.
     sysLEDLights = insysLEDLights;
     LEDSetting = inLEDSetting;
   
@@ -31,6 +30,7 @@ public class TestLEDLightsTwo extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Set the LED to the setting on the dashboard.
     sysLEDLights.LEDLightsTwo.set(SmartDashboard.getNumber("LEDSetTwo", Constants.LEDs.LED_COLORS.LED_SETTING_DEFAULT));
   }
 
