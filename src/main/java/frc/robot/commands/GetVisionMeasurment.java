@@ -47,7 +47,7 @@ public class GetVisionMeasurment extends Command {
     if (timestamp - lastUpdateTime >= 1) {
      Pose2d measuredPose = limelight.getMeasuredPose();
      if(limelight.hasTarget() && limelight.tagCount() >= 2) {
-       swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
+       swerve.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
        lastUpdateTime = timestamp;
      }
    }
