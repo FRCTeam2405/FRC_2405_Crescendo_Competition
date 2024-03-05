@@ -71,7 +71,7 @@ public class TeleopDrive extends Command {
       correctedMoveY *= -1;
     }
 
-    swerve.teleopDrive(correctedMoveX, correctedMoveY, correctedTurnTheta);
+    swerve.driveTeleop(correctedMoveX, correctedMoveY, correctedTurnTheta);
 
     swerve.updatePose();
     }

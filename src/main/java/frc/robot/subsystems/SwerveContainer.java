@@ -111,7 +111,7 @@ public class SwerveContainer implements Subsystem {
    * @param moveY Y velocity in meters per second
    * @param turnTheta Angular velocity in radians per second
    */
-  public void teleopDrive(double moveX, double moveY, double turnTheta) {
+  public void driveTeleop(double moveX, double moveY, double turnTheta) {
     ChassisSpeeds desiredSpeeds = inner.swerveController.getRawTargetSpeeds(moveX, moveY, turnTheta);
     inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
   }
