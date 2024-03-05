@@ -27,8 +27,9 @@ import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class SwerveContainer implements Subsystem {
 
-  public SwerveDrive inner;
+  private SwerveDrive inner;
 
+  //TODO! put these elsewhere
   public static int robotTeamNumber = HALUtil.getTeamNumber();
   public static Alliance allianceColor;
 
@@ -85,9 +86,13 @@ public class SwerveContainer implements Subsystem {
   // Pass-through functions
   // These just pass the parameters and returns
   // to the inner swerve drive class
+
+  // Getters
   public Pose2d getPose() { return inner.getPose(); }
+  public ChassisSpeeds getRobotVelocity() { return inner.getRobotVelocity(); }
+
+  // Setters or Pass-through Actions
   public void resetOdometry(Pose2d pose) { inner.resetOdometry(pose); }
   public void zeroGyro() { inner.zeroGyro(); }
-  public ChassisSpeeds getRobotVelocity() { return inner.getRobotVelocity(); }
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) { inner.setChassisSpeeds(chassisSpeeds); }
 }
