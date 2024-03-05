@@ -7,22 +7,12 @@ package frc.robot.commands.swerve;
 import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
-import swervelib.SwerveController;
 import swervelib.imu.SwerveIMU;
 
 public class TeleopDrive extends Command {
@@ -53,8 +43,7 @@ public class TeleopDrive extends Command {
   @Override
   public void initialize() {
     // Set the motors to coast
-    swerve.inner.setMotorIdleMode(false);
-
+    swerve.setMotorBrake(false);
     alliance = DriverStation.getAlliance();
   }
 
@@ -69,17 +58,8 @@ public class TeleopDrive extends Command {
       }
     }
 
-    // Post the pose to dashboard
-    Pose2d pose = swerve.getPose();
-
-    imu = swerve.inner.getGyro();
-    rotation3d = imu.getRawRotation3d();
-
-    SmartDashboard.putNumber("poseX", pose.getX());
-    SmartDashboard.putNumber("poseY", pose.getY());
-    SmartDashboard.putNumber("poseYaw", pose.getRotation().getDegrees());
-
     // Cube input of XY movement, multiply by max speed
+    //TODO! Drivers don't like this but don't like linear either YwY
     double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedTurnTheta = turnTheta.getAsDouble() * Constants.Swerve.MAX_ANGULAR_SPEED;
@@ -91,10 +71,9 @@ public class TeleopDrive extends Command {
       correctedMoveY *= -1;
     }
 
-    ChassisSpeeds desiredSpeeds = swerve.inner.swerveController.getRawTargetSpeeds(correctedMoveX, correctedMoveY, correctedTurnTheta);
-    swerve.inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
+    swerve.teleopDrive(correctedMoveX, correctedMoveY, correctedTurnTheta);
 
-    swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
+    swerve.updatePose();
     }
 
   // Called once the command ends or is interrupted.

@@ -13,6 +13,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.hal.HALUtil;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -20,6 +21,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
@@ -90,9 +92,40 @@ public class SwerveContainer implements Subsystem {
   // Getters
   public Pose2d getPose() { return inner.getPose(); }
   public ChassisSpeeds getRobotVelocity() { return inner.getRobotVelocity(); }
+  public Rotation2d getYaw() { return inner.getYaw(); }
 
-  // Setters or Pass-through Actions
-  public void resetOdometry(Pose2d pose) { inner.resetOdometry(pose); }
-  public void zeroGyro() { inner.zeroGyro(); }
+  // Setters
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) { inner.setChassisSpeeds(chassisSpeeds); }
+
+  /** Sets whether the driver motors will brake.
+   * Braking causes stress on the motors, but
+   * prevents slippage. */
+  public void setMotorBrake(boolean brakeEnabled) {
+    inner.setMotorIdleMode(brakeEnabled);
+  }
+
+  /** Drive the robot using user input.
+   *  Do not use for autonomous driving.
+   * 
+   * @param moveX X velocity in meters per second
+   * @param moveY Y velocity in meters per second
+   * @param turnTheta Angular velocity in radians per second
+   */
+  public void teleopDrive(double moveX, double moveY, double turnTheta) {
+    ChassisSpeeds desiredSpeeds = inner.swerveController.getRawTargetSpeeds(moveX, moveY, turnTheta);
+    inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
+  }
+
+  /** Update the pose estimator without a vision reading. */
+  public void updatePose() {
+    inner.swerveDrivePoseEstimator.update(inner.getYaw(), inner.getModulePositions());
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    inner.resetOdometry(pose);
+  }
+
+  public void zeroGyro() {
+    inner.zeroGyro();
+  }
 }
