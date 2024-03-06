@@ -22,18 +22,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DirectDriveArm;
-import frc.robot.commands.GetVisionMeasurment;
+import frc.robot.commands.GetVisionMeasurement;
 import frc.robot.commands.MoveArmToPosition;
 import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
 import frc.robot.commands.shooting.IntakeOnly;
-import frc.robot.commands.swerve.RotateToApriltag;
 import frc.robot.commands.swerve.SpeakerAimingDrive;
 import frc.robot.commands.swerve.TeleopDrive;
-import frc.robot.commands.swerve.Turn90Degrees;
 import frc.robot.commands.swerve.ZeroGyro;
 import frc.robot.controllers.GuitarController;
 import frc.robot.subsystems.Arm;
@@ -47,7 +44,6 @@ import frc.robot.subsystems.shooting.Shooter;
 
 public class RobotContainer {
   // Initialize drive-team controllers
-  //TODO! CommandGenericHID may not be optimal. Decide whether we need to make a helper class or other tool.
   private CommandGenericHID driverController = new CommandGenericHID(Constants.Controllers.DRIVER_CONTROLLER_PORT);
   private GuitarController codriverController = new GuitarController(Constants.Controllers.CODRIVER_CONTROLLER_PORT);
 
@@ -90,8 +86,7 @@ public class RobotContainer {
     ));
 
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).whileTrue(new ZeroGyro(swerveDrive));
-    driverController.button(Constants.Controllers.Taranis.ADD_VISION_MEASURMENT_BUTTON).whileTrue(new GetVisionMeasurment(swerveDrive, limelight));
-    driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Turn90Degrees(swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ADD_VISION_MEASURMENT_BUTTON).whileTrue(new GetVisionMeasurement(swerveDrive, limelight));
     driverController.button(Constants.Controllers.Taranis.ROTATE_TO_SPEAKER_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
@@ -161,8 +156,7 @@ public class RobotContainer {
   private void configureAutonomous() {
     // Register named commands for pathplanner
     // This must be done before initializing autos
-    NamedCommands.registerCommand("Turn90Degrees", new Turn90Degrees(swerveDrive));
-    NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurment(swerveDrive, limelight));
+    NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive, limelight));
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
     
     // Comp bot only

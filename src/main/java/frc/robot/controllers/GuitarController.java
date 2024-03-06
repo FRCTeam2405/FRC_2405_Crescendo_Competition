@@ -44,8 +44,7 @@ public class GuitarController extends CommandGenericHID {
     /** @return The current y-value of the guitar joystick */
     public double getJoystickY() { return getRawAxis(Constants.Controllers.Guitar.JOYSTICK_Y); }
 
-
-    //TODO! figure out how to return the strum output in a useful manner
+    
     /** @return A Trigger representing the strum bar pushed up. */
     public Trigger strumUp() { return pov(Constants.Controllers.Guitar.STRUM_UP); }
 

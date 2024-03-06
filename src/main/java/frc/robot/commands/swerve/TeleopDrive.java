@@ -7,22 +7,12 @@ package frc.robot.commands.swerve;
 import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
-import swervelib.SwerveController;
 import swervelib.imu.SwerveIMU;
 
 public class TeleopDrive extends Command {
@@ -53,48 +43,29 @@ public class TeleopDrive extends Command {
   @Override
   public void initialize() {
     // Set the motors to coast
-    swerve.inner.setMotorIdleMode(false);
-
+    swerve.setMotorBrake(false);
     alliance = DriverStation.getAlliance();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Try to get alliance if unavailable
-    if(alliance.isEmpty()) {
-      alliance = DriverStation.getAlliance();
-      if(alliance.isEmpty()) {
-        return;
-      }
-    }
-
-    // Post the pose to dashboard
-    Pose2d pose = swerve.getPose();
-
-    imu = swerve.inner.getGyro();
-    rotation3d = imu.getRawRotation3d();
-
-    SmartDashboard.putNumber("poseX", pose.getX());
-    SmartDashboard.putNumber("poseY", pose.getY());
-    SmartDashboard.putNumber("poseYaw", pose.getRotation().getDegrees());
-
     // Cube input of XY movement, multiply by max speed
-    double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
-    double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
+    double correctedMoveX = moveX.getAsDouble() * Constants.Swerve.MAX_SPEED;
+    double correctedMoveY = moveY.getAsDouble() * Constants.Swerve.MAX_SPEED;
     double correctedTurnTheta = turnTheta.getAsDouble() * Constants.Swerve.MAX_ANGULAR_SPEED;
 
     // Invert inputs if we're on the red side of the field
     // so that movement is still relative to driver
+    // Requires at least one vision measurement to be accurate
+    //TODO! test this
     if(alliance.get() == Alliance.Red) {
       correctedMoveX *= -1;
       correctedMoveY *= -1;
     }
 
-    ChassisSpeeds desiredSpeeds = swerve.inner.swerveController.getRawTargetSpeeds(correctedMoveX, correctedMoveY, correctedTurnTheta);
-    swerve.inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
-
-    swerve.inner.swerveDrivePoseEstimator.update(swerve.inner.getYaw(), swerve.inner.getModulePositions());
+    swerve.driveRelative(correctedMoveX, correctedMoveY, correctedTurnTheta);
+    swerve.updatePose();
     }
 
   // Called once the command ends or is interrupted.

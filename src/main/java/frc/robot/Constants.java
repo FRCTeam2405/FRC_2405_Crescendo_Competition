@@ -4,8 +4,6 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-
 public final class Constants {
 
     public static final class Swerve {
@@ -15,7 +13,6 @@ public final class Constants {
         // Max speed: ~1.5 rotations per second
         public static final double MAX_ANGULAR_SPEED = 0.05 * (2 * Math.PI);
 
-        //TODO! Configure the path follower
         public static final HolonomicPathFollowerConfig PATH_PLANNER_CONFIG = 
             new HolonomicPathFollowerConfig(
                 // Best Values So Far: kP: 3.14, kI: 0, kD: 0.1
@@ -168,6 +165,8 @@ public final class Constants {
 
             public static final double DRIVE_DEADBAND = 0.05;
             public static final double ROTATE_DEADBAND = 0.05;
+
+            public static final int LED_LIGHTS_TEST_BUTTON = 6;
 
             public static final int ZERO_GYRO_BUTTON = 7;
 
