@@ -166,6 +166,8 @@ public final class Constants {
             public static final double DRIVE_DEADBAND = 0.05;
             public static final double ROTATE_DEADBAND = 0.05;
 
+            public static final int LED_LIGHTS_TEST_BUTTON = 6;
+
             public static final int ZERO_GYRO_BUTTON = 7;
 
             public static final int ROTATE_90_DEGREES_BUTTON = 5;
