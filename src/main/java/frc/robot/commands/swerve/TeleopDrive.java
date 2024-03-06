@@ -50,19 +50,9 @@ public class TeleopDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Try to get alliance if we don't have it yet
-    // Else, return early
-    if(alliance.isEmpty()) {
-      alliance = DriverStation.getAlliance();
-      if(alliance.isEmpty()) {
-        return;
-      }
-    }
-
     // Cube input of XY movement, multiply by max speed
-    //TODO! Switch to linear, drivers don't like cubed
-    double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
-    double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
+    double correctedMoveX = moveX.getAsDouble() * Constants.Swerve.MAX_SPEED;
+    double correctedMoveY = moveY.getAsDouble() * Constants.Swerve.MAX_SPEED;
     double correctedTurnTheta = turnTheta.getAsDouble() * Constants.Swerve.MAX_ANGULAR_SPEED;
 
     // Invert inputs if we're on the red side of the field
