@@ -4,15 +4,12 @@
 
 package frc.robot.commands.swerve;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveContainer;
 
 public class TurnToBlueSide extends Command {
 
-  Pose2d desiredPose;
   SwerveContainer swerveDrive;
 
   public TurnToBlueSide(SwerveContainer swervedrive) {
@@ -31,8 +28,12 @@ public class TurnToBlueSide extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //TODO! Try ChassisSpeeds discretize
-    //TODO! Maybe pass in driver input
+    //TODO! Consider passing in driver input
+
+    // Points towards the side of the field where the amps are located.
+
+    // Requires an accurate field pose - make sure we have at least one
+    // vision measurement before driving.
     swerveDrive.driveAbsolute(0, 0, Rotation2d.fromDegrees(-90));
   }
 

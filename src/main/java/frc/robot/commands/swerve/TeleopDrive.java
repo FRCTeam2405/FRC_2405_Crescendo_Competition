@@ -50,7 +50,8 @@ public class TeleopDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Try to get alliance if unavailable
+    // Try to get alliance if we don't have it yet
+    // Else, return early
     if(alliance.isEmpty()) {
       alliance = DriverStation.getAlliance();
       if(alliance.isEmpty()) {
@@ -59,20 +60,21 @@ public class TeleopDrive extends Command {
     }
 
     // Cube input of XY movement, multiply by max speed
-    //TODO! Drivers don't like this but don't like linear either YwY
+    //TODO! Switch to linear, drivers don't like cubed
     double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
     double correctedTurnTheta = turnTheta.getAsDouble() * Constants.Swerve.MAX_ANGULAR_SPEED;
 
     // Invert inputs if we're on the red side of the field
     // so that movement is still relative to driver
+    // Requires at least one vision measurement to be accurate
+    //TODO! test this
     if(alliance.get() == Alliance.Red) {
       correctedMoveX *= -1;
       correctedMoveY *= -1;
     }
 
     swerve.driveRelative(correctedMoveX, correctedMoveY, correctedTurnTheta);
-
     swerve.updatePose();
     }
 
