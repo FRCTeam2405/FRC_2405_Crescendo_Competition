@@ -57,6 +57,10 @@ public class SwerveContainer implements Subsystem {
       throw new RuntimeException(e);
     }
 
+    // Disable YAGSL odometry thread so that we can
+    // manually update odometry with vision stuff
+    inner.stopOdometryThread();
+
     // Configure PathPlanner and/or Choreo
     configurePathplanner();
   }
@@ -84,6 +88,9 @@ public class SwerveContainer implements Subsystem {
   public void periodic() {
     // Put the measured team number to the dashboard for diagnostics
     SmartDashboard.putNumber("robotTeamNumber", robotTeamNumber);
+
+    // Update odometry
+    updatePose();
   }
   
   // Pass-through functions
