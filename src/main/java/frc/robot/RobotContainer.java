@@ -54,7 +54,7 @@ public class RobotContainer {
   private Limelight limelight = new Limelight();
 
   // Comp bot only
-  private LEDLights sysLighting = new LEDLights();
+  // private LEDLights sysLighting = new LEDLights();
   private Intake sysIntake = new Intake();
   private Feeder sysFeeder = new Feeder();
   private Shooter sysShooter = new Shooter();
