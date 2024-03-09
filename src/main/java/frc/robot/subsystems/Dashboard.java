@@ -51,11 +51,13 @@ public class Dashboard extends SubsystemBase {
     this.sysIntake = sysIntake;
     this.sysArm = sysArm;
 
+    dashboardTabAuto = Shuffleboard.getTab(("Auto"));
     dashboardTabMain = Shuffleboard.getTab(Constants.Dashboard.Main.TAB_NAME);
     dashboardTabUtility = Shuffleboard.getTab(Constants.Dashboard.Utility.TAB_NAME);
 
 
     setDashboardUtility();
+    setDashboardAutonomous();
   }
 
   private void setDashboardMain() {
@@ -178,7 +180,7 @@ public class Dashboard extends SubsystemBase {
               .getEntry();
   }
 
-  private void setDashboardAutonomous() {
+  public void setDashboardAutonomous() {
 
     startPoseChooser.addOption("blue1", "blue1");
     startPoseChooser.addOption("blue2", "blue2");
@@ -187,7 +189,6 @@ public class Dashboard extends SubsystemBase {
     startPoseChooser.addOption("red2", "red2");
     startPoseChooser.addOption("red3", "red3");
 
-    dashboardTabAuto = Shuffleboard.getTab(("Auto"));
     dashboardEntryRobotStartPose = dashboardTabAuto.add(
       "Robots starting position", startPoseChooser)
       .withWidget(BuiltInWidgets.kComboBoxChooser)
@@ -200,7 +201,6 @@ public class Dashboard extends SubsystemBase {
     firstNoteChooser.addOption("note4", "note4");
     firstNoteChooser.addOption("note8", "note8");
 
-    dashboardTabAuto = Shuffleboard.getTab(("Auto"));
     dashboardEntryFirstNote = dashboardTabAuto.add(
       "First Note In Auto", startPoseChooser)
       .withWidget(BuiltInWidgets.kComboBoxChooser)
@@ -302,6 +302,12 @@ public class Dashboard extends SubsystemBase {
     SmartDashboard.putData("startPoseDropdown", startPoseChooser);
     SmartDashboard.putData("firstNoteDropdown", firstNoteChooser);
   }
+
+  // Chooser
+  public SendableChooser<Command> getAutonChooser() {
+    return autonChooser;
+  }
+
 
   // Shooter gets
   public double getTopShooterVelocityDashboard() {
