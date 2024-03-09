@@ -65,7 +65,6 @@ public class TeleopDrive extends Command {
     }
 
     swerve.driveRelative(correctedMoveX, correctedMoveY, correctedTurnTheta);
-    swerve.updatePose();
     }
 
   // Called once the command ends or is interrupted.
