@@ -59,7 +59,7 @@ public class SwerveContainer implements Subsystem {
 
     // Disable YAGSL odometry thread so that we can
     // manually update odometry with vision stuff
-    inner.stopOdometryThread();
+    // inner.stopOdometryThread();
 
     // Configure PathPlanner and/or Choreo
     configurePathplanner();
@@ -90,7 +90,7 @@ public class SwerveContainer implements Subsystem {
     SmartDashboard.putNumber("robotTeamNumber", robotTeamNumber);
 
     // Update odometry
-    updatePose();
+    // updatePose();
   }
   
   // Pass-through functions
