@@ -77,8 +77,6 @@ public class SpeakerAimingDrive extends Command {
      }
     }
 
-    swerveDrive.updatePose();
-
     // Relative positions from the robot to the speaker.
     double offsetX;
     double offsetY;
