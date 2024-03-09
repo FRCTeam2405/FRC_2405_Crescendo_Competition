@@ -29,6 +29,7 @@ import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
 import frc.robot.commands.shooting.IntakeOnly;
+import frc.robot.commands.shooting.PrimeShooter;
 import frc.robot.commands.swerve.SpeakerAimingDrive;
 import frc.robot.commands.swerve.TeleopDrive;
 import frc.robot.commands.swerve.ZeroGyro;
@@ -128,6 +129,12 @@ public class RobotContainer {
   //       Constants.Controllers.Guitar.STRUM_DOWN)
   //       .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
   //   }
+  // codriverController.pov(
+  //           Constants.Controllers.Guitar.STRUM_UP)
+  //           .onTrue(new PrimeShooter(sysShooter, 
+  //           Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT,
+  //           Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT));
+
     
   //   // arm commands
   //   codriverController.button(Constants.Controllers.Guitar.RED_FRET)
