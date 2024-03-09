@@ -116,18 +116,21 @@ public class RobotContainer {
 
 
     // shooter command
-    if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.AMP + 10) {
-       codriverController.pov(
-        Constants.Controllers.Guitar.STRUM_DOWN)
-        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard,
-        () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
-        () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED));
-    }
-    else {
-      codriverController.pov(
+
+    codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
         .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
-    }
+
+    // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.AMP + 10) {
+    //    codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_DOWN)
+    //     .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard,
+    //     () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
+    //     () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED));
+    // }
+    // else {
+      
+    // }
     
     // arm commands
     codriverController.button(Constants.Controllers.Guitar.RED_FRET)
