@@ -13,6 +13,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -56,6 +57,10 @@ public class SwerveContainer implements Subsystem {
       throw new RuntimeException(e);
     }
 
+    // Disable YAGSL odometry thread so that we can
+    // manually update odometry with vision stuff
+    // inner.stopOdometryThread();
+
     // Configure PathPlanner and/or Choreo
     configurePathplanner();
   }
@@ -83,6 +88,9 @@ public class SwerveContainer implements Subsystem {
   public void periodic() {
     // Put the measured team number to the dashboard for diagnostics
     SmartDashboard.putNumber("robotTeamNumber", robotTeamNumber);
+
+    // Update odometry
+    // updatePose();
   }
   
   // Pass-through functions
@@ -144,7 +152,9 @@ public class SwerveContainer implements Subsystem {
 
   /** Update the pose estimator without a vision reading. */
   public void updatePose() {
-    inner.swerveDrivePoseEstimator.update(inner.getYaw(), inner.getModulePositions());
+    Rotation2d yaw = inner.getYaw();
+    SwerveModulePosition[] positions = inner.getModulePositions();
+    inner.swerveDrivePoseEstimator.update(yaw, positions);
   }
 
   public void resetOdometry(Pose2d pose) {

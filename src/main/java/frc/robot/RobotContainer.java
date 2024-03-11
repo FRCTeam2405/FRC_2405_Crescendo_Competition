@@ -48,7 +48,7 @@ public class RobotContainer {
   private CommandGenericHID driverController = new CommandGenericHID(Constants.Controllers.DRIVER_CONTROLLER_PORT);
   private GuitarController codriverController = new GuitarController(Constants.Controllers.CODRIVER_CONTROLLER_PORT);
 
-  private SendableChooser<Command> testAutonChooser = new SendableChooser<>(), autonChooser = new SendableChooser<>();
+  private SendableChooser<Command> testAutonChooser = new SendableChooser<>();
 
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
@@ -56,11 +56,11 @@ public class RobotContainer {
 
   // Comp bot only
   // private LEDLights sysLighting = new LEDLights();
-  // private Intake sysIntake = new Intake();
-  // private Feeder sysFeeder = new Feeder();
-  // private Shooter sysShooter = new Shooter();
-  // private Arm sysArm = new Arm();
-  // private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
+  private Intake sysIntake = new Intake();
+  private Feeder sysFeeder = new Feeder();
+  private Shooter sysShooter = new Shooter();
+  private Arm sysArm = new Arm();
+  private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
 
   // Initialization code for our robot
   public RobotContainer() {
@@ -86,7 +86,7 @@ public class RobotContainer {
       axisDeadband(driverController, Constants.Controllers.Taranis.ROTATE_AXIS, Constants.Controllers.Taranis.ROTATE_DEADBAND, false)
     ));
 
-    driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).whileTrue(new ZeroGyro(swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
     driverController.button(Constants.Controllers.Taranis.ADD_VISION_MEASURMENT_BUTTON).whileTrue(new GetVisionMeasurement(swerveDrive, limelight));
     driverController.button(Constants.Controllers.Taranis.ROTATE_TO_SPEAKER_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
@@ -96,57 +96,53 @@ public class RobotContainer {
 
     // Comp bot only
 
-  //   // intake commands
-  //   driverController.button(
-  //       Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-  //       .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
-  //   // figure out later
-  //   // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME - 10) {
+    // intake commands
+    driverController.button(
+        Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
+        .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+    // figure out later
+    // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME - 10) {
+    // }
+    // else {
+    //   sysLighting.SetColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+    //   sysLighting.SetColorTwo(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+    // }
+
+    driverController.button(
+      Constants.Controllers.Taranis.REVERSE_INTAKE_NOTE_BUTTON)
+      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard, 
+      () -> Constants.Intake.Motors.RIGHT_INTAKE_REVERSE_SPEED_MAX, 
+      () -> Constants.Feeder.Motors.REVERSE_FEEDER_INTAKING_SPEED));
+
+
+    // shooter command
+
+    codriverController.pov(
+        Constants.Controllers.Guitar.STRUM_DOWN)
+        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
+
+    // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.AMP + 10) {
+    //    codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_DOWN)
+    //     .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard,
+    //     () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
+    //     () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED));
+    // }
+    // else {
       
-  //   // }
-  //   // else {
-  //   //   sysLighting.SetColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
-  //   //   sysLighting.SetColorTwo(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
-  //   // }
-
-  //   driverController.button(
-  //     Constants.Controllers.Taranis.REVERSE_INTAKE_NOTE_BUTTON)
-  //     .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard, 
-  //     () -> Constants.Intake.Motors.RIGHT_INTAKE_REVERSE_SPEED_MAX, 
-  //     () -> Constants.Feeder.Motors.REVERSE_FEEDER_INTAKING_SPEED));
-
-
-  //   // shooter command
-  //   if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.AMP + 10) {
-  //      codriverController.pov(
-  //       Constants.Controllers.Guitar.STRUM_DOWN)
-  //       .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard,
-  //       () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
-  //       () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED));
-  //   }
-  //   else {
-  //     codriverController.pov(
-  //       Constants.Controllers.Guitar.STRUM_DOWN)
-  //       .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
-  //   }
-  // codriverController.pov(
-  //           Constants.Controllers.Guitar.STRUM_UP)
-  //           .onTrue(new PrimeShooter(sysShooter, 
-  //           Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT,
-  //           Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT));
-
+    // }
     
-  //   // arm commands
-  //   codriverController.button(Constants.Controllers.Guitar.RED_FRET)
-  //                       .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
-  //   codriverController.button(Constants.Controllers.Guitar.GREEN_FRET)
-  //                       .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
-  //   codriverController.button(Constants.Controllers.Guitar.BLUE_FRET)
-  //                       .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
-  //   codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
-  //    .whileTrue(new DirectDriveArm(sysArm, 
-  //    () -> codriverController.getRawAxis(Constants.Controllers.Guitar.JOYSTICK_X),
-  //    () -> sysArm.getArmPosition()));
+    // arm commands
+    codriverController.button(Constants.Controllers.Guitar.RED_FRET)
+                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
+    codriverController.button(Constants.Controllers.Guitar.GREEN_FRET)
+                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
+    codriverController.button(Constants.Controllers.Guitar.BLUE_FRET)
+                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
+    codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
+     .whileTrue(new DirectDriveArm(sysArm, 
+     () -> codriverController.getRawAxis(Constants.Controllers.Guitar.JOYSTICK_X),
+     () -> sysArm.getArmPosition()));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
@@ -167,8 +163,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
     
     // Comp bot only
-    // NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
-    // NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
+    NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysDashboard));
 
     // Set a default autonomous to prevent errors
     testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
@@ -177,22 +173,22 @@ public class RobotContainer {
     testAutonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
     testAutonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
     testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
-    testAutonChooser.addOption("Left Turn", new PathPlannerAuto("Left Turn"));
-    testAutonChooser.addOption("right turn", new PathPlannerAuto("rightTurn"));
+    testAutonChooser.addOption("Right Turn", new PathPlannerAuto("Left Turn"));
+    testAutonChooser.addOption("Right Contained Turn", new PathPlannerAuto("rightTurn"));
 
     SmartDashboard.putData("testAutonDropdown", testAutonChooser);
   }
 
   public Command getAutonomousCommand() {
-   if (autonChooser.getSelected() != null && testAutonChooser.getSelected() != null) {
+   if (sysDashboard.getAutonChooser().getSelected() != null && testAutonChooser.getSelected() != null) {
     Commands.print("2 autonomous commands selected");
     return null;
    } else {
     if (testAutonChooser.getSelected() != null) {
      return testAutonChooser.getSelected();
     } else {
-     if (autonChooser.getSelected() != null) {
-      return autonChooser.getSelected();
+     if (sysDashboard.getAutonChooser().getSelected() != null) {
+      return sysDashboard.getAutonChooser().getSelected();
      } else {
       Commands.print("No autonomous commands selected");
       return null;
