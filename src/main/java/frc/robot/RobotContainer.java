@@ -167,8 +167,8 @@ public class RobotContainer {
     testAutonChooser.addOption("Small Square Test", new PathPlannerAuto("Small Square Auto"));
     testAutonChooser.addOption("SmallCircleFacingInwards", new PathPlannerAuto("SmallCircleFacingInwards"));  
     testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
-    testAutonChooser.addOption("Left Turn", new PathPlannerAuto("Left Turn"));
-    testAutonChooser.addOption("right turn", new PathPlannerAuto("rightTurn"));
+    testAutonChooser.addOption("Right Turn", new PathPlannerAuto("Left Turn"));
+    testAutonChooser.addOption("Right Contained Turn", new PathPlannerAuto("rightTurn"));
 
     SmartDashboard.putData("testAutonDropdown", testAutonChooser);
   }
