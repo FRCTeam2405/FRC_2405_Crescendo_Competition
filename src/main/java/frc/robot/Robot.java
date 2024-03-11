@@ -7,37 +7,33 @@
 
 package frc.robot;
 
-import org.littletonrobotics.junction.LogFileUtil;
-import org.littletonrobotics.junction.LoggedRobot;
-import org.littletonrobotics.junction.Logger;
-import org.littletonrobotics.junction.networktables.NT4Publisher;
-import org.littletonrobotics.junction.wpilog.WPILOGReader;
-import org.littletonrobotics.junction.wpilog.WPILOGWriter;
-
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-public class Robot extends LoggedRobot {
+public class Robot extends TimedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
 
   @Override
   public void robotInit() {
-    // Set up logging. One of the few things we manage in Robot.java
-    if(isReal()) {
-      // Log to NetworkTables and (optionally) a USB stick
-      Logger.addDataReceiver(new NT4Publisher());
-      // Logger.addDataReceiver(new WPILOGWriter());
-    } else {
-      // Replaying a log, set up replay source
-        setUseTiming(false); // Run as fast as possible
-        String logPath = LogFileUtil.findReplayLog();
-        Logger.setReplaySource(new WPILOGReader(logPath));
-        Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
-    }
+    // AdvantageKit logging. Disabled.
 
-    // Start AdvantageKit logger
-    Logger.start();
+    // Set up logging. One of the few things we manage in Robot.java
+    // if(isReal()) {
+    //   // Log to NetworkTables and (optionally) a USB stick
+    //   Logger.addDataReceiver(new NT4Publisher());
+    //   // Logger.addDataReceiver(new WPILOGWriter());
+    // } else {
+    //   // Replaying a log, set up replay source
+    //     setUseTiming(false); // Run as fast as possible
+    //     String logPath = LogFileUtil.findReplayLog();
+    //     Logger.setReplaySource(new WPILOGReader(logPath));
+    //     Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+    // }
+
+    // // Start AdvantageKit logger
+    // Logger.start();
 
     robotContainer = new RobotContainer();
   }

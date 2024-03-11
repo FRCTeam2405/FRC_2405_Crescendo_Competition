@@ -22,18 +22,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DirectDriveArm;
-import frc.robot.commands.GetVisionMeasurment;
+import frc.robot.commands.GetVisionMeasurement;
 import frc.robot.commands.MoveArmToPosition;
 import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
 import frc.robot.commands.shooting.IntakeOnly;
-import frc.robot.commands.swerve.RotateToApriltag;
 import frc.robot.commands.swerve.SpeakerAimingDrive;
 import frc.robot.commands.swerve.TeleopDrive;
-import frc.robot.commands.swerve.Turn90Degrees;
 import frc.robot.commands.swerve.ZeroGyro;
 import frc.robot.controllers.GuitarController;
 import frc.robot.subsystems.Arm;
@@ -47,7 +44,6 @@ import frc.robot.subsystems.shooting.Shooter;
 
 public class RobotContainer {
   // Initialize drive-team controllers
-  //TODO! CommandGenericHID may not be optimal. Decide whether we need to make a helper class or other tool.
   private CommandGenericHID driverController = new CommandGenericHID(Constants.Controllers.DRIVER_CONTROLLER_PORT);
   private GuitarController codriverController = new GuitarController(Constants.Controllers.CODRIVER_CONTROLLER_PORT);
 
@@ -56,10 +52,10 @@ public class RobotContainer {
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
   private Limelight limelight = new Limelight();
-  private LEDLights sysLighting = new LEDLights();
-  // Below systems only on competition bot
+
+  // Comp bot only
+  // private LEDLights sysLighting = new LEDLights();
   private Intake sysIntake = new Intake();
-  //TODO! enable when shooter and feeder are ready
   private Feeder sysFeeder = new Feeder();
   private Shooter sysShooter = new Shooter();
   private Arm sysArm = new Arm();
@@ -89,24 +85,28 @@ public class RobotContainer {
       axisDeadband(driverController, Constants.Controllers.Taranis.ROTATE_AXIS, Constants.Controllers.Taranis.ROTATE_DEADBAND, false)
     ));
 
-    driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).whileTrue(new ZeroGyro(swerveDrive));
-    driverController.button(Constants.Controllers.Taranis.ADD_VISION_MEASURMENT_BUTTON).whileTrue(new GetVisionMeasurment(swerveDrive, limelight));
-    driverController.button(Constants.Controllers.Taranis.ROTATE_90_DEGREES_BUTTON).whileTrue(new Turn90Degrees(swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
+    driverController.button(Constants.Controllers.Taranis.ADD_VISION_MEASURMENT_BUTTON).whileTrue(new GetVisionMeasurement(swerveDrive, limelight));
     driverController.button(Constants.Controllers.Taranis.ROTATE_TO_SPEAKER_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
     ));
 
+
+    // Comp bot only
+
     // intake commands
-    if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME + 10) {
-      driverController.button(
+    driverController.button(
         Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
         .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
-    }
-    else {
-      sysLighting.SetColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
-      sysLighting.SetColorTwo(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
-    }
+    // figure out later
+    // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME - 10) {
+      
+    // }
+    // else {
+    //   sysLighting.SetColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+    //   sysLighting.SetColorTwo(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+    // }
 
     driverController.button(
       Constants.Controllers.Taranis.REVERSE_INTAKE_NOTE_BUTTON)
@@ -116,18 +116,21 @@ public class RobotContainer {
 
 
     // shooter command
-    if (sysArm.getArmPosition() >= Constants.Arm.SetPoints.AMP - 10) {
-       codriverController.pov(
-        Constants.Controllers.Guitar.STRUM_DOWN)
-        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard,
-        () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
-        () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED));
-    }
-    else {
-      codriverController.pov(
+
+    codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
         .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
-    }
+
+    // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.AMP + 10) {
+    //    codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_DOWN)
+    //     .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard,
+    //     () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
+    //     () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED));
+    // }
+    // else {
+      
+    // }
     
     // arm commands
     codriverController.button(Constants.Controllers.Guitar.RED_FRET)
@@ -156,9 +159,12 @@ public class RobotContainer {
   private void configureAutonomous() {
     // Register named commands for pathplanner
     // This must be done before initializing autos
-    NamedCommands.registerCommand("Turn90Degrees", new Turn90Degrees(swerveDrive));
-    NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurment(swerveDrive, limelight));
+    NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive, limelight));
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
+    
+    // Comp bot only
+    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
+    NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysDashboard));
 
     // Set a default autonomous to prevent errors
     testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
@@ -174,6 +180,20 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-   return testAutonChooser.getSelected();
+   if (sysDashboard.getAutonChooser().getSelected() != null && testAutonChooser.getSelected() != null) {
+    Commands.print("2 autonomous commands selected");
+    return null;
+   } else {
+    if (testAutonChooser.getSelected() != null) {
+     return testAutonChooser.getSelected();
+    } else {
+     if (sysDashboard.getAutonChooser().getSelected() != null) {
+      return sysDashboard.getAutonChooser().getSelected();
+     } else {
+      Commands.print("No autonomous commands selected");
+      return null;
+     }
+    }
+   }
   }
 }

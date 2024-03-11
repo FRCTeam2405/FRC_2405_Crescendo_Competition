@@ -6,6 +6,7 @@ package frc.robot.commands.shooting;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Dashboard;
@@ -92,6 +93,10 @@ public class FireWhenReadyVelocity extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (DriverStation.isAutonomousEnabled() && sysFeeder.getNoteLimit() == false) {
+      return true;
+    } else {
     return false;
+    }
   }
 }

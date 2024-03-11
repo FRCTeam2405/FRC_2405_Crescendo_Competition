@@ -9,18 +9,17 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.Dashboard;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 
-public class GetVisionMeasurment extends Command {
+public class GetVisionMeasurement extends Command {
   private SwerveContainer swerve;
   private Limelight limelight;
   double lastUpdateTime = 0;
   double timestamp;
 
-  /** Creates a new GetVisionMeasurment. */
-  public GetVisionMeasurment(SwerveContainer swerve, Limelight limelight) {
+  /** Creates a new GetVisionMeasurement. */
+  public GetVisionMeasurement(SwerveContainer swerve, Limelight limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.limelight = limelight;
     this.swerve = swerve;
@@ -43,11 +42,13 @@ public class GetVisionMeasurment extends Command {
     Pose2d pose = swerve.getPose();
 
     // Vision measurement
+    // Make sure we only get it once per second
+    //TODO! move this "once per second" reading into Limelight subsystem
     timestamp = Timer.getFPGATimestamp();
     if (timestamp - lastUpdateTime >= 1) {
      Pose2d measuredPose = limelight.getMeasuredPose();
      if(limelight.hasTarget() && limelight.tagCount() >= 2) {
-       swerve.inner.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
+       swerve.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
        lastUpdateTime = timestamp;
      }
    }

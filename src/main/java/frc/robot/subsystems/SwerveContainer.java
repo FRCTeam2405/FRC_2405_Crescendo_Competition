@@ -2,24 +2,27 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-// TODO! Configure the json files in deploy/swerve
-
 package frc.robot.subsystems;
 
 import java.io.File;
-import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.hal.HALUtil;
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
@@ -27,8 +30,9 @@ import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class SwerveContainer implements Subsystem {
 
-  public SwerveDrive inner;
+  private SwerveDrive inner;
 
+  //TODO! put these elsewhere
   public static int robotTeamNumber = HALUtil.getTeamNumber();
   public static Alliance allianceColor;
 
@@ -52,6 +56,10 @@ public class SwerveContainer implements Subsystem {
     } catch(Exception e) {
       throw new RuntimeException(e);
     }
+
+    // Disable YAGSL odometry thread so that we can
+    // manually update odometry with vision stuff
+    // inner.stopOdometryThread();
 
     // Configure PathPlanner and/or Choreo
     configurePathplanner();
@@ -80,14 +88,80 @@ public class SwerveContainer implements Subsystem {
   public void periodic() {
     // Put the measured team number to the dashboard for diagnostics
     SmartDashboard.putNumber("robotTeamNumber", robotTeamNumber);
+
+    // Update odometry
+    // updatePose();
   }
   
   // Pass-through functions
   // These just pass the parameters and returns
   // to the inner swerve drive class
+
+  // Getters
   public Pose2d getPose() { return inner.getPose(); }
-  public void resetOdometry(Pose2d pose) { inner.resetOdometry(pose); }
-  public void zeroGyro() { inner.zeroGyro(); }
   public ChassisSpeeds getRobotVelocity() { return inner.getRobotVelocity(); }
+  public Rotation2d getYaw() { return inner.getYaw(); }
+
+  // Setters
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) { inner.setChassisSpeeds(chassisSpeeds); }
+
+  /** Sets whether the driver motors will brake.
+   * Braking causes stress on the motors, but
+   * prevents slippage. */
+  public void setMotorBrake(boolean brakeEnabled) {
+    inner.setMotorIdleMode(brakeEnabled);
+  }
+
+  /** Drive the robot using relative rotation (turning left and right).
+   *  Do not use for autonomous driving.
+   * 
+   * @param moveX X velocity in meters per second
+   * @param moveY Y velocity in meters per second
+   * @param turnTheta Angular velocity in radians per second
+   */
+  public void driveRelative(double moveX, double moveY, double turnTheta) {
+    ChassisSpeeds desiredSpeeds = inner.swerveController.getRawTargetSpeeds(moveX, moveY, turnTheta);
+    inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
+  }
+
+  /** Drive the robot using absolute rotation (point towards a direction).
+   * Use for assisted or autonomous driving.
+   * 
+   * @param moveX X velocity in meters per second
+   * @param moveY Y velocity in meters per second
+   * @param rotation2d Desired rotation
+   */
+  public void driveAbsolute(double moveX, double moveY, Rotation2d rotation2d) {
+    ChassisSpeeds desiredSpeeds = inner.swerveController.getRawTargetSpeeds(
+      moveX,
+      moveY,
+      rotation2d.getRadians(),
+      getYaw().getRadians()
+    );
+    inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
+  }
+
+  //TODO! Document
+  public void setHeadingCorrection(boolean correctionEnabled) {
+    inner.setHeadingCorrection(correctionEnabled);
+  }
+
+  public void addVisionMeasurement(Pose2d measuredPose, double timestamp, Matrix<N3, N1> stdDeviation) {
+    inner.addVisionMeasurement(measuredPose, timestamp, stdDeviation);
+  }
+
+  /** Update the pose estimator without a vision reading. */
+  public void updatePose() {
+    Rotation2d yaw = inner.getYaw();
+    SwerveModulePosition[] positions = inner.getModulePositions();
+    inner.swerveDrivePoseEstimator.update(yaw, positions);
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    inner.resetOdometry(pose);
+  }
+
+  public void zeroGyro() {
+    inner.zeroGyro();
+  }
 }

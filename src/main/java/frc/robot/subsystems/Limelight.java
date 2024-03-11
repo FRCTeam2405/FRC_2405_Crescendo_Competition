@@ -6,18 +6,20 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
+
+  private NetworkTable networkTable;
+
   /** Creates a new Limelight. */
-  public Limelight() {}
-  
-  // Gets network table from limelight
-  NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("limelight");
+  public Limelight() {
+    // Gets network table for limelight
+    networkTable = NetworkTableInstance.getDefault().getTable("limelight");
+  }
 
   // Counts the number of tags seen by the limelight
   public int tagCount() {
@@ -28,8 +30,8 @@ public class Limelight extends SubsystemBase {
 
   // Turns off the limelight LEDs and sets the pipeline to 4
   public void initialize(){
-  networkTable.getEntry("ledMode").setNumber(0);
-  networkTable.getEntry("pipeline").setNumber(4);
+    networkTable.getEntry("ledMode").setNumber(0);
+    networkTable.getEntry("pipeline").setNumber(4);
   }
   
   // Measures total latency
