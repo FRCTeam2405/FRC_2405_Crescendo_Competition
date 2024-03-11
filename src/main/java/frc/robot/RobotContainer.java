@@ -29,6 +29,7 @@ import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
 import frc.robot.commands.shooting.IntakeOnly;
+import frc.robot.commands.shooting.PrimeShooter;
 import frc.robot.commands.swerve.SpeakerAimingDrive;
 import frc.robot.commands.swerve.TeleopDrive;
 import frc.robot.commands.swerve.ZeroGyro;
@@ -101,7 +102,6 @@ public class RobotContainer {
         .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
     // figure out later
     // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME - 10) {
-      
     // }
     // else {
     //   sysLighting.SetColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
