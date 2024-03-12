@@ -194,6 +194,7 @@ public final class Constants {
             // Port IDs for the axes on the controller (joystick)
             public static final int JOYSTICK_X = 0;
             public static final int JOYSTICK_Y = 1;
+            public static final int ROBOT_EMOTION_ID = 2;
 
             public static final double X_DEADBAND = 0.05;
             public static final double Y_DEADBAND = 0.05;
@@ -205,6 +206,15 @@ public final class Constants {
             public static final int STRUM_UP = 0;
             public static final int STRUM_DOWN = 180;
             public static final int STRUM_NEUTRAL = -1;
+
+            public static final class ROBOT_EMOTION_SETTING {
+
+                public static final double SADNESS = 0.1;
+                public static final double FEAR = 0.3;
+                public static final double JOY = 0.5;
+                public static final double DISGUST = 0.7;
+                public static final double ANGER = 0.9;
+            }
         }
 
         public static final class AprilTags {
@@ -262,6 +272,24 @@ public final class Constants {
         public static final class LED_ACTIONS {
             public static final double INTAKE_INVALID = -0.11;
         }
+
+        public static final class ROBOT_EMOTIONS {
+
+            public static final double SADNESS_COLOR_ONE = -0.41;
+            public static final double SADNESS_COLOR_TWO = -0.65;
+
+            public static final double FEAR_COLOR_ONE = -0.27;
+            public static final double FEAR_COLOR_TWO = -0.29;
+
+            public static final double JOY_COLOR_ONE = -0.87;
+            public static final double JOY_COLOR_TWO = -0.89;
+
+            public static final double DISGUST_COLOR_ONE = 0.07;
+            public static final double DISGUST_COLOR_TWO = -0.27;
+
+            public static final double ANGER_COLOR_ONE = -0.57;
+            public static final double ANGER_COLOR_TWO = -0.85;
+        }
     }
 
     public static final class Dashboard {
@@ -292,6 +320,8 @@ public final class Constants {
                 public static final String ARM_VELOCITY_SETTING_NAME = "Arm Velocity Setting";
                 public static final String ARM_POSITION_SETTING_NAME = "Arm Position Setting";
                 public static final String ARM_POSITION_NAME = "Arm Position";
+
+                public static final String ROBOT_EMOTION_SETTING_NAME = "Robot Emotion Setting";
 
                 public static final String PHANTOM_NAME = "Dont look here";
             }

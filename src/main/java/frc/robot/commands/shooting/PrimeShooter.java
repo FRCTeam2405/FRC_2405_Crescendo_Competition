@@ -53,6 +53,7 @@ public class PrimeShooter extends Command {
   public void end(boolean interrupted) {
 
     sysShooter.stopShooter();
+    sysLighting.setRobotEmotion();
   }
 
   // Returns true when the command should end.

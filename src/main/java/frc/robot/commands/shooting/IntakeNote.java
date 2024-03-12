@@ -87,7 +87,7 @@ public class IntakeNote extends Command {
     else {
       sysIntake.stopIntake();
       sysFeeder.stopFeeder();
-      sysLighting.setColorBoth(Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT, Constants.LEDs.LED_COLORS.TELEOP_COLOR_TWO_DEFAULT);
+      sysLighting.setRobotEmotion();
     }
     
   }
@@ -98,16 +98,13 @@ public class IntakeNote extends Command {
 
     sysIntake.stopIntake();
     sysFeeder.stopFeeder();
-    sysLighting.setColorBoth(Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT, Constants.LEDs.LED_COLORS.TELEOP_COLOR_TWO_DEFAULT);
+    sysLighting.setRobotEmotion();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (DriverStation.isAutonomousEnabled() && sysFeeder.getNoteLimit() == true) {
-      return true;
-    } else {
+    
      return false;
-    }
   }
 }

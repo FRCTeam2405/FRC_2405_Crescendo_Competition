@@ -94,7 +94,7 @@ public class FireWhenReadyVelocity extends Command {
 
     sysShooter.stopShooter();
     sysFeeder.stopFeeder();
-    sysLighting.setColorBoth(Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT, Constants.LEDs.LED_COLORS.TELEOP_COLOR_TWO_DEFAULT);
+    sysLighting.setRobotEmotion();
   }
 
   // Returns true when the command should end.

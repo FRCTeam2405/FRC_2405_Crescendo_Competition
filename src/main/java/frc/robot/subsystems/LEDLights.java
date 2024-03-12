@@ -53,6 +53,35 @@ public class LEDLights extends SubsystemBase {
     LEDLightsTwo.set(colorTwo);
   }
 
+  public void setRobotEmotion() {
+    double emotionSetting = SmartDashboard.getNumber(Constants.Dashboard.Utility.Widgets.ROBOT_EMOTION_SETTING_NAME, 0);
+    
+    if (emotionSetting == Constants.Controllers.Guitar.ROBOT_EMOTION_SETTING.SADNESS) {
+      LEDLightsOne.set(Constants.LEDs.ROBOT_EMOTIONS.SADNESS_COLOR_ONE);
+      LEDLightsTwo.set(Constants.LEDs.ROBOT_EMOTIONS.SADNESS_COLOR_TWO);
+    }
+    else if (emotionSetting == Constants.Controllers.Guitar.ROBOT_EMOTION_SETTING.FEAR) {
+      LEDLightsOne.set(Constants.LEDs.ROBOT_EMOTIONS.FEAR_COLOR_ONE);
+      LEDLightsTwo.set(Constants.LEDs.ROBOT_EMOTIONS.FEAR_COLOR_TWO);
+    }
+    else if (emotionSetting == Constants.Controllers.Guitar.ROBOT_EMOTION_SETTING.JOY) {
+      LEDLightsOne.set(Constants.LEDs.ROBOT_EMOTIONS.JOY_COLOR_ONE);
+      LEDLightsTwo.set(Constants.LEDs.ROBOT_EMOTIONS.JOY_COLOR_TWO);
+    }
+    else if (emotionSetting == Constants.Controllers.Guitar.ROBOT_EMOTION_SETTING.DISGUST) {
+      LEDLightsOne.set(Constants.LEDs.ROBOT_EMOTIONS.DISGUST_COLOR_ONE);
+      LEDLightsTwo.set(Constants.LEDs.ROBOT_EMOTIONS.DISGUST_COLOR_TWO);
+    }
+    else if (emotionSetting == Constants.Controllers.Guitar.ROBOT_EMOTION_SETTING.ANGER) {
+      LEDLightsOne.set(Constants.LEDs.ROBOT_EMOTIONS.ANGER_COLOR_ONE);
+      LEDLightsTwo.set(Constants.LEDs.ROBOT_EMOTIONS.ANGER_COLOR_TWO);
+    }
+    else {
+      LEDLightsOne.set(Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT);
+      LEDLightsTwo.set(Constants.LEDs.LED_COLORS.TELEOP_COLOR_TWO_DEFAULT);
+    }
+  }
+
   public double GetColorOne() {
     return LEDLightsOne.get();
   }
