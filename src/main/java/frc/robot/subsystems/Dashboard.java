@@ -182,6 +182,8 @@ public class Dashboard extends SubsystemBase {
 
   public void setDashboardAutonomous() {
 
+    startPoseChooser.setDefaultOption("NONE", "blue2");
+
     startPoseChooser.addOption("blue1", "blue1");
     startPoseChooser.addOption("blue2", "blue2");
     startPoseChooser.addOption("blue3", "blue3");
@@ -195,6 +197,8 @@ public class Dashboard extends SubsystemBase {
       .withPosition(0, 0)
       .withSize(2, 1);
 
+    firstNoteChooser.setDefaultOption("NONE", "note2");
+
     firstNoteChooser.addOption("note1", "note1");
     firstNoteChooser.addOption("note2", "note2");
     firstNoteChooser.addOption("note3", "note3");
@@ -206,6 +210,8 @@ public class Dashboard extends SubsystemBase {
       .withWidget(BuiltInWidgets.kComboBoxChooser)
       .withPosition(0, 1)
       .withSize(2, 1);
+
+    autonChooser.setDefaultOption("NONE", new PathPlannerAuto("Blue2Note2"));
 
     switch (startPoseChooser.getSelected()) {
       case "blue1":
