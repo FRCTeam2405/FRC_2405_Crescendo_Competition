@@ -303,11 +303,15 @@ public class Dashboard extends SubsystemBase {
     SmartDashboard.putData("firstNoteDropdown", firstNoteChooser);
   }
 
-  // Chooser
+  // Auton Chooser
   public SendableChooser<Command> getAutonChooser() {
     return autonChooser;
   }
 
+  // Start Chooser
+  public SendableChooser<String> getStartPoseChooser() {
+    return startPoseChooser;
+  }
 
   // Shooter gets
   public double getTopShooterVelocityDashboard() {

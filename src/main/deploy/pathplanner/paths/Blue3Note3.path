@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7365015087811937,
-        "y": 4.376333332273105
+        "x": 0.74,
+        "y": 4.38
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.602956765841976,
-        "y": 4.156048097427144
+        "x": 1.6064552570607824,
+        "y": 4.159714765154039
       },
       "isLocked": false,
       "linkedName": null
@@ -63,7 +63,7 @@
   "reversed": false,
   "folder": "Competition Paths",
   "previewStartingState": {
-    "rotation": -59.77816173293735,
+    "rotation": -59.77999999999997,
     "velocity": 0
   },
   "useDefaultConstraints": true

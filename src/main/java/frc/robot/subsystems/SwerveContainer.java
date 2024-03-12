@@ -101,6 +101,7 @@ public class SwerveContainer implements Subsystem {
   public Pose2d getPose() { return inner.getPose(); }
   public ChassisSpeeds getRobotVelocity() { return inner.getRobotVelocity(); }
   public Rotation2d getYaw() { return inner.getYaw(); }
+  public SwerveModulePosition[] getModulePositions() { return inner.getModulePositions(); }
 
   // Setters
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) { inner.setChassisSpeeds(chassisSpeeds); }
@@ -155,6 +156,10 @@ public class SwerveContainer implements Subsystem {
     Rotation2d yaw = inner.getYaw();
     SwerveModulePosition[] positions = inner.getModulePositions();
     inner.swerveDrivePoseEstimator.update(yaw, positions);
+  }
+
+  public void resetPose(Rotation2d gyroAngle, SwerveModulePosition[] modulePositions, Pose2d poseMeters) {
+    inner.swerveDrivePoseEstimator.resetPosition(gyroAngle, modulePositions, poseMeters);
   }
 
   public void resetOdometry(Pose2d pose) {

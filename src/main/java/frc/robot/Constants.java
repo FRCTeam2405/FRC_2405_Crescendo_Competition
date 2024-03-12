@@ -41,6 +41,30 @@ public final class Constants {
         }
     }
 
+    public static final class Auton {
+
+        public static final class startPose {
+
+            public static final double BLUE_1_ROTATION = 1.03777277;
+
+            public static final double BLUE_2_ROTATION = 0;
+
+            public static final double BLUE_3_ROTATION = -1.04335783;
+
+            public static final double BLUE_1_X = 0.71;
+
+            public static final double BLUE_2_X = 1.38;
+
+            public static final double BLUE_3_X = 0.74;
+
+            public static final double BLUE_1_Y = 6.71;
+
+            public static final double BLUE_2_Y = 5.55;
+
+            public static final double BLUE_3_Y = 4.38;
+        }
+    }
+
     public static final class Shooter {
         //TODO! adjust for shooter
         public static final double SHOOTER_HEIGHT = 0;

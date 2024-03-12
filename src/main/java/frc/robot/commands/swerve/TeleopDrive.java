@@ -16,7 +16,7 @@ import frc.robot.subsystems.SwerveContainer;
 import swervelib.imu.SwerveIMU;
 
 public class TeleopDrive extends Command {
-  private SwerveContainer swerve;
+  private SwerveContainer swerveDrive;
   Optional<Alliance> alliance;
   Rotation3d rotation3d;
   SwerveIMU imu;
@@ -25,14 +25,14 @@ public class TeleopDrive extends Command {
 
   /** Drive command for typical teleop movement. */
   public TeleopDrive(SwerveContainer swerveContainer, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier rotate) {
-    swerve = swerveContainer;
+    swerveDrive = swerveContainer;
 
     moveX = vX;
     moveY = vY;
     turnTheta = rotate;
     
     // Required subsystems
-    addRequirements(swerve);
+    addRequirements(swerveDrive);
   }
 
   /*
@@ -43,7 +43,7 @@ public class TeleopDrive extends Command {
   @Override
   public void initialize() {
     // Set the motors to coast
-    swerve.setMotorBrake(false);
+    swerveDrive.setMotorBrake(false);
     alliance = DriverStation.getAlliance();
   }
 
@@ -64,7 +64,7 @@ public class TeleopDrive extends Command {
       correctedMoveY *= -1;
     }
 
-    swerve.driveRelative(correctedMoveX, correctedMoveY, correctedTurnTheta);
+    swerveDrive.driveRelative(correctedMoveX, correctedMoveY, correctedTurnTheta);
     }
 
   // Called once the command ends or is interrupted.
