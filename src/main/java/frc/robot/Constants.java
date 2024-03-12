@@ -59,8 +59,8 @@ public final class Constants {
             public static final double TOP_SHOOTER_VELOCITY_MAX = 6500;
             public static final double BOTTOM_SHOOTER_VELOCITY_MAX = 6500;
 
-            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 5000; 
-            public static final double BOTTOM_SHOOTER_VELOCITY_DEFAULT = 5000;
+            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 3500; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_DEFAULT = 1600;
 
             public static final double TOP_SHOOTER_VELOCITY_AMP = 1000; 
             public static final double BOTTOM_SHOOTER_VELOCITY_AMP = 1000;
@@ -111,7 +111,7 @@ public final class Constants {
         public static final class Motors {
             public static final int ARM_PORTID = 40;
 
-            public static final boolean ARM_INVERTED = false;
+            public static final boolean ARM_INVERTED = true;
 
             public static final double ARM_SPEED_MAX = 0.50;
             public static final double ARM_VELOCITY = 30;
@@ -182,14 +182,14 @@ public final class Constants {
 
         public static final class Guitar {
             // Port IDs for the buttons on the controller
-            public static final int GREEN_FRET = 4;
-            public static final int RED_FRET = 3;
-            public static final int YELLOW_FRET = 2;
-            public static final int BLUE_FRET = 1;
-            public static final int ORANGE_FRET = 7;
+            public static final int GREEN_FRET = 1;
+            public static final int RED_FRET = 2;
+            public static final int YELLOW_FRET = 4;
+            public static final int BLUE_FRET = 3;
+            public static final int ORANGE_FRET = 5;
 
-            public static final int OPTION_A_BUTTON = 10;
-            public static final int OPTION_B_BUTTON = 9;
+            public static final int OPTION_A_BUTTON = 7;
+            public static final int OPTION_B_BUTTON = 8;
 
             // Port IDs for the axes on the controller (joystick)
             public static final int JOYSTICK_X = 0;
