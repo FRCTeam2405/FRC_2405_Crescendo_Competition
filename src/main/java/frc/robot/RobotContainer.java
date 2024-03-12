@@ -184,6 +184,7 @@ public class RobotContainer {
     testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
     testAutonChooser.addOption("Left Turn", new PathPlannerAuto("Left Turn"));
     testAutonChooser.addOption("right turn", new PathPlannerAuto("rightTurn"));
+    testAutonChooser.addOption("Null Blue 2", new PathPlannerAuto("Blue2Null"));
 
     SmartDashboard.putData("testAutonDropdown", testAutonChooser);
   }
