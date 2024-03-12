@@ -19,12 +19,9 @@ import frc.robot.subsystems.SwerveContainer;
 public class SetStartPose extends InstantCommand {
 
   public enum StartPosition {
-    Blue1,
-    Blue2,
-    Blue3,
-    Red1,
-    Red2,
-    Red3
+    Start1,
+    Start2,
+    Start3
   }
 
   SwerveContainer swerveDrive;
@@ -47,46 +44,24 @@ public class SetStartPose extends InstantCommand {
 
     // Choose start position based on autonomous input
     switch (startPosition) {
-      case Blue1:
-        startX = Constants.Auton.startPose.BLUE_1_X;
-        startY = Constants.Auton.startPose.BLUE_1_Y;
-        startRotation = Constants.Auton.startPose.BLUE_1_ROTATION;
+      case Start1:
+        startX = Constants.Auton.startPose.START_1_X;
+        startY = Constants.Auton.startPose.START_1_Y;
+        startRotation = Constants.Auton.startPose.START_1_ROTATION;
         break;
       
-      case Blue2:
-        startX = Constants.Auton.startPose.BLUE_2_X;
-        startY = Constants.Auton.startPose.BLUE_2_Y;
-        startRotation = Constants.Auton.startPose.BLUE_1_ROTATION;
+      case Start2:
+        startX = Constants.Auton.startPose.START_2_X;
+        startY = Constants.Auton.startPose.START_2_Y;
+        startRotation = Constants.Auton.startPose.START_1_ROTATION;
         break;
       
-      case Blue3:
-        startX = Constants.Auton.startPose.BLUE_3_X;
-        startY = Constants.Auton.startPose.BLUE_3_Y;
-        startRotation = Constants.Auton.startPose.BLUE_1_ROTATION;
+      case Start3:
+        startX = Constants.Auton.startPose.START_3_X;
+        startY = Constants.Auton.startPose.START_3_Y;
+        startRotation = Constants.Auton.startPose.START_1_ROTATION;
         break;
-      
-      case Red1:
-        // TODO! make red positions
-        // startX = Constants.Auton.startPose.RED_1_X;
-        // startY = Constants.Auton.startPose.RED_1_Y;
-        // startRotation = Constants.Auton.startPose.RED_1_ROTATION;
-        // break;
-        return;
-      
-      case Red2:
-        // startX = Constants.Auton.startPose.RED_2_X;
-        // startY = Constants.Auton.startPose.RED_2_Y;
-        // startRotation = Constants.Auton.startPose.RED_2_ROTATION;
-        // break;
-        return;
 
-      case Red3:
-        // startX = Constants.Auton.startPose.RED_3_X;
-        // startY = Constants.Auton.startPose.RED_3_Y;
-        // startRotation = Constants.Auton.startPose.RED_3_ROTATION;
-        // break;
-        return;
-      
       default:
         // unreachable
         return;

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.74,
-      "y": 4.38
+      "x": 0.71,
+      "y": 6.71
     },
-    "rotation": -59.77999999999997
+    "rotation": 59.46
   },
   "command": {
     "type": "sequential",
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Blue3Note3"
+                  "pathName": "Start1Note1"
                 }
               },
               {
@@ -51,7 +51,38 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Note3ShootN3"
+            "pathName": "Note1Amp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtAmp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AmpNote2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
           }
         },
         {
@@ -73,7 +104,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ShootN3Note2"
+                  "pathName": "Note2Note3"
                 }
               },
               {
@@ -83,6 +114,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note3ShootN3"
           }
         },
         {

@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.38,
-        "y": 5.55
+        "x": 0.71,
+        "y": 6.71
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.055541386860949,
-        "y": 6.034627516661114
+        "x": 1.7099999999999993,
+        "y": 6.71
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Start1"
     },
     {
       "anchor": {
@@ -20,30 +20,30 @@
         "y": 6.990384785778517
       },
       "prevControl": {
-        "x": 2.0728986001800274,
-        "y": 6.43232885750208
+        "x": 1.895296810271618,
+        "y": 6.990384785778517
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Note1"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.05,
-      "rotationDegrees": 0.0,
-      "rotateFast": false
+      "waypointRelativePos": 0.4,
+      "rotationDegrees": 0,
+      "rotateFast": true
     },
     {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": 38.26250812174218,
+      "waypointRelativePos": 0.05,
+      "rotationDegrees": 59.46,
       "rotateFast": false
     }
   ],
   "constraintZones": [
     {
-      "name": "Slow Down For Note",
-      "minWaypointRelativePos": 0.8,
+      "name": "Slow down for note",
+      "minWaypointRelativePos": 0.85,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 0.5,
@@ -62,13 +62,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 39.522631271171136,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Competition Paths",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": 59.46,
     "velocity": 0
   },
   "useDefaultConstraints": true

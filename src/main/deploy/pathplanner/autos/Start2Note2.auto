@@ -36,38 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Blue2Note1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RotateToSpeaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Note1Note2"
+                  "pathName": "Start2Note2"
                 }
               },
               {

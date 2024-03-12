@@ -182,12 +182,9 @@ public class Dashboard extends SubsystemBase {
 
   public void setDashboardAutonomous() {
 
-    startPoseChooser.addOption("blue1", "blue1");
-    startPoseChooser.addOption("blue2", "blue2");
-    startPoseChooser.addOption("blue3", "blue3");
-    startPoseChooser.addOption("red1", "red1");
-    startPoseChooser.addOption("red2", "red2");
-    startPoseChooser.addOption("red3", "red3");
+    startPoseChooser.addOption("start1", "start1");
+    startPoseChooser.addOption("start2", "start2");
+    startPoseChooser.addOption("start3", "start3");
 
     dashboardEntryRobotStartPose = dashboardTabAuto.add(
       "Robots starting position", startPoseChooser)
@@ -208,14 +205,14 @@ public class Dashboard extends SubsystemBase {
       .withSize(2, 1);
 
     switch (startPoseChooser.getSelected()) {
-      case "blue1":
+      case "start1":
        switch (firstNoteChooser.getSelected()) {
         case "note1":
-         autonChooser.addOption("Blue1Note1", new PathPlannerAuto("Blue1Note1"));
-         autonChooser.addOption("Blue1Note1amp", new PathPlannerAuto("Blue1Note1amp"));
-         autonChooser.addOption("Blue1Note12", new PathPlannerAuto("Blue1Note12"));
-         autonChooser.addOption("Blue1Note123", new PathPlannerAuto("Blue1Note123"));
-         autonChooser.addOption("Blue1Note123amp", new PathPlannerAuto("Blue1Note123amp"));
+         autonChooser.addOption("Start1Note1", new PathPlannerAuto("Start1Note1"));
+         autonChooser.addOption("Start1Note1amp", new PathPlannerAuto("Start1Note1amp"));
+         autonChooser.addOption("Start1Note12", new PathPlannerAuto("Start1Note12"));
+         autonChooser.addOption("Start1Note123", new PathPlannerAuto("Start1Note123"));
+         autonChooser.addOption("Start1Note123amp", new PathPlannerAuto("Start1Note123amp"));
         case "note2":
 
         case "note3":
@@ -225,76 +222,38 @@ public class Dashboard extends SubsystemBase {
         case "note8":
 
        }
-      case "blue2":
+      case "start2":
        switch (firstNoteChooser.getSelected()) {
         case "note1":
-         autonChooser.addOption("Blue2Note12", new PathPlannerAuto("Blue2Note12"));
-         autonChooser.addOption("Blue2Note123", new PathPlannerAuto("Blue2Note123"));
+         autonChooser.addOption("Start2Note12", new PathPlannerAuto("Start2Note12"));
+         autonChooser.addOption("Start2Note123", new PathPlannerAuto("Start2Note123"));
         case "note2":
-         autonChooser.addOption("Blue2Note2", new PathPlannerAuto("Blue2Note2"));
-         autonChooser.addOption("Blue2Note21", new PathPlannerAuto("Blue2Note21"));
+         autonChooser.addOption("Start2Note2", new PathPlannerAuto("Start2Note2"));
+         autonChooser.addOption("Start2Note21", new PathPlannerAuto("Start2Note21"));
         case "note3":
-         autonChooser.addOption("Blue2Note32", new PathPlannerAuto("Blue2Note32"));
-         autonChooser.addOption("Blue2Note321", new PathPlannerAuto("Blue2Note321"));
-        case "note4":
-
-        case "note8":
-        
-       }
-      case "blue3":
-       switch (firstNoteChooser.getSelected()) {
-        case "note1":
-
-        case "note2":
-
-        case "note3":
-         autonChooser.addOption("Blue3Note3", new PathPlannerAuto("Blue3Note3"));
-         autonChooser.addOption("Blue3Note32", new PathPlannerAuto("Blue3Note32"));
-         autonChooser.addOption("Blue3Note321", new PathPlannerAuto("Blue3Note213"));
+         autonChooser.addOption("Start2Note32", new PathPlannerAuto("Start2Note32"));
+         autonChooser.addOption("Start2Note321", new PathPlannerAuto("Start2Note321"));
         case "note4":
 
         case "note8":
         
        }
-      case "red1":
+      case "start3":
        switch (firstNoteChooser.getSelected()) {
         case "note1":
 
         case "note2":
 
         case "note3":
-
+         autonChooser.addOption("Start3Note3", new PathPlannerAuto("Start3Note3"));
+         autonChooser.addOption("Start3Note32", new PathPlannerAuto("Start3Note32"));
+         autonChooser.addOption("Start3Note321", new PathPlannerAuto("Start3Note213"));
         case "note4":
 
         case "note8":
         
        }
-      case "red2":
-       switch (firstNoteChooser.getSelected()) {
-        case "note1":
-
-        case "note2":
-
-        case "note3":
-
-        case "note4":
-
-        case "note8":
-        
-       }
-      case "red3":
-       switch (firstNoteChooser.getSelected()) {
-        case "note1":
-
-        case "note2":
-
-        case "note3":
-
-        case "note4":
-
-        case "note8":
-        
-       }
+      
     }
 
     SmartDashboard.putData("testAutonDropdown", testAutonChooser);
