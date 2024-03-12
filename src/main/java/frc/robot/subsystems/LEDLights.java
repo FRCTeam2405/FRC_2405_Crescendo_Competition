@@ -11,13 +11,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LEDLights extends SubsystemBase {
 
-  public PWMSparkMax LEDLightsOne = new PWMSparkMax(Constants.LEDs.LED_PORT_ONE);
-  public PWMSparkMax LEDLightsTwo = new PWMSparkMax(Constants.LEDs.LED_PORT_TWO);
+  private PWMSparkMax LEDLightsOne;
+  private PWMSparkMax LEDLightsTwo;
 
   /** Creates a new LEDLights. */
   public LEDLights() {
-    SmartDashboard.putNumber("LEDSetOne", Constants.LEDs.LED_COLORS.LED_SETTING_DEFAULT);
-    SmartDashboard.putNumber("LEDSetTwo", Constants.LEDs.LED_COLORS.LED_SETTING_DEFAULT);
+    LEDLightsOne = new PWMSparkMax(Constants.LEDs.LED_PORT_ONE);
+    LEDLightsTwo = new PWMSparkMax(Constants.LEDs.LED_PORT_TWO);
+    SmartDashboard.putNumber("LEDSetOne", Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT);
+    SmartDashboard.putNumber("LEDSetTwo", Constants.LEDs.LED_COLORS.TELEOP_COLOR_TWO_DEFAULT);
+  }
+
+  public LEDLights(double colorOne, double colorTwo) {
+    LEDLightsOne = new PWMSparkMax(Constants.LEDs.LED_PORT_ONE);
+    LEDLightsTwo = new PWMSparkMax(Constants.LEDs.LED_PORT_TWO);
+    LEDLightsOne.set(colorOne);
+    LEDLightsTwo.set(colorTwo);
+    SmartDashboard.putNumber("LEDSetOne", Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT);
+    SmartDashboard.putNumber("LEDSetTwo", Constants.LEDs.LED_COLORS.TELEOP_COLOR_TWO_DEFAULT);
   }
 
   @Override
@@ -25,11 +36,21 @@ public class LEDLights extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void SetColorOne(double Color) {
+  public void setColorOne(double Color) {
     LEDLightsOne.set(Color);
   }
-  public void SetColorTwo(double Color) {
+  public void setColorTwo(double Color) {
     LEDLightsTwo.set(Color);
+  }
+
+  public void setColorBoth(double color) {
+    LEDLightsOne.set(color);
+    LEDLightsTwo.set(color);
+  }
+
+  public void setColorBoth(double colorOne, double colorTwo) {
+    LEDLightsOne.set(colorOne);
+    LEDLightsTwo.set(colorTwo);
   }
 
   public double GetColorOne() {

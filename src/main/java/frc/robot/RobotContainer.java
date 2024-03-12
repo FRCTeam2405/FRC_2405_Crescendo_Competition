@@ -55,7 +55,7 @@ public class RobotContainer {
   private Limelight limelight = new Limelight();
 
   // Comp bot only
-  // private LEDLights sysLighting = new LEDLights();
+  private LEDLights sysLighting = new LEDLights(Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT, Constants.LEDs.LED_COLORS.TELEOP_COLOR_TWO_DEFAULT);
   private Intake sysIntake = new Intake();
   private Feeder sysFeeder = new Feeder();
   private Shooter sysShooter = new Shooter();
@@ -99,7 +99,7 @@ public class RobotContainer {
     // intake commands
     driverController.button(
         Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-        .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+        .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysLighting, sysDashboard));
     // figure out later
     // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME - 10) {
     // }
@@ -110,7 +110,7 @@ public class RobotContainer {
 
     driverController.button(
       Constants.Controllers.Taranis.REVERSE_INTAKE_NOTE_BUTTON)
-      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard, 
+      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysLighting, sysDashboard, 
       () -> Constants.Intake.Motors.RIGHT_INTAKE_REVERSE_SPEED_MAX, 
       () -> Constants.Feeder.Motors.REVERSE_FEEDER_INTAKING_SPEED));
 
@@ -119,7 +119,11 @@ public class RobotContainer {
 
     codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
-        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
+        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard));
+
+    codriverController.pov(
+        Constants.Controllers.Guitar.STRUM_UP)
+        .onTrue(new PrimeShooter(sysShooter, sysLighting));
 
     // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.AMP + 10) {
     //    codriverController.pov(
@@ -163,8 +167,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
     
     // Comp bot only
-    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
-    NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard));
+    NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysLighting, sysDashboard));
 
     // Set a default autonomous to prevent errors
     testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));

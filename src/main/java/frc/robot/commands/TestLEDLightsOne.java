@@ -11,16 +11,17 @@ import frc.robot.subsystems.LEDLights;
 
 public class TestLEDLightsOne extends Command {
   
-  final LEDLights sysLEDLights;
-  final double LEDSetting;
+  private final LEDLights sysLighting;
+  private final double LEDSetting;
   
   /** Test command for the first LED strip on the robot. */
-  public TestLEDLightsOne(LEDLights insysLEDLights, double inLEDSetting) {
-    sysLEDLights = insysLEDLights;
-    LEDSetting = inLEDSetting;
+  public TestLEDLightsOne(LEDLights sysLighting, double LEDSetting) {
+    
+    this.sysLighting = sysLighting;
+    this.LEDSetting = LEDSetting;
   
     // Use addRequirements() here to declare subsystem dependencies.  
-    addRequirements(insysLEDLights);
+    addRequirements(sysLighting);
   }
 
   // Called when the command is initially scheduled.
@@ -31,21 +32,18 @@ public class TestLEDLightsOne extends Command {
   @Override
   public void execute() {
     // Set the LED to the setting on the dashboard.
-    sysLEDLights.LEDLightsOne.set(SmartDashboard.getNumber("LEDSetOne", Constants.LEDs.LED_COLORS.LED_SETTING_DEFAULT));
+    sysLighting.setColorOne(SmartDashboard.getNumber("LEDSetOne", Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    sysLEDLights.LEDLightsOne.set(0);
+    sysLighting.setColorOne(Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (sysLEDLights.LEDLightsOne.get() == SmartDashboard.getNumber("LEDSetOne", Constants.LEDs.LED_COLORS.LED_SETTING_DEFAULT))
-      return true; 
-    else
       return false;
   }
 }

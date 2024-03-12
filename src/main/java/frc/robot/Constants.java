@@ -237,7 +237,17 @@ public final class Constants {
 
             //These are imported colors from last season.
             //This color will be what the LEDs set to when the robot is turned on
-            public static final double LED_SETTING_DEFAULT = -0.95;
+            public static final double TELEOP_COLOR_ONE_DEFAULT = -0.95;
+            public static final double TELEOP_COLOR_TWO_DEFAULT = -0.91;
+
+            public static final double INTAKE_COLOR_ONE = -0.29;
+            public static final double INTAKE_COLOR_TWO = -0.15;
+
+            public static final double INTAKE_REVERSE_COLOR_ONE = -0.31;
+            public static final double INTAKE_REVERSE_COLOR_TWO = -0.17;
+
+            public static final double SHOOTER_COLOR_ONE = -0.21;
+            public static final double SHOOTER_COLOR_TWO = -0.19;
 
             public static final double STROBE_RED = -0.11;
             public static final double HEARTBEAT_RED = -0.25;

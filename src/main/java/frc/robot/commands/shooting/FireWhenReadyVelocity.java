@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Dashboard;
+import frc.robot.subsystems.LEDLights;
 import frc.robot.subsystems.shooting.Feeder;
 import frc.robot.subsystems.shooting.Shooter;
 
@@ -17,14 +18,16 @@ public class FireWhenReadyVelocity extends Command {
 
   private final Shooter sysShooter;
   private final Feeder sysFeeder;
+  private final LEDLights sysLighting;
   private final Dashboard sysDashboard;
   private final DoubleSupplier rpmShooterTop, rpmShooterBottom, percentOutputFeederTop, percentOutputFeederBottom;
   /** Creates a new FireWhenReadyVelocity. */
-  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, Dashboard sysDashboard,
+  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, LEDLights sysLighting, Dashboard sysDashboard,
                       DoubleSupplier rpmShooterTop, DoubleSupplier rpmShooterBottom, 
                       DoubleSupplier percentOutputFeederTop, DoubleSupplier percentOutputFeederBottom)  {
     this.sysShooter = sysShooter;
     this.sysFeeder = sysFeeder;
+    this.sysLighting = sysLighting;
     this.sysDashboard = sysDashboard;
     this.rpmShooterTop = rpmShooterTop;
     this.rpmShooterBottom = rpmShooterBottom;
@@ -32,14 +35,15 @@ public class FireWhenReadyVelocity extends Command {
     this.percentOutputFeederBottom = percentOutputFeederBottom;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysShooter, sysFeeder, sysDashboard);
+    addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
   }
 
-  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, Dashboard sysDashboard,
+  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, LEDLights sysLighting, Dashboard sysDashboard,
                       DoubleSupplier rpmShooter, 
                       DoubleSupplier percentOutputFeeder)  {
     this.sysShooter = sysShooter;
     this.sysFeeder = sysFeeder;
+    this.sysLighting = sysLighting;
     this.sysDashboard = sysDashboard;
     this.rpmShooterTop = rpmShooter;
     this.rpmShooterBottom = rpmShooter;
@@ -47,12 +51,13 @@ public class FireWhenReadyVelocity extends Command {
     this.percentOutputFeederBottom = percentOutputFeeder;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysShooter, sysFeeder, sysDashboard);
+    addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
   }
 
-  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, Dashboard sysDashboard)  {
+  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, LEDLights sysLighting, Dashboard sysDashboard)  {
     this.sysShooter = sysShooter;
     this.sysFeeder = sysFeeder;
+    this.sysLighting = sysLighting;
     this.sysDashboard = sysDashboard;
     this.rpmShooterTop = () -> sysDashboard.getTopShooterVelocityDashboard();
     this.rpmShooterBottom = () -> sysDashboard.getBottomShooterVelocityDashboard();
@@ -60,7 +65,7 @@ public class FireWhenReadyVelocity extends Command {
     this.percentOutputFeederBottom = () -> sysDashboard.getBottomFeederShootingSpeedDashboard();
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysShooter, sysFeeder, sysDashboard);
+    addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
   }
 
   // Called when the command is initially scheduled.
@@ -72,6 +77,7 @@ public class FireWhenReadyVelocity extends Command {
   public void execute() {
 
     sysShooter.runShooterVelocity(rpmShooterTop.getAsDouble(), rpmShooterBottom.getAsDouble());
+    sysLighting.setColorBoth(Constants.LEDs.LED_COLORS.SHOOTER_COLOR_ONE, Constants.LEDs.LED_COLORS.SHOOTER_COLOR_TWO);
     
     if (sysShooter.getShooterVelocity(Constants.Shooter.Motors.TOP_SHOOTER_PORTID) 
                 >= rpmShooterTop.getAsDouble() && 
@@ -88,6 +94,7 @@ public class FireWhenReadyVelocity extends Command {
 
     sysShooter.stopShooter();
     sysFeeder.stopFeeder();
+    sysLighting.setColorBoth(Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT, Constants.LEDs.LED_COLORS.TELEOP_COLOR_TWO_DEFAULT);
   }
 
   // Returns true when the command should end.
