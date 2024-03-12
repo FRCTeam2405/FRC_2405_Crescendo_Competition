@@ -256,7 +256,7 @@ public class Dashboard extends SubsystemBase {
         case "note3":
          autonChooser.addOption("Blue3Note3", new PathPlannerAuto("Blue3Note3"));
          autonChooser.addOption("Blue3Note32", new PathPlannerAuto("Blue3Note32"));
-         autonChooser.addOption("Blue3Note321", new PathPlannerAuto("Blue3Note213"));
+         autonChooser.addOption("Blue3Note321", new PathPlannerAuto("Blue3Note321"));
         case "note4":
 
         case "note8":
