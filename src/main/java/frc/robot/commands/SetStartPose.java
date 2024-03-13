@@ -53,13 +53,13 @@ public class SetStartPose extends InstantCommand {
       case Start2:
         startX = Constants.Auton.startPose.START_2_X;
         startY = Constants.Auton.startPose.START_2_Y;
-        startRotation = Constants.Auton.startPose.START_1_ROTATION;
+        startRotation = Constants.Auton.startPose.START_2_ROTATION;
         break;
       
       case Start3:
         startX = Constants.Auton.startPose.START_3_X;
         startY = Constants.Auton.startPose.START_3_Y;
-        startRotation = Constants.Auton.startPose.START_1_ROTATION;
+        startRotation = Constants.Auton.startPose.START_3_ROTATION;
         break;
 
       default:
