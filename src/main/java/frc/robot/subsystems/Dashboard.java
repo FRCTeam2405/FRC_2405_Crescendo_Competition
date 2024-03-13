@@ -182,7 +182,7 @@ public class Dashboard extends SubsystemBase {
 
   public void setDashboardAutonomous() {
 
-    startPoseChooser.setDefaultOption("NONE", "blue2");
+    startPoseChooser.setDefaultOption("NONE", "start2");
 
     startPoseChooser.addOption("start1", "start1");
     startPoseChooser.addOption("start2", "start2");
@@ -194,8 +194,9 @@ public class Dashboard extends SubsystemBase {
       .withPosition(0, 0)
       .withSize(2, 1);
 
-    firstNoteChooser.setDefaultOption("NONE", "note2");
+    firstNoteChooser.setDefaultOption("NONE", "NONE");
 
+    firstNoteChooser.addOption("NONE", "NONE");
     firstNoteChooser.addOption("note1", "note1");
     firstNoteChooser.addOption("note2", "note2");
     firstNoteChooser.addOption("note3", "note3");
@@ -208,11 +209,13 @@ public class Dashboard extends SubsystemBase {
       .withPosition(0, 1)
       .withSize(2, 1);
 
-    autonChooser.setDefaultOption("NONE", new PathPlannerAuto("Blue2Note2"));
+    autonChooser.setDefaultOption("NONE", new PathPlannerAuto("Start2Null"));
 
     switch (startPoseChooser.getSelected()) {
       case "start1":
        switch (firstNoteChooser.getSelected()) {
+        case "NONE":
+         autonChooser.addOption("Start1Null", new PathPlannerAuto("Start1Null"));
         case "note1":
          autonChooser.addOption("Start1Note1", new PathPlannerAuto("Start1Note1"));
          autonChooser.addOption("Start1Note1amp", new PathPlannerAuto("Start1Note1amp"));
@@ -230,6 +233,8 @@ public class Dashboard extends SubsystemBase {
        }
       case "start2":
        switch (firstNoteChooser.getSelected()) {
+        case "NONE":
+         autonChooser.addOption("Start2Null", new PathPlannerAuto("Start2Null"));
         case "note1":
          autonChooser.addOption("Start2Note12", new PathPlannerAuto("Start2Note12"));
          autonChooser.addOption("Start2Note123", new PathPlannerAuto("Start2Note123"));
@@ -246,6 +251,8 @@ public class Dashboard extends SubsystemBase {
        }
       case "start3":
        switch (firstNoteChooser.getSelected()) {
+        case "NONE":
+         autonChooser.addOption("Start3Null", new PathPlannerAuto("Start3Null"));
         case "note1":
 
         case "note2":

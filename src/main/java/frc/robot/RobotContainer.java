@@ -163,9 +163,9 @@ public class RobotContainer {
     // This must be done before initializing autos
     NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive, limelight));
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
-    NamedCommands.registerCommand("SetBlue1", new SetStartPose(swerveDrive, StartPosition.Start1));
-    NamedCommands.registerCommand("SetBlue2", new SetStartPose(swerveDrive, StartPosition.Start2));
-    NamedCommands.registerCommand("SetBlue3", new SetStartPose(swerveDrive, StartPosition.Start3));
+    NamedCommands.registerCommand("SetStart1", new SetStartPose(swerveDrive, StartPosition.Start1));
+    NamedCommands.registerCommand("SetStart2", new SetStartPose(swerveDrive, StartPosition.Start2));
+    NamedCommands.registerCommand("SetStart3", new SetStartPose(swerveDrive, StartPosition.Start3));
 
     // Comp bot only
     NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
@@ -180,27 +180,25 @@ public class RobotContainer {
     testAutonChooser.addOption("RotationTest", new PathPlannerAuto("Rotation test"));
     testAutonChooser.addOption("Right Turn", new PathPlannerAuto("Left Turn"));
     testAutonChooser.addOption("Right Contained Turn", new PathPlannerAuto("rightTurn"));
-    testAutonChooser.addOption("Null Blue 2", new PathPlannerAuto("Blue2Null"));
 
     SmartDashboard.putData("testAutonDropdown", testAutonChooser);
   }
 
   public Command getAutonomousCommand() {
-    return testAutonChooser.getSelected();
-  //  if (sysDashboard.getAutonChooser().getSelected() != null && testAutonChooser.getSelected() != null) {
-  //   Commands.print("2 autonomous commands selected");
-  //   return null;
-  //  } else {
-  //   if (testAutonChooser.getSelected() != null) {
-  //    return testAutonChooser.getSelected();
-  //   } else {
-  //    if (sysDashboard.getAutonChooser().getSelected() != null) {
-  //     return sysDashboard.getAutonChooser().getSelected();
-  //    } else {
-  //     Commands.print("No autonomous commands selected");
-  //     return null;
-  //    }
-  //   }
-  //  }
+   if (sysDashboard.getAutonChooser().getSelected() != null && testAutonChooser.getSelected() != null) {
+    Commands.print("2 autonomous commands selected");
+    return null;
+   } else {
+    if (testAutonChooser.getSelected() != null) {
+     return testAutonChooser.getSelected();
+    } else {
+     if (sysDashboard.getAutonChooser().getSelected() != null) {
+      return sysDashboard.getAutonChooser().getSelected();
+     } else {
+      Commands.print("No autonomous commands selected");
+      return null;
+     }
+    }
+   }
   }
 }
