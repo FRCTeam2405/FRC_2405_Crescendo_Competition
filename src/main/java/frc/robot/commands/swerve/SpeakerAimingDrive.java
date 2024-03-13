@@ -61,6 +61,7 @@ public class SpeakerAimingDrive extends Command {
   public void execute() {
     // Sets time measurement recieved
     double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
+    currentPose = swerveDrive.getPose();
 
     // Makes joystick inputs useable for command
     double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
