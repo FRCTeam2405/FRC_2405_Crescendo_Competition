@@ -106,7 +106,7 @@ public class SpeakerAimingDrive extends Command {
     double directDistance = Math.hypot(floorDistance, offsetZ);
 
     // calculate pitch and yaw from the shooter to the speaker
-    desiredYaw = new Rotation2d(offsetX, offsetY);
+    desiredYaw = new Rotation2d(offsetX, offsetY).rotateBy(Rotation2d.fromDegrees(90));
     
     // Deadband so we don't oscillate
     if (Math.abs(currentPose.getRotation().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
