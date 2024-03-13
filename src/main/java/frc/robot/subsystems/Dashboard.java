@@ -184,8 +184,6 @@ public class Dashboard extends SubsystemBase {
 
     startPoseChooser.setDefaultOption("NONE", "blue2");
 
-    startPoseChooser.setDefaultOption("NONE", "blue2");
-
     startPoseChooser.addOption("start1", "start1");
     startPoseChooser.addOption("start2", "start2");
     startPoseChooser.addOption("start3", "start3");
