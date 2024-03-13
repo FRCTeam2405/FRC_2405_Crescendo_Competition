@@ -72,7 +72,7 @@ public class RobotContainer {
 
     configureBindings();
     configureAutonomous();
-    SmartDashboard.putNumber(Constants.Dashboard.Utility.Widgets.ROBOT_EMOTION_SETTING_NAME, codriverController.getRawAxis(Constants.Controllers.Guitar.ROBOT_EMOTION_ID));
+    // SmartDashboard.putNumber(Constants.Dashboard.Utility.Widgets.ROBOT_EMOTION_SETTING_NAME, codriverController.getRawAxis(Constants.Controllers.Guitar.ROBOT_EMOTION_ID));
   }
 
   // Set up the driver controls

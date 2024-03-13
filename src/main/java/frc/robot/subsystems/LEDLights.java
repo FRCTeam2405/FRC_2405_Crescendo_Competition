@@ -33,6 +33,8 @@ public class LEDLights extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber(Constants.Dashboard.Utility.Widgets.ROBOT_EMOTION_SETTING_NAME, 0);
+    
     // This method will be called once per scheduler run
   }
 
@@ -55,7 +57,7 @@ public class LEDLights extends SubsystemBase {
 
   public void setRobotEmotion() {
     double emotionSetting = SmartDashboard.getNumber(Constants.Dashboard.Utility.Widgets.ROBOT_EMOTION_SETTING_NAME, 0);
-    
+
     if (emotionSetting == Constants.Controllers.Guitar.ROBOT_EMOTION_SETTING.SADNESS) {
       LEDLightsOne.set(Constants.LEDs.ROBOT_EMOTIONS.SADNESS_COLOR_ONE);
       LEDLightsTwo.set(Constants.LEDs.ROBOT_EMOTIONS.SADNESS_COLOR_TWO);
