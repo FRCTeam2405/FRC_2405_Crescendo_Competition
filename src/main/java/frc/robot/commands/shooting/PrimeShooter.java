@@ -8,18 +8,32 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.shooting.Shooter;
+import frc.robot.Constants;
+import frc.robot.subsystems.LEDLights;
 
 public class PrimeShooter extends Command {
 
   private final Shooter sysShooter;
+  private final LEDLights sysLighting;
   private final DoubleSupplier rpmShooterTop, rpmShooterBottom;
+
   /** Creates a new PrimeShooter. */
-  public PrimeShooter(Shooter sysShooter, DoubleSupplier rpmShooterTop, DoubleSupplier rpmShooterBottom) {
+  public PrimeShooter(Shooter sysShooter, LEDLights sysLighting, DoubleSupplier rpmShooterTop, DoubleSupplier rpmShooterBottom) {
     this.sysShooter = sysShooter;
+    this.sysLighting = sysLighting;
     this.rpmShooterTop = rpmShooterTop;
     this.rpmShooterBottom = rpmShooterBottom;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysShooter);
+    addRequirements(sysShooter, sysLighting);
+  }
+
+  public PrimeShooter(Shooter sysShooter, LEDLights sysLighting) {
+    this.sysShooter = sysShooter;
+    this.sysLighting = sysLighting;
+    this.rpmShooterTop = () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT;
+    this.rpmShooterBottom = () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(sysShooter, sysLighting);
   }
 
   // Called when the command is initially scheduled.
@@ -31,13 +45,15 @@ public class PrimeShooter extends Command {
   public void execute() {
 
     sysShooter.runShooterVelocity(rpmShooterTop.getAsDouble(), rpmShooterBottom.getAsDouble());
+    sysLighting.setColorBoth(Constants.LEDs.LED_COLORS.SHOOTER_COLOR_ONE, Constants.LEDs.LED_COLORS.SHOOTER_COLOR_TWO);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+
     sysShooter.stopShooter();
+    sysLighting.setRobotEmotion();
   }
 
   // Returns true when the command should end.
