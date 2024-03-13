@@ -266,7 +266,12 @@ public class Dashboard extends SubsystemBase {
         case "note8":
         
        }
-      
+
+       dashboardEntryRobotStartPose = dashboardTabAuto.add(
+        "Auton", autonChooser)
+        .withWidget(BuiltInWidgets.kComboBoxChooser)
+        .withPosition(0, 2)
+        .withSize(2, 1);
     }
 
     SmartDashboard.putData("testAutonDropdown", testAutonChooser);
