@@ -71,6 +71,6 @@ public class SetStartPose extends InstantCommand {
     Pose2d pose = new Pose2d(startX, startY, rotation);
 
     // reset pose with our initial auton position
-    swerveDrive.resetPose(rotation, swerveDrive.getModulePositions(), pose);
+    swerveDrive.resetPose(swerveDrive.getYaw(), swerveDrive.getModulePositions(), pose);
   }
 }
