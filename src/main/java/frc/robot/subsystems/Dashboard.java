@@ -182,6 +182,10 @@ public class Dashboard extends SubsystemBase {
 
   public void setDashboardAutonomous() {
 
+    startPoseChooser.setDefaultOption("NONE", "blue2");
+
+    startPoseChooser.setDefaultOption("NONE", "blue2");
+
     startPoseChooser.addOption("start1", "start1");
     startPoseChooser.addOption("start2", "start2");
     startPoseChooser.addOption("start3", "start3");
@@ -191,6 +195,8 @@ public class Dashboard extends SubsystemBase {
       .withWidget(BuiltInWidgets.kComboBoxChooser)
       .withPosition(0, 0)
       .withSize(2, 1);
+
+    firstNoteChooser.setDefaultOption("NONE", "note2");
 
     firstNoteChooser.addOption("note1", "note1");
     firstNoteChooser.addOption("note2", "note2");
@@ -203,6 +209,8 @@ public class Dashboard extends SubsystemBase {
       .withWidget(BuiltInWidgets.kComboBoxChooser)
       .withPosition(0, 1)
       .withSize(2, 1);
+
+    autonChooser.setDefaultOption("NONE", new PathPlannerAuto("Blue2Note2"));
 
     switch (startPoseChooser.getSelected()) {
       case "start1":
@@ -247,7 +255,7 @@ public class Dashboard extends SubsystemBase {
         case "note3":
          autonChooser.addOption("Start3Note3", new PathPlannerAuto("Start3Note3"));
          autonChooser.addOption("Start3Note32", new PathPlannerAuto("Start3Note32"));
-         autonChooser.addOption("Start3Note321", new PathPlannerAuto("Start3Note213"));
+         autonChooser.addOption("Start3Note321", new PathPlannerAuto("Start3Note321"));
         case "note4":
 
         case "note8":
