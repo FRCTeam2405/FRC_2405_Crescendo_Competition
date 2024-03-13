@@ -89,6 +89,10 @@ public class SwerveContainer implements Subsystem {
     // Put the measured team number to the dashboard for diagnostics
     SmartDashboard.putNumber("robotTeamNumber", robotTeamNumber);
 
+    Pose2d pose = inner.getPose();
+    SmartDashboard.putNumber("poseX", pose.getX());
+    SmartDashboard.putNumber("poseY", pose.getY());
+    SmartDashboard.putNumber("poseRotation", pose.getRotation().getDegrees());
     // Update odometry
     // updatePose();
   }
