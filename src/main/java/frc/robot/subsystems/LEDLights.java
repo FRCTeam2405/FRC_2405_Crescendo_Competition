@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -13,6 +15,8 @@ public class LEDLights extends SubsystemBase {
 
   private PWMSparkMax LEDLightsOne;
   private PWMSparkMax LEDLightsTwo;
+
+  private boolean isEndgame = false;
 
   /** Creates a new LEDLights. */
   public LEDLights() {
@@ -35,22 +39,43 @@ public class LEDLights extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber(Constants.Dashboard.Utility.Widgets.ROBOT_EMOTION_SETTING_NAME, 0);
     
+    // we force an endgame color when there are 30 seconds left in teleop
+    if(!isEndgame && DriverStation.isTeleop() && Timer.getMatchTime() <= 30.0) {
+      isEndgame = true;
+
+      LEDLightsOne.set(Constants.LEDs.LED_COLORS.SOLID_RED);
+      LEDLightsTwo.set(Constants.LEDs.LED_COLORS.SOLID_RED);
+    }
+
     // This method will be called once per scheduler run
   }
 
   public void setColorOne(double Color) {
+    if(isEndgame) {
+      Color = Constants.LEDs.LED_COLORS.SOLID_RED;
+    }
     LEDLightsOne.set(Color);
   }
   public void setColorTwo(double Color) {
+    if(isEndgame) {
+      Color = Constants.LEDs.LED_COLORS.SOLID_RED;
+    }
     LEDLightsTwo.set(Color);
   }
 
   public void setColorBoth(double color) {
+    if(isEndgame) {
+      color = Constants.LEDs.LED_COLORS.SOLID_RED;
+    }
     LEDLightsOne.set(color);
     LEDLightsTwo.set(color);
   }
 
   public void setColorBoth(double colorOne, double colorTwo) {
+    if(isEndgame) {
+      colorOne = Constants.LEDs.LED_COLORS.SOLID_RED;
+      colorTwo = Constants.LEDs.LED_COLORS.SOLID_RED;
+    }
     LEDLightsOne.set(colorOne);
     LEDLightsTwo.set(colorTwo);
   }
