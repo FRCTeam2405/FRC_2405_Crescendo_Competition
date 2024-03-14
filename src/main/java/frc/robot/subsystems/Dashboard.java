@@ -215,7 +215,8 @@ public class Dashboard extends SubsystemBase {
       case "start1":
        switch (firstNoteChooser.getSelected()) {
         case "NONE":
-         autonChooser.addOption("Start1Null", new PathPlannerAuto("Start1Null"));
+         autonChooser.addOption("Blue1Null", new PathPlannerAuto("Blue1Null"));
+         autonChooser.addOption("Red1Null", new PathPlannerAuto("Red1Null"));
         case "note1":
          autonChooser.addOption("Start1Note1", new PathPlannerAuto("Start1Note1"));
          autonChooser.addOption("Start1Note1amp", new PathPlannerAuto("Start1Note1amp"));
@@ -234,7 +235,8 @@ public class Dashboard extends SubsystemBase {
       case "start2":
        switch (firstNoteChooser.getSelected()) {
         case "NONE":
-         autonChooser.addOption("Start2Null", new PathPlannerAuto("Start2Null"));
+         autonChooser.addOption("Blue2Null", new PathPlannerAuto("Blue2Null"));
+         autonChooser.addOption("Red2Null", new PathPlannerAuto("Red2Null"));
         case "note1":
          autonChooser.addOption("Start2Note12", new PathPlannerAuto("Start2Note12"));
          autonChooser.addOption("Start2Note123", new PathPlannerAuto("Start2Note123"));
@@ -252,7 +254,8 @@ public class Dashboard extends SubsystemBase {
       case "start3":
        switch (firstNoteChooser.getSelected()) {
         case "NONE":
-         autonChooser.addOption("Start3Null", new PathPlannerAuto("Start3Null"));
+         autonChooser.addOption("Blue3Null", new PathPlannerAuto("Blue3Null"));
+         autonChooser.addOption("Red3Null", new PathPlannerAuto("Red3Null"));
         case "note1":
 
         case "note2":
