@@ -59,15 +59,15 @@ public class SpeakerAimingDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Sets time measurement recieved
-    double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
-    currentPose = swerveDrive.getPose();
-
-    // Makes joystick inputs useable for command
-    double correctedMoveX = Math.pow(moveX.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
-    double correctedMoveY = Math.pow(moveY.getAsDouble(), 3) * Constants.Swerve.MAX_SPEED;
+    // Don't aim the robot towards our speaker if we don't know what team we're on.
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+    if(alliance.isEmpty()) {
+      return;
+    }
     
-    // Only check limelight once per second
+    // Only check limelight once per second to avoid overloading network
+    double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
+
     if (timestamp - lastUpdateTime >= 1) {
       measuredPose = limelight.getMeasuredPose();
 
@@ -78,19 +78,15 @@ public class SpeakerAimingDrive extends Command {
      }
     }
 
-    // Relative positions from the robot to the speaker.
+    currentPose = swerveDrive.getPose();
+
+    // Relative positions from the robot to the speaker
     double offsetX;
     double offsetY;
     double offsetZ;
 
-    // Can't aim towards our shooter if we don't know what team we're on.
-    Optional<Alliance> alliance = DriverStation.getAlliance();
-    if(alliance.isEmpty()) {
-      return;
-    }
-
-    // Calculate XY offset between robot and speaker,
-    // convert to angle, then convert to field-centric angle
+    // Calculate XY offset between robot and speaker
+    // and the angles between them
     if(alliance.get() == Alliance.Blue) {
       offsetX = Constants.Field.BLUE_SPEAKER_X - currentPose.getX();
       offsetY = Constants.Field.BLUE_SPEAKER_Y - currentPose.getY();
@@ -101,18 +97,31 @@ public class SpeakerAimingDrive extends Command {
       offsetZ = Constants.Field.RED_SPEAKER_Z - Constants.Shooter.SHOOTER_HEIGHT;
     }
 
-    // calculate direct distance and ground distance to the speaker
-    double floorDistance = Math.hypot(offsetX, offsetY);
-    double directDistance = Math.hypot(floorDistance, offsetZ);
+    // calculate distances to the speaker for shooter calculations
+    // double floorDistance = Math.hypot(offsetX, offsetY);
+    // double directDistance = Math.hypot(floorDistance, offsetZ);
 
-    // calculate pitch and yaw from the shooter to the speaker
+    // calculate angle to the speaker so we can aim that direction
     desiredYaw = new Rotation2d(offsetX, offsetY);
-    
-    // Deadband so we don't oscillate
+    desiredYaw.minus(Rotation2d.fromDegrees(90));
+
+    // normalizes input to [-MAX_SPEED, MAX_SPEED]
+    double correctedMoveX = moveX.getAsDouble() * Constants.Swerve.MAX_SPEED;
+    double correctedMoveY = moveY.getAsDouble() * Constants.Swerve.MAX_SPEED;
+
+    // Invert inputs if we're on the red side of the field
+    // so that movement is still relative to driver
+    if(alliance.get() == Alliance.Red) {
+      correctedMoveX *= -1;
+      correctedMoveY *= -1;
+    }
+  
+    // Rotation deadband so we don't oscillate
     if (Math.abs(currentPose.getRotation().getDegrees() - (desiredYaw.getDegrees() - 90)) > 0.25) {
-      swerveDrive.driveAbsolute(correctedMoveX, correctedMoveY, desiredYaw.minus(Rotation2d.fromDegrees(90)));
+      desiredYaw = swerveDrive.getYaw();
     }
 
+    swerveDrive.driveAbsolute(correctedMoveX, correctedMoveY, desiredYaw);
   }
 
   // Called once the command ends or is interrupted.
