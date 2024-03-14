@@ -59,10 +59,10 @@ public class TeleopDrive extends Command {
     // so that movement is still relative to driver
     // Requires at least one vision measurement to be accurate
     //TODO! test this
-    // if(alliance.get() == Alliance.Red) {
-    //   correctedMoveX *= -1;
-    //   correctedMoveY *= -1;
-    // }
+    if(alliance.get() == Alliance.Red) {
+      correctedMoveX *= -1;
+      correctedMoveY *= -1;
+    }
 
     swerveDrive.driveRelative(correctedMoveX, correctedMoveY, correctedTurnTheta);
     }
