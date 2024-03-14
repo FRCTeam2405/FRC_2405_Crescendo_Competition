@@ -101,8 +101,8 @@ public final class Constants {
             public static final double TOP_SHOOTER_VELOCITY_MAX = 6500;
             public static final double BOTTOM_SHOOTER_VELOCITY_MAX = 6500;
 
-            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 5000; 
-            public static final double BOTTOM_SHOOTER_VELOCITY_DEFAULT = 5000;
+            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 3500; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_DEFAULT = 1600;
 
             public static final double TOP_SHOOTER_VELOCITY_AMP = 1000; 
             public static final double BOTTOM_SHOOTER_VELOCITY_AMP = 1000;
@@ -153,7 +153,7 @@ public final class Constants {
         public static final class Motors {
             public static final int ARM_PORTID = 40;
 
-            public static final boolean ARM_INVERTED = false;
+            public static final boolean ARM_INVERTED = true;
 
             public static final double ARM_SPEED_MAX = 0.50;
             public static final double ARM_VELOCITY = 30;
@@ -224,18 +224,19 @@ public final class Constants {
 
         public static final class Guitar {
             // Port IDs for the buttons on the controller
-            public static final int GREEN_FRET = 4;
-            public static final int RED_FRET = 3;
-            public static final int YELLOW_FRET = 2;
-            public static final int BLUE_FRET = 1;
-            public static final int ORANGE_FRET = 7;
+            public static final int GREEN_FRET = 1;
+            public static final int RED_FRET = 2;
+            public static final int YELLOW_FRET = 4;
+            public static final int BLUE_FRET = 3;
+            public static final int ORANGE_FRET = 5;
 
-            public static final int OPTION_A_BUTTON = 10;
-            public static final int OPTION_B_BUTTON = 9;
+            public static final int OPTION_A_BUTTON = 7;
+            public static final int OPTION_B_BUTTON = 8;
 
             // Port IDs for the axes on the controller (joystick)
             public static final int JOYSTICK_X = 0;
             public static final int JOYSTICK_Y = 1;
+            public static final int ROBOT_EMOTION_ID = 2;
 
             public static final double X_DEADBAND = 0.05;
             public static final double Y_DEADBAND = 0.05;
@@ -247,6 +248,15 @@ public final class Constants {
             public static final int STRUM_UP = 0;
             public static final int STRUM_DOWN = 180;
             public static final int STRUM_NEUTRAL = -1;
+
+            public static final class ROBOT_EMOTION_SETTING {
+
+                public static final double SADNESS = 0.1;
+                public static final double FEAR = 0.3;
+                public static final double JOY = 0.5;
+                public static final double DISGUST = 0.7;
+                public static final double ANGER = 0.9;
+            }
         }
 
         public static final class AprilTags {
@@ -279,7 +289,17 @@ public final class Constants {
 
             //These are imported colors from last season.
             //This color will be what the LEDs set to when the robot is turned on
-            public static final double LED_SETTING_DEFAULT = -0.95;
+            public static final double TELEOP_COLOR_ONE_DEFAULT = -0.95;
+            public static final double TELEOP_COLOR_TWO_DEFAULT = -0.91;
+
+            public static final double INTAKE_COLOR_ONE = -0.29;
+            public static final double INTAKE_COLOR_TWO = -0.15;
+
+            public static final double INTAKE_REVERSE_COLOR_ONE = -0.31;
+            public static final double INTAKE_REVERSE_COLOR_TWO = -0.17;
+
+            public static final double SHOOTER_COLOR_ONE = -0.21;
+            public static final double SHOOTER_COLOR_TWO = -0.19;
 
             public static final double STROBE_RED = -0.11;
             public static final double HEARTBEAT_RED = -0.25;
@@ -293,6 +313,24 @@ public final class Constants {
 
         public static final class LED_ACTIONS {
             public static final double INTAKE_INVALID = -0.11;
+        }
+
+        public static final class ROBOT_EMOTIONS {
+
+            public static final double SADNESS_COLOR_ONE = -0.41;
+            public static final double SADNESS_COLOR_TWO = -0.65;
+
+            public static final double FEAR_COLOR_ONE = -0.27;
+            public static final double FEAR_COLOR_TWO = -0.29;
+
+            public static final double JOY_COLOR_ONE = -0.87;
+            public static final double JOY_COLOR_TWO = -0.89;
+
+            public static final double DISGUST_COLOR_ONE = 0.07;
+            public static final double DISGUST_COLOR_TWO = -0.27;
+
+            public static final double ANGER_COLOR_ONE = -0.57;
+            public static final double ANGER_COLOR_TWO = -0.85;
         }
     }
 
@@ -324,6 +362,8 @@ public final class Constants {
                 public static final String ARM_VELOCITY_SETTING_NAME = "Arm Velocity Setting";
                 public static final String ARM_POSITION_SETTING_NAME = "Arm Position Setting";
                 public static final String ARM_POSITION_NAME = "Arm Position";
+
+                public static final String ROBOT_EMOTION_SETTING_NAME = "Robot Emotion Setting";
 
                 public static final String PHANTOM_NAME = "Dont look here";
             }

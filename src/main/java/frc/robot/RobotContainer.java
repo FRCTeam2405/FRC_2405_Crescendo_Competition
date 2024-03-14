@@ -57,7 +57,7 @@ public class RobotContainer {
   private Limelight limelight = new Limelight();
 
   // Comp bot only
-  // private LEDLights sysLighting = new LEDLights();
+  private LEDLights sysLighting = new LEDLights(Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT, Constants.LEDs.LED_COLORS.TELEOP_COLOR_TWO_DEFAULT);
   private Intake sysIntake = new Intake();
   private Feeder sysFeeder = new Feeder();
   private Shooter sysShooter = new Shooter();
@@ -74,6 +74,7 @@ public class RobotContainer {
 
     configureBindings();
     configureAutonomous();
+    // SmartDashboard.putNumber(Constants.Dashboard.Utility.Widgets.ROBOT_EMOTION_SETTING_NAME, codriverController.getRawAxis(Constants.Controllers.Guitar.ROBOT_EMOTION_ID));
   }
 
   // Set up the driver controls
@@ -99,40 +100,57 @@ public class RobotContainer {
     // Comp bot only
 
     // intake commands
-    driverController.button(
+    
+    if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME + 10) {
+      driverController.button(
         Constants.Controllers.Taranis.INTAKE_NOTE_BUTTON)
-        .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard));
-    // figure out later
-    // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.HOME - 10) {
-    // }
-    // else {
-    //   sysLighting.SetColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
-    //   sysLighting.SetColorTwo(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
-    // }
+        .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysLighting, sysDashboard));
+    }
+    else {
+      sysLighting.setColorOne(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+      sysLighting.setColorTwo(Constants.LEDs.LED_ACTIONS.INTAKE_INVALID);
+    }
 
     driverController.button(
       Constants.Controllers.Taranis.REVERSE_INTAKE_NOTE_BUTTON)
-      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysDashboard, 
+      .whileTrue(new IntakeNote(sysIntake, sysFeeder, sysLighting, sysDashboard, 
       () -> Constants.Intake.Motors.RIGHT_INTAKE_REVERSE_SPEED_MAX, 
       () -> Constants.Feeder.Motors.REVERSE_FEEDER_INTAKING_SPEED));
 
 
+
     // shooter command
 
-    codriverController.pov(
+    if (sysArm.getArmPosition() >= Constants.Arm.SetPoints.AMP - 10) {
+       codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
-        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
+        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
+        () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
+        () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP,
+        () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
+        () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
 
-    // if (sysArm.getArmPosition() <= Constants.Arm.SetPoints.AMP + 10) {
-    //    codriverController.pov(
-    //     Constants.Controllers.Guitar.STRUM_DOWN)
-    //     .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard,
-    //     () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
-    //     () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED));
-    // }
-    // else {
-      
-    // }
+        codriverController.pov(
+        Constants.Controllers.Guitar.STRUM_UP)
+        .onTrue(new PrimeShooter(sysShooter, sysLighting, 
+                  () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
+                  () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP));
+    }
+    else {
+      codriverController.pov(
+        Constants.Controllers.Guitar.STRUM_DOWN)
+        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
+                   () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
+                   () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT,
+                   () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
+                   () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+
+      codriverController.pov(
+        Constants.Controllers.Guitar.STRUM_UP)
+        .onTrue(new PrimeShooter(sysShooter, sysLighting, 
+              () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
+              () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT));
+    }
     
     // arm commands
     codriverController.button(Constants.Controllers.Guitar.RED_FRET)
@@ -171,8 +189,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("SetRed3", new SetStartPose(swerveDrive, StartPosition.Red3));
 
     // Comp bot only
-    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
-    NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysDashboard));
+    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard));
+    NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysLighting, sysDashboard));
 
     // Set a default autonomous to prevent errors
     testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));

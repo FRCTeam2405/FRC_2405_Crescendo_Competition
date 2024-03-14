@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
@@ -17,9 +18,9 @@ import frc.robot.Constants;
 public class Arm extends SubsystemBase {
 
   private TalonFX motorArm;
+  private Slot0Configs motorArmConfig;
   private PositionVoltage motorPositionVoltage;
   private NeutralOut motorBreak;
-  private TalonFXConfiguration motorArmConfig;
 
   /** Creates a new Arm. */
   public Arm() {
@@ -28,29 +29,19 @@ public class Arm extends SubsystemBase {
     motorArm.setInverted(Constants.Arm.Motors.ARM_INVERTED);
     motorArm.setNeutralMode(NeutralModeValue.Brake);
 
-    motorPositionVoltage = new PositionVoltage(
-                            0, 
-                            0, 
-                            false, 
-                            0, 
-                            Constants.Arm.Encoder.ProfileZero.PROFILE_ID, 
-                            false, 
-                            false, 
-                            false);
+    
 
     motorBreak = new NeutralOut();
-    motorArmConfig = new TalonFXConfiguration();
-    motorArmConfig.Slot0.kP = Constants.Arm.Encoder.ProfileZero.GAIN_P;
-    motorArmConfig.Slot0.kD = Constants.Arm.Encoder.ProfileZero.GAIN_D;
-    motorArmConfig.Voltage.PeakForwardVoltage = Constants.Arm.Encoder.ProfileZero.PEAK_FORWARD_VOLTAGE;
-    motorArmConfig.Voltage.PeakReverseVoltage = Constants.Arm.Encoder.ProfileZero.PEAK_REVERSE_VOLTAGE;
+    motorArmConfig = new Slot0Configs();
+    motorArmConfig.kP = Constants.Arm.Encoder.ProfileZero.GAIN_P;
+    motorArmConfig.kD = Constants.Arm.Encoder.ProfileZero.GAIN_D;
     motorArm.getConfigurator().apply(motorArmConfig);
-    motorArm.setPosition(0);
+    motorPositionVoltage = new PositionVoltage(0).withSlot(Constants.Arm.Encoder.ProfileZero.PROFILE_ID);
   }
 
   public void moveArmToPosition(double newSetPoint) {
 
-    motorArm.setControl(motorPositionVoltage.withPosition(-newSetPoint));
+    motorArm.setControl(motorPositionVoltage.withPosition(newSetPoint));
   }
 
   public double getArmPosition() {
