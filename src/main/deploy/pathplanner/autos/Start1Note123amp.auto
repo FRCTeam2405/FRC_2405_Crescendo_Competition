@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.38,
-      "y": 5.55
+      "x": 0.71,
+      "y": 6.71
     },
-    "rotation": 0
+    "rotation": 59.46
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SetStartPose"
+            "name": "SetStart1"
           }
         },
         {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Blue2Note1"
+                  "pathName": "Start1Note1"
                 }
               },
               {
@@ -49,9 +49,15 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Note1Amp"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "RotateToSpeaker"
+            "name": "AimAtAmp"
           }
         },
         {
@@ -67,7 +73,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note1Note2"
+                  "pathName": "AmpNote2"
                 }
               },
               {

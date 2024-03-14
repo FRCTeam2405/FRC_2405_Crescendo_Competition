@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0582129178569635,
-        "y": 6.035815434779349
+        "x": 2.1610126941184125,
+        "y": 5.21341722468776
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Start2"
     },
     {
       "anchor": {
-        "x": 2.895296810271618,
-        "y": 6.990384785778517
+        "x": 2.6456402107795283,
+        "y": 4.067934003488759
       },
       "prevControl": {
-        "x": 2.0728986001800274,
-        "y": 6.43232885750208
+        "x": 1.8966704123032585,
+        "y": 4.258847873688592
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Note3"
     }
   ],
   "rotationTargets": [
@@ -35,15 +35,15 @@
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": 38.26250812174218,
+      "waypointRelativePos": 0.65,
+      "rotationDegrees": -4.759999999999991,
       "rotateFast": false
     }
   ],
   "constraintZones": [
     {
       "name": "Slow Down For Note",
-      "minWaypointRelativePos": 0.8,
+      "minWaypointRelativePos": 0.85,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 0.5,
@@ -62,7 +62,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 39.522631271171136,
+    "rotation": -4.763641690726202,
     "rotateFast": false
   },
   "reversed": false,

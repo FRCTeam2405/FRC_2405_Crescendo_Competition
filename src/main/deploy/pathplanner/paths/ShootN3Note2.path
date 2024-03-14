@@ -12,20 +12,20 @@
         "y": 4.963760625195669
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ShootN3"
     },
     {
       "anchor": {
         "x": 2.9,
-        "y": 5.55
+        "y": 5.551187918118234
       },
       "prevControl": {
         "x": 2.0728986001800274,
-        "y": 5.800844517610323
+        "y": 5.802032435728558
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Note2"
     }
   ],
   "rotationTargets": [

@@ -11,7 +11,7 @@ public final class Constants {
         public static final double MAX_SPEED = 0.7;
         /** Swerve drive max angular speed, in radians per second. */
         // Max speed: ~1.5 rotations per second
-        public static final double MAX_ANGULAR_SPEED = 0.1 * (2 * Math.PI);
+        public static final double MAX_ANGULAR_SPEED = 0.2 * (2 * Math.PI);
 
         public static final HolonomicPathFollowerConfig PATH_PLANNER_CONFIG = 
             new HolonomicPathFollowerConfig(
@@ -38,6 +38,48 @@ public final class Constants {
 
             public static final double RIGHT_INTAKE_SPEED_MAX = 0.70;
             public static final double RIGHT_INTAKE_REVERSE_SPEED_MAX = -0.70;
+        }
+    }
+
+    public static final class Auton {
+
+        public static final class startPose {
+
+            public static final double BLUE_1_ROTATION = 1.03777277;
+
+            public static final double BLUE_2_ROTATION = 0;
+
+            public static final double BLUE_3_ROTATION = -1.04335783;
+
+            public static final double BLUE_1_X = 0.71;
+
+            public static final double BLUE_2_X = 1.38;
+
+            public static final double BLUE_3_X = 0.74;
+
+            public static final double BLUE_1_Y = 6.71;
+
+            public static final double BLUE_2_Y = 5.55;
+
+            public static final double BLUE_3_Y = 4.38;
+
+            public static final double RED_1_ROTATION = 4.1793654235897;
+
+            public static final double RED_2_ROTATION = 3.1415926535897;
+
+            public static final double RED_3_ROTATION = 2.1038198835897;
+
+            public static final double RED_1_X = 15.86938;
+
+            public static final double RED_2_X = 15.19938;
+
+            public static final double RED_3_X = 15.83938;
+
+            public static final double RED_1_Y = 4.38;
+
+            public static final double RED_2_Y = 5.55;
+
+            public static final double RED_3_Y = 6.71;
         }
     }
 

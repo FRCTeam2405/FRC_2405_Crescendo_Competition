@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.8128,
-  "robotLength": 0.9144,
+  "robotWidth": 0.923925,
+  "robotLength": 0.92,
   "holonomicMode": true,
   "pathFolders": [
     "Auton Command Test paths",

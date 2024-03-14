@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.74,
-      "y": 4.38
+      "x": 0.71,
+      "y": 6.71
     },
-    "rotation": -59.77999999999997
+    "rotation": 59.46
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SetStartPose"
+            "name": "SetStart1"
           }
         },
         {
@@ -36,44 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Blue3Note3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Note3ShootN3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RotateToSpeaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "ShootN3Note2"
+                  "pathName": "Start1Note1"
                 }
               },
               {

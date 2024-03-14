@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import frc.robot.commands.DirectDriveArm;
 import frc.robot.commands.GetVisionMeasurement;
 import frc.robot.commands.MoveArmToPosition;
+import frc.robot.commands.SetStartPose;
+import frc.robot.commands.SetStartPose.StartPosition;
 import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
@@ -179,7 +181,13 @@ public class RobotContainer {
     // This must be done before initializing autos
     NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive, limelight));
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
-    
+    NamedCommands.registerCommand("SetBlue1", new SetStartPose(swerveDrive, StartPosition.Blue1));
+    NamedCommands.registerCommand("SetBlue2", new SetStartPose(swerveDrive, StartPosition.Blue2));
+    NamedCommands.registerCommand("SetBlue3", new SetStartPose(swerveDrive, StartPosition.Blue3));
+    NamedCommands.registerCommand("SetRed1", new SetStartPose(swerveDrive, StartPosition.Red1));
+    NamedCommands.registerCommand("SetRed2", new SetStartPose(swerveDrive, StartPosition.Red2));
+    NamedCommands.registerCommand("SetRed3", new SetStartPose(swerveDrive, StartPosition.Red3));
+
     // Comp bot only
     NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard));
     NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysLighting, sysDashboard));

@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SetStartPose"
+            "name": "SetStart1"
           }
         },
         {
@@ -36,7 +36,44 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Blue1Note1"
+                  "pathName": "Start1Note1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note1Amp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtAmp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AmpNote2"
                 }
               },
               {
