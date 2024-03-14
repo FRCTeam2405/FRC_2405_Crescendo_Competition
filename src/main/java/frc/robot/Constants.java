@@ -59,8 +59,8 @@ public final class Constants {
             public static final double TOP_SHOOTER_VELOCITY_MAX = 6500;
             public static final double BOTTOM_SHOOTER_VELOCITY_MAX = 6500;
 
-            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 3500; 
-            public static final double BOTTOM_SHOOTER_VELOCITY_DEFAULT = 1600;
+            public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 5000; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_DEFAULT = 5000;
 
             public static final double TOP_SHOOTER_VELOCITY_AMP = 1000; 
             public static final double BOTTOM_SHOOTER_VELOCITY_AMP = 1000;
