@@ -163,9 +163,12 @@ public class RobotContainer {
     // This must be done before initializing autos
     NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive, limelight));
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
-    NamedCommands.registerCommand("SetStart1", new SetStartPose(swerveDrive, StartPosition.Start1));
-    NamedCommands.registerCommand("SetStart2", new SetStartPose(swerveDrive, StartPosition.Start2));
-    NamedCommands.registerCommand("SetStart3", new SetStartPose(swerveDrive, StartPosition.Start3));
+    NamedCommands.registerCommand("SetBlue1", new SetStartPose(swerveDrive, StartPosition.Blue1));
+    NamedCommands.registerCommand("SetBlue2", new SetStartPose(swerveDrive, StartPosition.Blue2));
+    NamedCommands.registerCommand("SetBlue3", new SetStartPose(swerveDrive, StartPosition.Blue3));
+    NamedCommands.registerCommand("SetRed1", new SetStartPose(swerveDrive, StartPosition.Red1));
+    NamedCommands.registerCommand("SetRed2", new SetStartPose(swerveDrive, StartPosition.Red2));
+    NamedCommands.registerCommand("SetRed3", new SetStartPose(swerveDrive, StartPosition.Red3));
 
     // Comp bot only
     NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysDashboard));
