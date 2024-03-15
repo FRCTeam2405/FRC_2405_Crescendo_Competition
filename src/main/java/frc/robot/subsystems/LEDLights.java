@@ -40,7 +40,7 @@ public class LEDLights extends SubsystemBase {
     SmartDashboard.putNumber(Constants.Dashboard.Utility.Widgets.ROBOT_EMOTION_SETTING_NAME, 0);
     
     // we force an endgame color when there are 30 seconds left in teleop
-    if(!isEndgame && DriverStation.isTeleop() && Timer.getMatchTime() <= 30.0) {
+    if(!isEndgame && DriverStation.isTeleopEnabled() && Timer.getMatchTime() <= 30.0) {
       isEndgame = true;
 
       LEDLightsOne.set(Constants.LEDs.LED_COLORS.SOLID_RED);
