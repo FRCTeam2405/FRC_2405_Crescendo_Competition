@@ -219,6 +219,7 @@ public class Dashboard extends SubsystemBase {
          autonChooser.addOption("Red1Null", new PathPlannerAuto("Red1Null"));
         case "note1":
          autonChooser.addOption("Start1Note1", new PathPlannerAuto("Start1Note1"));
+         autonChooser.addOption("Start1Note1speakershooting", new PathPlannerAuto("Start1Note1speakershooting"));
          autonChooser.addOption("Start1Note1amp", new PathPlannerAuto("Start1Note1amp"));
          autonChooser.addOption("Start1Note12", new PathPlannerAuto("Start1Note12"));
          autonChooser.addOption("Start1Note123", new PathPlannerAuto("Start1Note123"));
@@ -242,6 +243,7 @@ public class Dashboard extends SubsystemBase {
          autonChooser.addOption("Start2Note123", new PathPlannerAuto("Start2Note123"));
         case "note2":
          autonChooser.addOption("Start2Note2", new PathPlannerAuto("Start2Note2"));
+         autonChooser.addOption("Start2Note2speakershooting", new PathPlannerAuto("Start2Note2speakershooting"));
          autonChooser.addOption("Start2Note21", new PathPlannerAuto("Start2Note21"));
         case "note3":
          autonChooser.addOption("Start2Note32", new PathPlannerAuto("Start2Note32"));
@@ -261,6 +263,7 @@ public class Dashboard extends SubsystemBase {
         case "note2":
 
         case "note3":
+         autonChooser.addOption("Start3Note3speakershooting", new PathPlannerAuto("Start3Note3speakershooting"));
          autonChooser.addOption("Start3Note3", new PathPlannerAuto("Start3Note3"));
          autonChooser.addOption("Start3Note32", new PathPlannerAuto("Start3Note32"));
          autonChooser.addOption("Start3Note321", new PathPlannerAuto("Start3Note321"));
