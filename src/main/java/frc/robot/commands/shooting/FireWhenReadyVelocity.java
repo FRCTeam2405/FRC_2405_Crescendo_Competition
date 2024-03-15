@@ -37,6 +37,8 @@ public class FireWhenReadyVelocity extends Command {
     this.percentOutputFeederTop = percentOutputFeederTop;
     this.percentOutputFeederBottom = percentOutputFeederBottom;
 
+    timer = new Timer();
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
   }
@@ -52,6 +54,8 @@ public class FireWhenReadyVelocity extends Command {
     this.rpmShooterBottom = rpmShooter;
     this.percentOutputFeederTop = percentOutputFeeder;
     this.percentOutputFeederBottom = percentOutputFeeder;
+
+    timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
