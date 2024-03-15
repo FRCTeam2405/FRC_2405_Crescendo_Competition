@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.74,
-      "y": 4.38
+      "x": 0.71,
+      "y": 6.71
     },
-    "rotation": -59.77999999999997
+    "rotation": 59.46
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SetStart3"
+            "name": "SetRed1"
           }
         },
         {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Start3Note3"
+                  "pathName": "Start1Note1"
                 }
               },
               {
@@ -51,7 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Note3Start3"
+            "pathName": "Note1Start1"
           }
         },
         {

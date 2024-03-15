@@ -22,12 +22,6 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "Turn90Degrees"
-                }
-              },
-              {
                 "type": "wait",
                 "data": {
                   "waitTime": 2.0
@@ -46,12 +40,6 @@
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Turn90Degrees"
-                }
-              },
               {
                 "type": "wait",
                 "data": {
@@ -72,12 +60,6 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "Turn90Degrees"
-                }
-              },
-              {
                 "type": "wait",
                 "data": {
                   "waitTime": 2.0
@@ -96,12 +78,6 @@
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Turn90Degrees"
-                }
-              },
               {
                 "type": "wait",
                 "data": {
