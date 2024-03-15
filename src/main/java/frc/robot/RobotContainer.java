@@ -66,7 +66,7 @@ public class RobotContainer {
   private Arm sysArm = new Arm();
   private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
 
-  private UsbCamera camera = CameraServer.startAutomaticCapture();
+  // private UsbCamera camera = CameraServer.startAutomaticCapture();
 
   // Initialization code for our robot
   public RobotContainer() {
@@ -78,7 +78,7 @@ public class RobotContainer {
 
     // camera configuration
     // reduce resolution to reduce bandwidth
-    camera.setResolution(640, 480);
+    // camera.setResolution(640, 480);
 
     configureBindings();
     configureAutonomous();
