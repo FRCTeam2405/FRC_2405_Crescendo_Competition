@@ -224,6 +224,12 @@ public class Dashboard extends SubsystemBase {
     autonChooser.addOption("Red1Note1speakershooting", new PathPlannerAuto("Red1Note1speakershooting"));
     autonChooser.addOption("Red2Note2speakershooting", new PathPlannerAuto("Red2Note2speakershooting"));
     autonChooser.addOption("Red3Note3speakershooting", new PathPlannerAuto("Red3Note3speakershooting"));
+    autonChooser.addOption("Blue14Note1speakershooting", new PathPlannerAuto("Blue14Note1speakershooting"));
+    autonChooser.addOption("Blue25Note2speakershooting", new PathPlannerAuto("Blue25Note2speakershooting"));
+    autonChooser.addOption("Blue38Note3speakershooting", new PathPlannerAuto("Blue38Note3speakershooting"));
+    autonChooser.addOption("Red14Note1speakershooting", new PathPlannerAuto("Red14Note1speakershooting"));
+    autonChooser.addOption("Red25Note2speakershooting", new PathPlannerAuto("Red25Note2speakershooting"));
+    autonChooser.addOption("Red38Note3speakershooting", new PathPlannerAuto("Red38Note3speakershooting"));
 
     autonChooser.addOption("Blue 1, Hold Note 1", new PathPlannerAuto("Blue1HoldNote1"));
     autonChooser.addOption("Blue 2, Hold Note 2", new PathPlannerAuto("Blue2HoldNote2"));
