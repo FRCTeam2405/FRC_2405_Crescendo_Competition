@@ -57,6 +57,9 @@ public class SwerveContainer implements Subsystem {
       throw new RuntimeException(e);
     }
 
+    // try to disable slew rates
+    inner.swerveController.addSlewRateLimiters(null, null, null);
+
     // Disable YAGSL odometry thread so that we can
     // manually update odometry with vision stuff
     // inner.stopOdometryThread();
