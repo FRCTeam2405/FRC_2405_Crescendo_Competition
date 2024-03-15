@@ -11,6 +11,7 @@ import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.ReverseLimitValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -29,8 +30,6 @@ public class Arm extends SubsystemBase {
     motorArm.setInverted(Constants.Arm.Motors.ARM_INVERTED);
     motorArm.setNeutralMode(NeutralModeValue.Brake);
 
-    
-
     motorBreak = new NeutralOut();
     motorArmConfig = new Slot0Configs();
     motorArmConfig.kP = Constants.Arm.Encoder.ProfileZero.GAIN_P;
@@ -40,7 +39,6 @@ public class Arm extends SubsystemBase {
   }
 
   public void moveArmToPosition(double newSetPoint) {
-
     motorArm.setControl(motorPositionVoltage.withPosition(newSetPoint));
   }
 
@@ -58,6 +56,10 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if(motorArm.getReverseLimit().getValue() == ReverseLimitValue.ClosedToGround) {
+      motorArm.setPosition(0);
+    }
+    
     // This method will be called once per scheduler run
   }
 }
