@@ -217,6 +217,7 @@ public class Dashboard extends SubsystemBase {
         case "NONE":
          autonChooser.addOption("Blue1Null", new PathPlannerAuto("Blue1Null"));
          autonChooser.addOption("Red1Null", new PathPlannerAuto("Red1Null"));
+         break;
         case "note1":
          autonChooser.addOption("Start1Note1", new PathPlannerAuto("Start1Note1"));
          autonChooser.addOption("Start1Note1speakershooting", new PathPlannerAuto("Start1Note1speakershooting"));
@@ -224,61 +225,71 @@ public class Dashboard extends SubsystemBase {
          autonChooser.addOption("Start1Note12", new PathPlannerAuto("Start1Note12"));
          autonChooser.addOption("Start1Note123", new PathPlannerAuto("Start1Note123"));
          autonChooser.addOption("Start1Note123amp", new PathPlannerAuto("Start1Note123amp"));
+         break;
         case "note2":
-
+          break;
         case "note3":
-
+          break;
         case "note4":
-
+          break;
         case "note8":
-
+          break;
        }
+       break;
       case "start2":
        switch (firstNoteChooser.getSelected()) {
         case "NONE":
          autonChooser.addOption("Blue2Null", new PathPlannerAuto("Blue2Null"));
          autonChooser.addOption("Red2Null", new PathPlannerAuto("Red2Null"));
+         break;
         case "note1":
          autonChooser.addOption("Start2Note12", new PathPlannerAuto("Start2Note12"));
          autonChooser.addOption("Start2Note123", new PathPlannerAuto("Start2Note123"));
+         break;
         case "note2":
          autonChooser.addOption("Start2Note2", new PathPlannerAuto("Start2Note2"));
          autonChooser.addOption("Start2Note2speakershooting", new PathPlannerAuto("Start2Note2speakershooting"));
          autonChooser.addOption("Start2Note21", new PathPlannerAuto("Start2Note21"));
+         break;
         case "note3":
          autonChooser.addOption("Start2Note32", new PathPlannerAuto("Start2Note32"));
          autonChooser.addOption("Start2Note321", new PathPlannerAuto("Start2Note321"));
+         break;
         case "note4":
-
+          break;
         case "note8":
-        
+          break;
        }
+       break;
       case "start3":
        switch (firstNoteChooser.getSelected()) {
         case "NONE":
-         autonChooser.addOption("Blue3Null", new PathPlannerAuto("Blue3Null"));
-         autonChooser.addOption("Red3Null", new PathPlannerAuto("Red3Null"));
+          autonChooser.addOption("Blue3Null", new PathPlannerAuto("Blue3Null"));
+          autonChooser.addOption("Red3Null", new PathPlannerAuto("Red3Null"));
+          break;
         case "note1":
-
+          break;
         case "note2":
-
+          break;
         case "note3":
          autonChooser.addOption("Start3Note3speakershooting", new PathPlannerAuto("Start3Note3speakershooting"));
          autonChooser.addOption("Start3Note3", new PathPlannerAuto("Start3Note3"));
          autonChooser.addOption("Start3Note32", new PathPlannerAuto("Start3Note32"));
          autonChooser.addOption("Start3Note321", new PathPlannerAuto("Start3Note321"));
+         break;
         case "note4":
-
+          break;
         case "note8":
-        
+          break;
        }
-
-       dashboardEntryRobotStartPose = dashboardTabAuto.add(
-        "Auton", autonChooser)
-        .withWidget(BuiltInWidgets.kComboBoxChooser)
-        .withPosition(0, 2)
-        .withSize(2, 1);
+       break;
     }
+
+    dashboardEntryRobotStartPose = dashboardTabAuto
+      .add("Auton", autonChooser)
+      .withWidget(BuiltInWidgets.kComboBoxChooser)
+      .withPosition(0, 2)
+      .withSize(2, 1);
 
     SmartDashboard.putData("testAutonDropdown", testAutonChooser);
     SmartDashboard.putData("autonDropdown", autonChooser);
