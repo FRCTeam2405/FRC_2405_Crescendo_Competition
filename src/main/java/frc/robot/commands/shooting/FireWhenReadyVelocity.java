@@ -7,6 +7,7 @@ package frc.robot.commands.shooting;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Dashboard;
@@ -16,6 +17,7 @@ import frc.robot.subsystems.shooting.Shooter;
 
 public class FireWhenReadyVelocity extends Command {
 
+  double timestamp = Timer.getFPGATimestamp();
   private final Shooter sysShooter;
   private final Feeder sysFeeder;
   private final LEDLights sysLighting;
@@ -100,7 +102,7 @@ public class FireWhenReadyVelocity extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (DriverStation.isAutonomousEnabled() && sysFeeder.getNoteLimit() == false) {
+    if (DriverStation.isAutonomousEnabled() && timestamp >= 5) {
       return true;
     } else {
     return false;
