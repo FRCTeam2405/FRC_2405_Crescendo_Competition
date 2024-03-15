@@ -160,9 +160,7 @@ public class RobotContainer {
     codriverController.button(Constants.Controllers.Guitar.BLUE_FRET)
                         .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
     codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
-     .whileTrue(new DirectDriveArm(sysArm, 
-     () -> codriverController.getRawAxis(Constants.Controllers.Guitar.JOYSTICK_X),
-     () -> sysArm.getArmPosition()));
+     .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.CLIMB));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
