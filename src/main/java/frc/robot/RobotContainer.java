@@ -9,6 +9,8 @@ import java.util.function.DoubleSupplier;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.hal.HALUtil;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -64,6 +66,8 @@ public class RobotContainer {
   private Arm sysArm = new Arm();
   private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
 
+  private UsbCamera camera = CameraServer.startAutomaticCapture();
+
   // Initialization code for our robot
   public RobotContainer() {
     if(DriverStation.getAlliance().isPresent()) {
@@ -71,6 +75,10 @@ public class RobotContainer {
     } else {
       SwerveContainer.allianceColor = null;
     }
+
+    // camera configuration
+    // reduce resolution to reduce bandwidth
+    camera.setResolution(640, 480);
 
     configureBindings();
     configureAutonomous();
