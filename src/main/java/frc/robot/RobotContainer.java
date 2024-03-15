@@ -202,7 +202,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("SetRed3", new SetStartPose(swerveDrive, StartPosition.Red3));
 
     // Comp bot only
-    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard));
+    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard, 
+                  () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
+                  () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT, 
+                  () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED, 
+                  () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
     NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysLighting, sysDashboard));
 
     // Set a default autonomous to prevent errors
