@@ -217,12 +217,20 @@ public class Dashboard extends SubsystemBase {
     autonChooser.addOption("Red2Null", new PathPlannerAuto("Red2Null"));
     autonChooser.addOption("Blue3Null", new PathPlannerAuto("Blue3Null"));
     autonChooser.addOption("Red3Null", new PathPlannerAuto("Red3Null"));
+
     autonChooser.addOption("Blue1Note1speakershooting", new PathPlannerAuto("Blue1Note1speakershooting"));
     autonChooser.addOption("Blue2Note2speakershooting", new PathPlannerAuto("Blue2Note2speakershooting"));
     autonChooser.addOption("Blue3Note3speakershooting", new PathPlannerAuto("Blue3Note3speakershooting"));
     autonChooser.addOption("Red1Note1speakershooting", new PathPlannerAuto("Red1Note1speakershooting"));
     autonChooser.addOption("Red2Note2speakershooting", new PathPlannerAuto("Red2Note2speakershooting"));
     autonChooser.addOption("Red3Note3speakershooting", new PathPlannerAuto("Red3Note3speakershooting"));
+
+    autonChooser.addOption("Blue 1, Hold Note 1", new PathPlannerAuto("Blue1HoldNote1"));
+    autonChooser.addOption("Blue 2, Hold Note 2", new PathPlannerAuto("Blue2HoldNote2"));
+    autonChooser.addOption("Blue 3, Hold Note 3", new PathPlannerAuto("Blue3HoldNote3"));
+    autonChooser.addOption("Red 1, Hold Note 1", new PathPlannerAuto("Red1HoldNote1"));
+    autonChooser.addOption("Red 2, Hold Note 2", new PathPlannerAuto("Red2HoldNote2"));
+    autonChooser.addOption("Red 3, Hold Note 3", new PathPlannerAuto("Red3HoldNote3"));
 
     // switch (startPoseChooser.getSelected()) {
     //   case "start1":
