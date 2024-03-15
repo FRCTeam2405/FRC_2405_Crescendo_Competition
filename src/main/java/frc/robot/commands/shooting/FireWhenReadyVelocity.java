@@ -67,6 +67,8 @@ public class FireWhenReadyVelocity extends Command {
     this.percentOutputFeederTop = () -> sysDashboard.getTopFeederShootingSpeedDashboard();
     this.percentOutputFeederBottom = () -> sysDashboard.getBottomFeederShootingSpeedDashboard();
 
+    timer = new Timer();
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
   }
