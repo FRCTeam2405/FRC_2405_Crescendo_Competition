@@ -141,8 +141,8 @@ public final class Constants {
             public static final double TOP_FEEDER_SHOOTING_SPEED = 0.75;
             public static final double BOTTOM_FEEDER_SHOOTING_SPEED = 0.75;
 
-            public static final double TOP_FEEDER_INTAKING_SPEED = 0.25;
-            public static final double BOTTOM_FEEDER_INTAKING_SPEED = 0.25;
+            public static final double TOP_FEEDER_INTAKING_SPEED = 0.20;
+            public static final double BOTTOM_FEEDER_INTAKING_SPEED = 0.20;
 
             public static final double REVERSE_FEEDER_INTAKING_SPEED = -0.25;
             ;
