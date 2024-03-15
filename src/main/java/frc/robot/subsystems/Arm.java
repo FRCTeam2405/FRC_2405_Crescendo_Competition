@@ -52,6 +52,10 @@ public class Arm extends SubsystemBase {
     motorArm.setControl(motorBreak);
   }
 
+  public boolean atAmp() {
+    return getArmPosition() >= Constants.Arm.SetPoints.AMP - 10;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -129,6 +129,29 @@ public class RobotContainer {
 
     // shooter command
 
+    //FIXME! messy competition fixes, please make cleaner
+    // codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_DOWN)
+    //     .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
+    //     () -> { return sysArm.atAmp()
+    //             ? Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP
+    //             : Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT; }, 
+    //     () -> { return sysArm.atAmp()
+    //             ? Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP
+    //             : Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT; }, 
+    //     () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
+    //     () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+
+    // codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_UP)
+    //     .onTrue(new PrimeShooter(sysShooter, sysLighting, 
+    //     () -> { return sysArm.atAmp()
+    //             ? Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP
+    //             : Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT; },
+    //     () -> { return sysArm.atAmp()
+    //             ? Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP
+    //             : Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT; }));
+    
     if (sysArm.getArmPosition() >= Constants.Arm.SetPoints.AMP - 10) {
        codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
