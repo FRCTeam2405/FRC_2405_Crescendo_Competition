@@ -17,7 +17,8 @@ import frc.robot.subsystems.shooting.Shooter;
 
 public class FireWhenReadyVelocity extends Command {
 
-  double timestamp = Timer.getFPGATimestamp();
+  double timestamp;
+  private Timer timer;
   private final Shooter sysShooter;
   private final Feeder sysFeeder;
   private final LEDLights sysLighting;
@@ -72,7 +73,9 @@ public class FireWhenReadyVelocity extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -93,6 +96,7 @@ public class FireWhenReadyVelocity extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    timer.stop();
 
     sysShooter.stopShooter();
     sysFeeder.stopFeeder();
@@ -102,10 +106,10 @@ public class FireWhenReadyVelocity extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (DriverStation.isAutonomousEnabled() && timestamp >= 5) {
+    if (DriverStation.isAutonomousEnabled() && timer.get() >= 2) {
       return true;
     } else {
-    return false;
+      return false;
     }
   }
 }

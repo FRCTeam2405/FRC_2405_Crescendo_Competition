@@ -209,6 +209,8 @@ public class RobotContainer {
                   () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
     NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysLighting, sysDashboard));
 
+    sysDashboard.setDashboardAutonomous();
+
     // Set a default autonomous to prevent errors
     testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
 

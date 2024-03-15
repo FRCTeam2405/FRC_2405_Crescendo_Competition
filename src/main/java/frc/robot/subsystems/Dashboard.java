@@ -57,7 +57,6 @@ public class Dashboard extends SubsystemBase {
 
 
     setDashboardUtility();
-    setDashboardAutonomous();
   }
 
   private void setDashboardMain() {
