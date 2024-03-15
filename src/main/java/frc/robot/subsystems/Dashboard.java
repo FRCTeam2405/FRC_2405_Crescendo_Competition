@@ -204,7 +204,7 @@ public class Dashboard extends SubsystemBase {
     firstNoteChooser.addOption("note8", "note8");
 
     dashboardEntryFirstNote = dashboardTabAuto.add(
-      "First Note In Auto", startPoseChooser)
+      "First Note In Auto", firstNoteChooser)
       .withWidget(BuiltInWidgets.kComboBoxChooser)
       .withPosition(0, 1)
       .withSize(2, 1);
