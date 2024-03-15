@@ -219,20 +219,21 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-   if (sysDashboard.getAutonChooser().getSelected() != null && testAutonChooser.getSelected() != null) {
-    Commands.print("2 autonomous commands selected");
-    return null;
-   } else {
-    if (testAutonChooser.getSelected() != null) {
-     return testAutonChooser.getSelected();
-    } else {
-     if (sysDashboard.getAutonChooser().getSelected() != null) {
-      return sysDashboard.getAutonChooser().getSelected();
-     } else {
-      Commands.print("No autonomous commands selected");
-      return null;
-     }
-    }
-   }
+    return sysDashboard.getAutonChooser().getSelected();
+  //  if (sysDashboard.getAutonChooser().getSelected() != null && testAutonChooser.getSelected() != null) {
+  //   Commands.print("2 autonomous commands selected");
+  //   return null;
+  //  } else {
+  //   if (testAutonChooser.getSelected() != null) {
+  //    return testAutonChooser.getSelected();
+  //   } else {
+  //    if (sysDashboard.getAutonChooser().getSelected() != null) {
+  //     return sysDashboard.getAutonChooser().getSelected();
+  //    } else {
+  //     Commands.print("No autonomous commands selected");
+  //     return null;
+  //    }
+  //   }
+  //  }
   }
 }
