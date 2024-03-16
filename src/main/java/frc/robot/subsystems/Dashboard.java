@@ -238,6 +238,12 @@ public class Dashboard extends SubsystemBase {
     autonChooser.addOption("Red 2, Hold Note 2", new PathPlannerAuto("Red2HoldNote2"));
     autonChooser.addOption("Red 3, Hold Note 3", new PathPlannerAuto("Red3HoldNote3"));
 
+    autonChooser.addOption("Blue 1, Wait 7.0s, Drive Out", new PathPlannerAuto("Blue1WaitAndDrive"));
+    autonChooser.addOption("Blue 2, Wait 7.0s, Drive Out", new PathPlannerAuto("Blue2WaitAndDrive"));
+    autonChooser.addOption("Blue 3, Wait 7.0s, Drive Out", new PathPlannerAuto("Blue3WaitAndDrive"));
+
+
+
     // switch (startPoseChooser.getSelected()) {
     //   case "start1":
     //    switch (firstNoteChooser.getSelected()) {
