@@ -1,0 +1,64 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 13.924244234892765,
+        "y": 3.950448544904246
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 14.479341286605592,
+        "y": 4.116774457625079
+      },
+      "isLocked": false,
+      "linkedName": "Note3Red"
+    },
+    {
+      "anchor": {
+        "x": 15.833382936891098,
+        "y": 4.376333332273105
+      },
+      "prevControl": {
+        "x": 15.294381309880826,
+        "y": 4.293373047201024
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Start3Red"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Slow Down For Note",
+      "minWaypointRelativePos": 0.9,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 0.5,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 360.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -120.14138555207514,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Competition Paths",
+  "previewStartingState": {
+    "rotation": -179.22577983507193,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

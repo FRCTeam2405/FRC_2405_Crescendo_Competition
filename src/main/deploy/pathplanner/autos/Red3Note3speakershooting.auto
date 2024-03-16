@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.74,
-      "y": 4.38
+      "x": 15.833382936891098,
+      "y": 4.376333332273105
     },
-    "rotation": -59.77999999999997
+    "rotation": -118.95099520746689
   },
   "command": {
     "type": "sequential",
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Start3Note3"
+                  "pathName": "Start3Note3Red"
                 }
               },
               {
@@ -51,7 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Note3Start3"
+            "pathName": "Note3Start3Red"
           }
         },
         {

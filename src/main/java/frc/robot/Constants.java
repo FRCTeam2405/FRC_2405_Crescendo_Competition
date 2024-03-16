@@ -63,11 +63,11 @@ public final class Constants {
 
             public static final double BLUE_3_Y = 4.38;
 
-            public static final double RED_1_ROTATION = 4.1793654235897;
+            public static final double RED_1_ROTATION = 2.115688119;
 
             public static final double RED_2_ROTATION = 3.1415926535897;
 
-            public static final double RED_3_ROTATION = 2.1038198835897;
+            public static final double RED_3_ROTATION = -2.07606914;
 
             public static final double RED_1_X = 15.86938;
 
@@ -75,11 +75,11 @@ public final class Constants {
 
             public static final double RED_3_X = 15.83938;
 
-            public static final double RED_1_Y = 4.38;
+            public static final double RED_1_Y = 6.71;
 
             public static final double RED_2_Y = 5.55;
 
-            public static final double RED_3_Y = 6.71;
+            public static final double RED_3_Y = 4.53;
         }
     }
 
