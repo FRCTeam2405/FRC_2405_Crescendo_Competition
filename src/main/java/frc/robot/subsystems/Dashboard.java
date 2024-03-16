@@ -241,6 +241,9 @@ public class Dashboard extends SubsystemBase {
     autonChooser.addOption("Blue 1, Wait 7.0s, Drive Out", new PathPlannerAuto("Blue1WaitAndDrive"));
     autonChooser.addOption("Blue 2, Wait 7.0s, Drive Out", new PathPlannerAuto("Blue2WaitAndDrive"));
     autonChooser.addOption("Blue 3, Wait 7.0s, Drive Out", new PathPlannerAuto("Blue3WaitAndDrive"));
+    autonChooser.addOption("Red 1, Wait 7.0s, Drive Out", new PathPlannerAuto("Red1WaitAndDrive"));
+    autonChooser.addOption("Red 2, Wait 7.0s, Drive Out", new PathPlannerAuto("Red2WaitAndDrive"));
+    autonChooser.addOption("Red 3, Wait 7.0s, Drive Out", new PathPlannerAuto("Red3WaitAndDrive"));
 
 
 
