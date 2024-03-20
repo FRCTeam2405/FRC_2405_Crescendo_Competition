@@ -51,9 +51,9 @@ public class TeleopDrive extends Command {
   @Override
   public void execute() {
     // Cube input of XY movement, multiply by max speed
-    double correctedMoveX = moveX.getAsDouble() * Constants.Swerve.MAX_SPEED;
-    double correctedMoveY = moveY.getAsDouble() * Constants.Swerve.MAX_SPEED;
-    double correctedTurnTheta = turnTheta.getAsDouble() * Constants.Swerve.MAX_ANGULAR_SPEED;
+    double correctedMoveX = moveX.getAsDouble(); //* Constants.Swerve.MAX_SPEED;
+    double correctedMoveY = moveY.getAsDouble(); // * Constants.Swerve.MAX_SPEED;
+    double correctedTurnTheta = turnTheta.getAsDouble(); // * Constants.Swerve.MAX_ANGULAR_SPEED;
 
     // Invert inputs if we're on the red side of the field
     // so that movement is still relative to driver
