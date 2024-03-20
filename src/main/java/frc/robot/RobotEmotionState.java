@@ -12,13 +12,16 @@ public enum RobotEmotionState {
     Disgust(0.7, 7),
     Anger(0.9, 9);
 
+
+    private double setPoint;
+    private int convertSetPoint;
+    
     RobotEmotionState(double setPoint, int convertSetPoint) {
         this.setPoint = setPoint;
         this.convertSetPoint = convertSetPoint;
     }
 
-    private double setPoint;
-    private int convertSetPoint;
+    
 
 
     public double getEmotionSetPoint() {

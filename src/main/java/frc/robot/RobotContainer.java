@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import frc.robot.commands.DirectDriveArm;
 import frc.robot.commands.GetVisionMeasurement;
 import frc.robot.commands.MoveArmToPosition;
+import frc.robot.commands.SetRobotEmotion;
 import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
@@ -38,6 +39,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.LEDLights;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.RobotEmotion;
 import frc.robot.subsystems.SwerveContainer;
 import frc.robot.subsystems.shooting.Feeder;
 import frc.robot.subsystems.shooting.Intake;
@@ -60,6 +62,7 @@ public class RobotContainer {
   private Feeder sysFeeder = new Feeder();
   private Shooter sysShooter = new Shooter();
   private Arm sysArm = new Arm();
+  private RobotEmotion sysRobotEmotion = new RobotEmotion();
   private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
 
   // Initialization code for our robot
@@ -95,7 +98,10 @@ public class RobotContainer {
     ));
 
 
-    // Comp bot only
+    // Robot Emotion
+    codriverController.axisGreaterThan(Constants.Controllers.Guitar.ROBOT_EMOTION_ID, 0)
+            .whileTrue(new SetRobotEmotion(sysRobotEmotion, 
+            () -> codriverController.getRawAxis(Constants.Controllers.Guitar.ROBOT_EMOTION_ID)));
 
     // intake commands
     
