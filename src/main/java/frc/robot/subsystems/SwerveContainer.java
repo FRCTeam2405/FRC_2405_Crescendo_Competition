@@ -53,7 +53,7 @@ public class SwerveContainer implements Subsystem {
     // Try to init the swerve drive, and send an error if it fails.
     try {
       inner = new SwerveParser(swerveConfig)
-        .createSwerveDrive(Units.feetToMeters(Constants.Swerve.MAX_SPEED_FEET));      
+        .createSwerveDrive(Units.feetToMeters(Constants.Swerve.MAX_ATTAINABLE_SPEED_FEET));      
     } catch(Exception e) {
       throw new RuntimeException(e);
     }
