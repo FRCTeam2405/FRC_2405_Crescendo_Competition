@@ -190,11 +190,7 @@ public class RobotContainer {
     }
 
     codriverController.button(Constants.Controllers.Guitar.YELLOW_FRET)
-                .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
-                () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_ALTERNATE, 
-                () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_ALTERNATE,
-                () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
-                () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+                .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard));
     
     // arm commands
     codriverController.button(Constants.Controllers.Guitar.RED_FRET)
