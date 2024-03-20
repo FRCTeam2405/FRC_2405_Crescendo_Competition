@@ -101,12 +101,30 @@ public final class Constants {
             public static final double TOP_SHOOTER_VELOCITY_MAX = 6500;
             public static final double BOTTOM_SHOOTER_VELOCITY_MAX = 6500;
 
+
             public static final double TOP_SHOOTER_VELOCITY_DEFAULT = 5000; 
             public static final double BOTTOM_SHOOTER_VELOCITY_DEFAULT = 5000;
 
             public static final double TOP_SHOOTER_VELOCITY_ALTERNATE = 3500; 
             public static final double BOTTOM_SHOOTER_VELOCITY_ALTERNATE = 1600;
+            // Speed settings
+            public static final double TOP_SHOOTER_VELOCITY_SADNESS = 5000; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_SADNESS = 5000;
 
+            public static final double TOP_SHOOTER_VELOCITY_FEAR = 4000; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_FEAR = 2000;
+
+            public static final double TOP_SHOOTER_VELOCITY_JOY = 3500; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_JOY = 1600;
+
+            public static final double TOP_SHOOTER_VELOCITY_DISGUST = 3500; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_DISGUST = 1600;
+
+            public static final double TOP_SHOOTER_VELOCITY_ANGER = 3500; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_ANGER = 1600;
+
+
+            // Amp speed
             public static final double TOP_SHOOTER_VELOCITY_AMP = 1000; 
             public static final double BOTTOM_SHOOTER_VELOCITY_AMP = 1000;
         }

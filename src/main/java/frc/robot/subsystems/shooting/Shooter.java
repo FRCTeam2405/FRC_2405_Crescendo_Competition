@@ -61,8 +61,8 @@ public class Shooter implements Subsystem {
   }
 
   public void runShooterVelocity() {
-    pidTopShooter.setReference(Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, ControlType.kVelocity);
-    pidBottomShooter.setReference(Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT, ControlType.kVelocity);
+    pidTopShooter.setReference(Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY, ControlType.kVelocity);
+    pidBottomShooter.setReference(Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY, ControlType.kVelocity);
 
   }
 

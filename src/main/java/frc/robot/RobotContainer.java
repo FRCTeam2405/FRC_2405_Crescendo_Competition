@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import frc.robot.commands.DirectDriveArm;
 import frc.robot.commands.GetVisionMeasurement;
 import frc.robot.commands.MoveArmToPosition;
+import frc.robot.commands.SetRobotEmotion;
 import frc.robot.commands.SetStartPose;
 import frc.robot.commands.SetStartPose.StartPosition;
 import frc.classes.AutonChooser;
@@ -42,6 +43,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.LEDLights;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.RobotEmotion;
 import frc.robot.subsystems.SwerveContainer;
 import frc.robot.subsystems.shooting.Feeder;
 import frc.robot.subsystems.shooting.Intake;
@@ -64,6 +66,7 @@ public class RobotContainer {
   private Feeder sysFeeder = new Feeder();
   private Shooter sysShooter = new Shooter();
   private Arm sysArm = new Arm();
+  private RobotEmotion sysRobotEmotion = new RobotEmotion();
   private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
 
   // private UsbCamera camera = CameraServer.startAutomaticCapture();
@@ -105,7 +108,10 @@ public class RobotContainer {
     // ));
 
 
-    // Comp bot only
+    // Robot Emotion
+    codriverController.axisGreaterThan(Constants.Controllers.Guitar.ROBOT_EMOTION_ID, 0)
+            .whileTrue(new SetRobotEmotion(sysRobotEmotion, 
+            () -> codriverController.getRawAxis(Constants.Controllers.Guitar.ROBOT_EMOTION_ID)));
 
     // intake commands
     
@@ -171,16 +177,16 @@ public class RobotContainer {
       codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
         .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
-                   () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
-                   () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT,
+                   () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY, 
+                   () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY,
                    () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
                    () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
 
       codriverController.pov(
         Constants.Controllers.Guitar.STRUM_UP)
         .onTrue(new PrimeShooter(sysShooter, sysLighting, 
-              () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
-              () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT));
+              () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY, 
+              () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY));
     }
 
     codriverController.button(Constants.Controllers.Guitar.YELLOW_FRET)

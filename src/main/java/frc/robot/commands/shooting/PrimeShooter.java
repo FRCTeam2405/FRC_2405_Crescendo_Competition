@@ -30,8 +30,8 @@ public class PrimeShooter extends Command {
   public PrimeShooter(Shooter sysShooter, LEDLights sysLighting) {
     this.sysShooter = sysShooter;
     this.sysLighting = sysLighting;
-    this.rpmShooterTop = () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT;
-    this.rpmShooterBottom = () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT;
+    this.rpmShooterTop = () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY;
+    this.rpmShooterBottom = () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysLighting);
   }

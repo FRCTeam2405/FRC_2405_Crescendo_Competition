@@ -67,7 +67,7 @@ public class Dashboard extends SubsystemBase {
     // Shooter widgets
     dashboardEntryTopShooterVelocitySetting = dashboardTabUtility.add(
               Constants.Dashboard.Utility.Widgets.TOP_SHOOTER_VELOCITY_SETTING_NAME, 
-              Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT)
+              Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY)
               .withWidget(BuiltInWidgets.kNumberSlider)
               .withProperties(Map.of("min", 0, "max", Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_MAX))
               .withPosition(0,0)
@@ -75,7 +75,7 @@ public class Dashboard extends SubsystemBase {
               .getEntry();
     dashboardEntryBottomShooterVelocitySetting = dashboardTabUtility.add(
               Constants.Dashboard.Utility.Widgets.BOTTOM_SHOOTER_VELOCITY_SETTING_NAME, 
-              Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT)
+              Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY)
               .withWidget(BuiltInWidgets.kNumberSlider)
               .withPosition(0,1)
               .withProperties(Map.of("min", 0, "max", Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_MAX))
