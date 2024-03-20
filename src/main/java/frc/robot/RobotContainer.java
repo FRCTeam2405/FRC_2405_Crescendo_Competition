@@ -9,6 +9,8 @@ import java.util.function.DoubleSupplier;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.hal.HALUtil;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -26,6 +28,8 @@ import frc.robot.commands.DirectDriveArm;
 import frc.robot.commands.GetVisionMeasurement;
 import frc.robot.commands.MoveArmToPosition;
 import frc.robot.commands.SetRobotEmotion;
+import frc.robot.commands.SetStartPose;
+import frc.robot.commands.SetStartPose.StartPosition;
 import frc.classes.AutonChooser;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
@@ -65,6 +69,8 @@ public class RobotContainer {
   private RobotEmotion sysRobotEmotion = new RobotEmotion();
   private Dashboard sysDashboard = new Dashboard(sysShooter, sysFeeder, sysIntake, sysArm);
 
+  // private UsbCamera camera = CameraServer.startAutomaticCapture();
+
   // Initialization code for our robot
   public RobotContainer() {
     if(DriverStation.getAlliance().isPresent()) {
@@ -72,6 +78,10 @@ public class RobotContainer {
     } else {
       SwerveContainer.allianceColor = null;
     }
+
+    // camera configuration
+    // reduce resolution to reduce bandwidth
+    // camera.setResolution(640, 480);
 
     configureBindings();
     configureAutonomous();
@@ -92,10 +102,10 @@ public class RobotContainer {
 
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
     driverController.button(Constants.Controllers.Taranis.ADD_VISION_MEASURMENT_BUTTON).whileTrue(new GetVisionMeasurement(swerveDrive, limelight));
-    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_SPEAKER_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
-     axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
-     axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
-    ));
+    // driverController.button(Constants.Controllers.Taranis.ROTATE_TO_SPEAKER_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
+    //  axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
+    //  axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
+    // ));
 
 
     // Robot Emotion
@@ -125,6 +135,29 @@ public class RobotContainer {
 
     // shooter command
 
+    //FIXME! messy competition fixes, please make cleaner
+    // codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_DOWN)
+    //     .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
+    //     () -> { return sysArm.atAmp()
+    //             ? Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP
+    //             : Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT; }, 
+    //     () -> { return sysArm.atAmp()
+    //             ? Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP
+    //             : Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT; }, 
+    //     () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
+    //     () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+
+    // codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_UP)
+    //     .onTrue(new PrimeShooter(sysShooter, sysLighting, 
+    //     () -> { return sysArm.atAmp()
+    //             ? Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP
+    //             : Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT; },
+    //     () -> { return sysArm.atAmp()
+    //             ? Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP
+    //             : Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT; }));
+    
     if (sysArm.getArmPosition() >= Constants.Arm.SetPoints.AMP - 10) {
        codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
@@ -155,6 +188,13 @@ public class RobotContainer {
               () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY, 
               () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY));
     }
+
+    codriverController.button(Constants.Controllers.Guitar.YELLOW_FRET)
+                .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
+                () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_ALTERNATE, 
+                () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_ALTERNATE,
+                () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
+                () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
     
     // arm commands
     codriverController.button(Constants.Controllers.Guitar.RED_FRET)
@@ -164,9 +204,7 @@ public class RobotContainer {
     codriverController.button(Constants.Controllers.Guitar.BLUE_FRET)
                         .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
     codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
-     .whileTrue(new DirectDriveArm(sysArm, 
-     () -> codriverController.getRawAxis(Constants.Controllers.Guitar.JOYSTICK_X),
-     () -> sysArm.getArmPosition()));
+     .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.CLIMB));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
@@ -185,10 +223,22 @@ public class RobotContainer {
     // This must be done before initializing autos
     NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive, limelight));
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
-    
+    NamedCommands.registerCommand("SetBlue1", new SetStartPose(swerveDrive, StartPosition.Blue1));
+    NamedCommands.registerCommand("SetBlue2", new SetStartPose(swerveDrive, StartPosition.Blue2));
+    NamedCommands.registerCommand("SetBlue3", new SetStartPose(swerveDrive, StartPosition.Blue3));
+    NamedCommands.registerCommand("SetRed1", new SetStartPose(swerveDrive, StartPosition.Red1));
+    NamedCommands.registerCommand("SetRed2", new SetStartPose(swerveDrive, StartPosition.Red2));
+    NamedCommands.registerCommand("SetRed3", new SetStartPose(swerveDrive, StartPosition.Red3));
+
     // Comp bot only
-    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard));
+    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard, 
+                  () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
+                  () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT, 
+                  () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED, 
+                  () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
     NamedCommands.registerCommand("Intake", new IntakeNote(sysIntake, sysFeeder, sysLighting, sysDashboard));
+
+    sysDashboard.setDashboardAutonomous();
 
     // Set a default autonomous to prevent errors
     testAutonChooser.setDefaultOption("NONE", Commands.print("No autonomous command selected!"));
@@ -204,20 +254,21 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-   if (sysDashboard.getAutonChooser().getSelected() != null && testAutonChooser.getSelected() != null) {
-    Commands.print("2 autonomous commands selected");
-    return null;
-   } else {
-    if (testAutonChooser.getSelected() != null) {
-     return testAutonChooser.getSelected();
-    } else {
-     if (sysDashboard.getAutonChooser().getSelected() != null) {
-      return sysDashboard.getAutonChooser().getSelected();
-     } else {
-      Commands.print("No autonomous commands selected");
-      return null;
-     }
-    }
-   }
+    return sysDashboard.getAutonChooser().getSelected();
+  //  if (sysDashboard.getAutonChooser().getSelected() != null && testAutonChooser.getSelected() != null) {
+  //   Commands.print("2 autonomous commands selected");
+  //   return null;
+  //  } else {
+  //   if (testAutonChooser.getSelected() != null) {
+  //    return testAutonChooser.getSelected();
+  //   } else {
+  //    if (sysDashboard.getAutonChooser().getSelected() != null) {
+  //     return sysDashboard.getAutonChooser().getSelected();
+  //    } else {
+  //     Commands.print("No autonomous commands selected");
+  //     return null;
+  //    }
+  //   }
+  //  }
   }
 }

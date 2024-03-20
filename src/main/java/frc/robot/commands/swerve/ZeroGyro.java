@@ -4,6 +4,14 @@
 
 package frc.robot.commands.swerve;
 
+import java.util.Optional;
+
+import edu.wpi.first.hal.HALUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.SwerveContainer;
 
@@ -12,24 +20,34 @@ import frc.robot.subsystems.SwerveContainer;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ZeroGyro extends InstantCommand {
 
-  private SwerveContainer swerve;
+  private SwerveContainer swerveDrive;
 
-  public ZeroGyro(SwerveContainer swerve) {
-    this.swerve = swerve;
+  public ZeroGyro(SwerveContainer swerveDrive) {
+    this.swerveDrive = swerveDrive;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(swerve);
+    addRequirements(swerveDrive);
   }
 
   // Called when the command is initially scheduled.
   // Does not seem to run when using an InstantCommand
   @Override
   public void initialize() {
-    swerve.zeroGyro();
+    swerveDrive.zeroGyro();
   }
 
   @Override
   public void execute() {
-    swerve.zeroGyro();
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+
+    Pose2d pose = swerveDrive.getPose();
+    Rotation2d zeroedRotation = new Rotation2d(Math.PI);
+    Pose2d zeroedRobotPosition = new Pose2d(pose.getX(), pose.getY(), zeroedRotation);
+
+    if(alliance.get() == Alliance.Blue) {
+      swerveDrive.zeroGyro();
+    } else {
+      swerveDrive.resetPose(swerveDrive.getYaw(), swerveDrive.getModulePositions(), zeroedRobotPosition);
+    }
   }
 }

@@ -57,6 +57,9 @@ public class SwerveContainer implements Subsystem {
       throw new RuntimeException(e);
     }
 
+    // try to disable slew rates
+    inner.swerveController.addSlewRateLimiters(null, null, null);
+
     // Disable YAGSL odometry thread so that we can
     // manually update odometry with vision stuff
     // inner.stopOdometryThread();
@@ -77,8 +80,9 @@ public class SwerveContainer implements Subsystem {
       () -> {
         // Boolean supplier that controls when the path will be mirrored for the red alliance
         // This should flip the path being followed to the red side of the field.
-        var alliance = DriverStation.getAlliance();
-        return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+        // var alliance = DriverStation.getAlliance();
+        // return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+        return false;
       },
       this
     );
@@ -89,6 +93,10 @@ public class SwerveContainer implements Subsystem {
     // Put the measured team number to the dashboard for diagnostics
     SmartDashboard.putNumber("robotTeamNumber", robotTeamNumber);
 
+    Pose2d pose = inner.getPose();
+    SmartDashboard.putNumber("poseX", pose.getX());
+    SmartDashboard.putNumber("poseY", pose.getY());
+    SmartDashboard.putNumber("poseRotation", pose.getRotation().getDegrees());
     // Update odometry
     // updatePose();
   }
@@ -101,6 +109,7 @@ public class SwerveContainer implements Subsystem {
   public Pose2d getPose() { return inner.getPose(); }
   public ChassisSpeeds getRobotVelocity() { return inner.getRobotVelocity(); }
   public Rotation2d getYaw() { return inner.getYaw(); }
+  public SwerveModulePosition[] getModulePositions() { return inner.getModulePositions(); }
 
   // Setters
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) { inner.setChassisSpeeds(chassisSpeeds); }
@@ -155,6 +164,10 @@ public class SwerveContainer implements Subsystem {
     Rotation2d yaw = inner.getYaw();
     SwerveModulePosition[] positions = inner.getModulePositions();
     inner.swerveDrivePoseEstimator.update(yaw, positions);
+  }
+
+  public void resetPose(Rotation2d gyroAngle, SwerveModulePosition[] modulePositions, Pose2d poseMeters) {
+    inner.swerveDrivePoseEstimator.resetPosition(gyroAngle, modulePositions, poseMeters);
   }
 
   public void resetOdometry(Pose2d pose) {

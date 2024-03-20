@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.270256540513081,
+        "y": 0.7804612792324187
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.769889849638854,
+        "y": 1.575375545117288
+      },
+      "isLocked": false,
+      "linkedName": "Note8"
+    },
+    {
+      "anchor": {
+        "x": 0.74,
+        "y": 4.38
+      },
+      "prevControl": {
+        "x": 1.1160281475468443,
+        "y": 3.5698877031509673
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Start3"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -58.79923672066815,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Competition Paths",
+  "previewStartingState": {
+    "rotation": -24.56717132060135,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

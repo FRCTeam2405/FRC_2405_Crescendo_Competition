@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.74,
+      "y": 4.38
+    },
+    "rotation": -59.834125664048464
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "SetBlue3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "GetVisionMeasurement"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 7.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Start3Note3"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Competition Autos",
+  "choreoAuto": false
+}
