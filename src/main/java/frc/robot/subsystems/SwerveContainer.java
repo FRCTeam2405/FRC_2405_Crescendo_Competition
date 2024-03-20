@@ -16,6 +16,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -52,7 +53,7 @@ public class SwerveContainer implements Subsystem {
     // Try to init the swerve drive, and send an error if it fails.
     try {
       inner = new SwerveParser(swerveConfig)
-        .createSwerveDrive(Constants.Swerve.MAX_SPEED);      
+        .createSwerveDrive(Units.feetToMeters(Constants.Swerve.MAX_SPEED_FEET));      
     } catch(Exception e) {
       throw new RuntimeException(e);
     }
