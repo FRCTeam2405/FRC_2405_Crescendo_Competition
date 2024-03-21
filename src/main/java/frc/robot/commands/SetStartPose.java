@@ -5,9 +5,12 @@
 package frc.robot.commands;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Dashboard;
@@ -19,12 +22,9 @@ import frc.robot.subsystems.SwerveContainer;
 public class SetStartPose extends InstantCommand {
 
   public enum StartPosition {
-    Blue1,
-    Blue2,
-    Blue3,
-    Red1,
-    Red2,
-    Red3
+    Start1,
+    Start2,
+    Start3
   }
 
   SwerveContainer swerveDrive;
@@ -44,48 +44,57 @@ public class SetStartPose extends InstantCommand {
     double startX;
     double startY;
     double startRotation;
+    Optional<Alliance> alliance = DriverStation.getAlliance();
 
     // Choose start position based on autonomous input
-    switch (startPosition) {
-      case Blue1:
-        startX = Constants.Auton.startPose.BLUE_1_X;
-        startY = Constants.Auton.startPose.BLUE_1_Y;
-        startRotation = Constants.Auton.startPose.BLUE_1_ROTATION;
-        break;
-      
-      case Blue2:
-        startX = Constants.Auton.startPose.BLUE_2_X;
-        startY = Constants.Auton.startPose.BLUE_2_Y;
-        startRotation = Constants.Auton.startPose.BLUE_2_ROTATION;
-        break;
-      
-      case Blue3:
-        startX = Constants.Auton.startPose.BLUE_3_X;
-        startY = Constants.Auton.startPose.BLUE_3_Y;
-        startRotation = Constants.Auton.startPose.BLUE_3_ROTATION;
-        break;
-      
-      case Red1:
-      startX = Constants.Auton.startPose.RED_1_X;
-      startY = Constants.Auton.startPose.RED_1_Y;
-      startRotation = Constants.Auton.startPose.RED_1_ROTATION;
-      break;
-      
-      case Red2:
-        startX = Constants.Auton.startPose.RED_2_X;
-        startY = Constants.Auton.startPose.RED_2_Y;
-        startRotation = Constants.Auton.startPose.RED_2_ROTATION;
-        break;
-      
-      case Red3:
-        startX = Constants.Auton.startPose.RED_3_X;
-        startY = Constants.Auton.startPose.RED_3_Y;
-        startRotation = Constants.Auton.startPose.RED_3_ROTATION;
-        break;
+    if (alliance.get() == Alliance.Blue) {
+      switch (startPosition) {
+        case Start1:
+          startX = Constants.Auton.startPose.BLUE_1_X;
+          startY = Constants.Auton.startPose.BLUE_1_Y;
+          startRotation = Constants.Auton.startPose.BLUE_1_ROTATION;
+          break;
+        
+        case Start2:
+          startX = Constants.Auton.startPose.BLUE_2_X;
+          startY = Constants.Auton.startPose.BLUE_2_Y;
+          startRotation = Constants.Auton.startPose.BLUE_2_ROTATION;
+          break;
+        
+        case Start3:
+          startX = Constants.Auton.startPose.BLUE_3_X;
+          startY = Constants.Auton.startPose.BLUE_3_Y;
+          startRotation = Constants.Auton.startPose.BLUE_3_ROTATION;
+          break;
 
-      default:
-        // unreachable
-        return;
+        default:
+          // unreachable
+          return;
+      }
+    } else {
+      switch (startPosition) {
+        case Start1:
+          startX = Constants.Auton.startPose.RED_1_X;
+          startY = Constants.Auton.startPose.RED_1_Y;
+          startRotation = Constants.Auton.startPose.RED_1_ROTATION;
+          break;
+        
+        case Start2:
+          startX = Constants.Auton.startPose.RED_2_X;
+          startY = Constants.Auton.startPose.RED_2_Y;
+          startRotation = Constants.Auton.startPose.RED_2_ROTATION;
+          break;
+        
+        case Start3:
+          startX = Constants.Auton.startPose.RED_3_X;
+          startY = Constants.Auton.startPose.RED_3_Y;
+          startRotation = Constants.Auton.startPose.RED_3_ROTATION;
+          break;
+
+        default:
+          // unreachable
+          return;
+      }
     }
 
     Rotation2d rotation = new Rotation2d(startRotation);

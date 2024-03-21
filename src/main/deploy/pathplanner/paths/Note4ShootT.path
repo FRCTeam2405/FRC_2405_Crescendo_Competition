@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.284709527165534,
+        "y": 7.443288126012872
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.638772200621324,
+        "y": 7.475012302439632
+      },
+      "isLocked": false,
+      "linkedName": "Note4"
+    },
+    {
+      "anchor": {
+        "x": 4.172951172378196,
+        "y": 5.698044741348875
+      },
+      "prevControl": {
+        "x": 4.892549606208337,
+        "y": 6.814156597901747
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "ShootT"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Competition Paths",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
