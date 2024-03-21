@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotEmotionState;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Dashboard;
 
@@ -27,11 +28,21 @@ public class MoveArmToPosition extends Command {
     addRequirements(sysArm, sysDashboard);
   }
 
-    public MoveArmToPosition(Arm sysArm, Dashboard sysDashboard) {
+  public MoveArmToPosition(Arm sysArm, Dashboard sysDashboard) {
 
     this.sysArm = sysArm;
     this.sysDashboard = sysDashboard;
     this.positionArm = () -> sysDashboard.getArmPositionSettingDashboard();
+
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(sysArm, sysDashboard);
+  }
+
+  public MoveArmToPosition(Arm sysArm, Dashboard sysDashboard, RobotEmotionState robotEmotion) {
+
+    this.sysArm = sysArm;
+    this.sysDashboard = sysDashboard;
+    this.positionArm = () -> robotEmotion.getEmotionArmPosition();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysArm, sysDashboard);

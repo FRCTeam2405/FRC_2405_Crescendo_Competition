@@ -157,49 +157,56 @@ public class RobotContainer {
     //             ? Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP
     //             : Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT; }));
     
-    if (sysArm.getArmPosition() >= Constants.Arm.SetPoints.AMP - 10) {
-       codriverController.pov(
+
+    codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
-        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
-        () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
-        () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP,
-        () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
-        () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard, sysRobotEmotion.getRobotEmotion()));
 
         codriverController.pov(
         Constants.Controllers.Guitar.STRUM_UP)
-        .onTrue(new PrimeShooter(sysShooter, sysLighting, 
-                  () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
-                  () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP));
-    }
-    else {
-      codriverController.pov(
-        Constants.Controllers.Guitar.STRUM_DOWN)
-        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
-                   () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY, 
-                   () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY,
-                   () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
-                   () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+        .onTrue(new PrimeShooter(sysShooter, sysLighting, sysRobotEmotion.getRobotEmotion()));
 
-      codriverController.pov(
-        Constants.Controllers.Guitar.STRUM_UP)
-        .onTrue(new PrimeShooter(sysShooter, sysLighting, 
-              () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY, 
-              () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY));
-    }
 
-    codriverController.button(Constants.Controllers.Guitar.YELLOW_FRET)
-                .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
-                () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_ALTERNATE, 
-                () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_ALTERNATE,
-                () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
-                () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+    // if (sysArm.getArmPosition() >= Constants.Arm.SetPoints.AMP - 10) {
+    //    codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_DOWN)
+    //     .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
+    //     () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
+    //     () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP,
+    //     () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
+    //     () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+
+    //     codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_UP)
+    //     .onTrue(new PrimeShooter(sysShooter, sysLighting, 
+    //               () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
+    //               () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP));
+    // }
+    // else {
+    //   codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_DOWN)
+    //     .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
+    //                () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
+    //                () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT,
+    //                () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
+    //                () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+
+    //   codriverController.pov(
+    //     Constants.Controllers.Guitar.STRUM_UP)
+    //     .onTrue(new PrimeShooter(sysShooter, sysLighting, 
+    //           () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY, 
+    //           () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY));
+    // }
+
+    
     
     // arm commands
     codriverController.button(Constants.Controllers.Guitar.RED_FRET)
                         .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
     codriverController.button(Constants.Controllers.Guitar.GREEN_FRET)
                         .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
+    codriverController.button(Constants.Controllers.Guitar.YELLOW_FRET)
+                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard, sysRobotEmotion.getRobotEmotion()));
     codriverController.button(Constants.Controllers.Guitar.BLUE_FRET)
                         .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
     codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)

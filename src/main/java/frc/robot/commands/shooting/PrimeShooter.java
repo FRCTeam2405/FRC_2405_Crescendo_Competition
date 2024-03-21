@@ -9,6 +9,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.shooting.Shooter;
 import frc.robot.Constants;
+import frc.robot.RobotEmotionState;
 import frc.robot.subsystems.LEDLights;
 
 public class PrimeShooter extends Command {
@@ -32,6 +33,15 @@ public class PrimeShooter extends Command {
     this.sysLighting = sysLighting;
     this.rpmShooterTop = () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY;
     this.rpmShooterBottom = () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(sysShooter, sysLighting);
+  }
+
+  public PrimeShooter(Shooter sysShooter, LEDLights sysLighting, RobotEmotionState robotEmotion) {
+    this.sysShooter = sysShooter;
+    this.sysLighting = sysLighting;
+    this.rpmShooterTop = () -> robotEmotion.getEmotionTopShooterVelocity();
+    this.rpmShooterBottom = () -> robotEmotion.getEmotionBottomShooterVelocity();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysLighting);
   }

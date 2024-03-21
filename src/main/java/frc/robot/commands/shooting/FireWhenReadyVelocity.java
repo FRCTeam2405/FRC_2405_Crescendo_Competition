@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.RobotEmotionState;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.LEDLights;
 import frc.robot.subsystems.shooting.Feeder;
@@ -17,13 +18,14 @@ import frc.robot.subsystems.shooting.Shooter;
 
 public class FireWhenReadyVelocity extends Command {
 
-  double timestamp;
-  private Timer timer;
+  // double timestamp;
+  // private Timer timer;
   private final Shooter sysShooter;
   private final Feeder sysFeeder;
   private final LEDLights sysLighting;
   private final Dashboard sysDashboard;
   private final DoubleSupplier rpmShooterTop, rpmShooterBottom, percentOutputFeederTop, percentOutputFeederBottom;
+
   /** Creates a new FireWhenReadyVelocity. */
   public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, LEDLights sysLighting, Dashboard sysDashboard,
                       DoubleSupplier rpmShooterTop, DoubleSupplier rpmShooterBottom, 
@@ -37,7 +39,7 @@ public class FireWhenReadyVelocity extends Command {
     this.percentOutputFeederTop = percentOutputFeederTop;
     this.percentOutputFeederBottom = percentOutputFeederBottom;
 
-    timer = new Timer();
+    // timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
@@ -55,7 +57,7 @@ public class FireWhenReadyVelocity extends Command {
     this.percentOutputFeederTop = percentOutputFeeder;
     this.percentOutputFeederBottom = percentOutputFeeder;
 
-    timer = new Timer();
+    // timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
@@ -71,7 +73,23 @@ public class FireWhenReadyVelocity extends Command {
     this.percentOutputFeederTop = () -> sysDashboard.getTopFeederShootingSpeedDashboard();
     this.percentOutputFeederBottom = () -> sysDashboard.getBottomFeederShootingSpeedDashboard();
 
-    timer = new Timer();
+    // timer = new Timer();
+
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
+  }
+
+  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, LEDLights sysLighting, Dashboard sysDashboard, RobotEmotionState robotEmotion)  {
+    this.sysShooter = sysShooter;
+    this.sysFeeder = sysFeeder;
+    this.sysLighting = sysLighting;
+    this.sysDashboard = sysDashboard;
+    this.rpmShooterTop = () -> robotEmotion.getEmotionTopShooterVelocity();
+    this.rpmShooterBottom = () -> robotEmotion.getEmotionBottomShooterVelocity();
+    this.percentOutputFeederTop = () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED;
+    this.percentOutputFeederBottom = () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED;
+
+    // timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
@@ -80,8 +98,8 @@ public class FireWhenReadyVelocity extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.reset();
-    timer.start();
+    // timer.reset();
+    // timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -103,7 +121,7 @@ public class FireWhenReadyVelocity extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    timer.stop();
+    // timer.stop();
 
     sysShooter.stopShooter();
     sysFeeder.stopFeeder();
@@ -113,10 +131,11 @@ public class FireWhenReadyVelocity extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (DriverStation.isAutonomousEnabled() && timer.get() >= 2) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (DriverStation.isAutonomousEnabled() && timer.get() >= 2) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return false;
   }
 }

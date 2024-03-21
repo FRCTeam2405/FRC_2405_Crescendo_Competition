@@ -52,11 +52,16 @@ public class RobotEmotion extends SubsystemBase {
     }
   }
 
+  public RobotEmotionState getRobotEmotion() {
+    return robotEmotion;
+  }
+
   public Command setEmotionCommand(DoubleSupplier robotEmotion) {
     return run(() -> {
       this.setRobotEmotion(robotEmotion.getAsDouble());
     });
   }
+
 
   @Override
   public void periodic() {
