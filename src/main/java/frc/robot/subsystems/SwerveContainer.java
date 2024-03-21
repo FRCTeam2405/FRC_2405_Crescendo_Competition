@@ -81,9 +81,8 @@ public class SwerveContainer implements Subsystem {
       () -> {
         // Boolean supplier that controls when the path will be mirrored for the red alliance
         // This should flip the path being followed to the red side of the field.
-        // var alliance = DriverStation.getAlliance();
-        // return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
-        return false;
+        var alliance = DriverStation.getAlliance();
+        return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
       },
       this
     );
