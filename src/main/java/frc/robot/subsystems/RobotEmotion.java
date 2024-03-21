@@ -4,7 +4,10 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotEmotionState;
 
@@ -22,30 +25,37 @@ public class RobotEmotion extends SubsystemBase {
     int convertSetPointCheck = (int)Math.round(setPoint * 10.0);
 
     switch (convertSetPointCheck) {
-      case 1:
+      case 0, 1:
         robotEmotion = robotEmotion.Sadness;
         break;
       
-      case 3:
+      case 2, 3:
         robotEmotion = robotEmotion.Fear;
         break;
 
-      case 5:
+      case 4, 5:
         robotEmotion = robotEmotion.Joy;
         break;
 
-      case 7:
+      case 6, 7:
         robotEmotion = robotEmotion.Disgust;
         break;
 
-      case 9:
+      case 8, 9, 10:
         robotEmotion = robotEmotion.Anger;
         break;
 
     
       default:
+        robotEmotion = robotEmotion.Sadness;
         break;
     }
+  }
+
+  public Command setEmotionCommand(DoubleSupplier robotEmotion) {
+    return run(() -> {
+      this.setRobotEmotion(robotEmotion.getAsDouble());
+    });
   }
 
   @Override

@@ -109,9 +109,8 @@ public class RobotContainer {
 
 
     // Robot Emotion
-    codriverController.axisGreaterThan(Constants.Controllers.Guitar.ROBOT_EMOTION_ID, 0)
-            .whileTrue(new SetRobotEmotion(sysRobotEmotion, 
-            () -> codriverController.getRawAxis(Constants.Controllers.Guitar.ROBOT_EMOTION_ID)));
+    Command cmdSetRobotEmotion = sysRobotEmotion.setEmotionCommand(() -> codriverController.getRawAxis(Constants.Controllers.Guitar.ROBOT_EMOTION_ID));
+    sysRobotEmotion.setDefaultCommand(cmdSetRobotEmotion);
 
     // intake commands
     
