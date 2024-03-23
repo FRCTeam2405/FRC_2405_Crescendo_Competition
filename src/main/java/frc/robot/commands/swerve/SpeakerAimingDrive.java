@@ -7,6 +7,7 @@ package frc.robot.commands.swerve;
 import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 
@@ -23,6 +25,7 @@ public class SpeakerAimingDrive extends Command {
 
   Limelight limelight;
   SwerveContainer swerveDrive;
+  Arm arm;
   Pose2d measuredPose;
   Pose2d currentPose;
   private DoubleSupplier moveX, moveY;
@@ -36,9 +39,10 @@ public class SpeakerAimingDrive extends Command {
    * moveX = main driver x axis joystick inputs
    * moveY = main driver y axis joystick inputs
   */
-  public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, DoubleSupplier vX, DoubleSupplier vY) {
+  public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, Arm arm, DoubleSupplier vX, DoubleSupplier vY) {
     this.limelight = limelight;
     this.swerveDrive = swerveDrive;
+    this.arm = arm;
 
     measuredPose = limelight.getMeasuredPose();
     currentPose = swerveDrive.getPose();
@@ -47,7 +51,7 @@ public class SpeakerAimingDrive extends Command {
     moveY = vY;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(limelight, swerveDrive);
+    addRequirements(limelight, swerveDrive, arm);
   }
 
   @Override
@@ -98,8 +102,26 @@ public class SpeakerAimingDrive extends Command {
     }
 
     // calculate distances to the speaker for shooter calculations
-    // double floorDistance = Math.hypot(offsetX, offsetY);
+    double floorDistance = Math.hypot(offsetX, offsetY);
     // double directDistance = Math.hypot(floorDistance, offsetZ);
+
+    // linear interpolate between measured points to create
+    // an angle for the arm to aim at.
+    double desiredSetpoint;
+    if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_1) {
+      desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_0_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_0_CONSTANT;
+    } else if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_2) {
+      desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_1_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_1_CONSTANT;
+    } else if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_3) {
+      desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_2_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_2_CONSTANT;
+    } else {
+      desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_3_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_3_CONSTANT;
+    }
+
+    // keep the setpoint within a safe range
+    MathUtil.clamp(desiredSetpoint, 0, 37);
+
+    arm.moveArmToPosition(desiredSetpoint);
 
     // calculate angle to the speaker so we can aim that direction
     desiredYaw = new Rotation2d(offsetX, offsetY);
