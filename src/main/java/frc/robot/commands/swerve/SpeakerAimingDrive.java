@@ -59,6 +59,8 @@ public class SpeakerAimingDrive extends Command {
   public void initialize() {
     // allows the robot to use rotate to pose
     swerveDrive.setHeadingCorrection(true);
+
+    SmartDashboard.putNumber("yawOffset", 180);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -132,7 +134,7 @@ public class SpeakerAimingDrive extends Command {
     // calculate angle to the speaker so we can aim that direction
     desiredYaw = new Rotation2d(offsetX, offsetY);
 
-    double yawOffset = SmartDashboard.getNumber("yawOffset", 0);
+    double yawOffset = SmartDashboard.getNumber("yawOffset", 180);
     desiredYaw = desiredYaw.plus(Rotation2d.fromDegrees(yawOffset));
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees());
