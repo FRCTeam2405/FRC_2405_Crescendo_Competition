@@ -3,39 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.895296810271618,
-        "y": 6.990384785778517
+        "x": 5.024720747115913,
+        "y": 7.25472706759367
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3765947392398568,
-        "y": 6.941398206917267
+        "x": 6.024720747115913,
+        "y": 7.25472706759367
       },
       "isLocked": false,
-      "linkedName": "Note1"
+      "linkedName": "Part2"
     },
     {
       "anchor": {
-        "x": 1.8232420006879377,
-        "y": 7.607183443347209
+        "x": 8.284942222836145,
+        "y": 7.4309552554704394
       },
       "prevControl": {
-        "x": 2.205069741091469,
-        "y": 7.342841161538416
+        "x": 7.284942222836145,
+        "y": 7.4309552554704394
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Amp"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [
     {
-      "name": "Slow Down For Note",
-      "minWaypointRelativePos": 0.8,
+      "name": "Slowdown",
+      "minWaypointRelativePos": 0.75,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 0.5,
+        "maxVelocity": 0.7,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 720.0
@@ -51,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Competition Paths",
+  "folder": "Shootin'",
   "previewStartingState": {
-    "rotation": -152.58673485140898,
+    "rotation": -160.58851314131644,
     "velocity": 0
   },
   "useDefaultConstraints": true
