@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Limelight;
@@ -121,11 +122,16 @@ public class SpeakerAimingDrive extends Command {
     // keep the setpoint within a safe range
     MathUtil.clamp(desiredSetpoint, 0, 37);
 
+    SmartDashboard.putNumber("floorDistance", floorDistance);
+    SmartDashboard.putNumber("desiredSetpoint", desiredSetpoint);
+
     arm.moveArmToPosition(desiredSetpoint);
 
     // calculate angle to the speaker so we can aim that direction
     desiredYaw = new Rotation2d(offsetX, offsetY);
     desiredYaw.minus(Rotation2d.fromDegrees(90));
+
+    SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees());
 
     // normalizes input to [-MAX_SPEED, MAX_SPEED]
     double correctedMoveX = moveX.getAsDouble() * Constants.Swerve.MAX_SPEED;
@@ -139,9 +145,10 @@ public class SpeakerAimingDrive extends Command {
     }
   
     // Rotation deadband so we don't oscillate
-    if (Math.abs(currentPose.getRotation().getDegrees() - (desiredYaw.getDegrees() - 90)) > 0.25) {
-      desiredYaw = swerveDrive.getYaw();
-    }
+    //TODO! enable
+    // if (Math.abs(currentPose.getRotation().getDegrees() - (desiredYaw.getDegrees() - 90)) > 0.25) {
+    //   desiredYaw = swerveDrive.getYaw();
+    // }
 
     swerveDrive.driveAbsolute(correctedMoveX, correctedMoveY, desiredYaw);
   }
