@@ -67,6 +67,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "ResetArm"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -114,6 +120,12 @@
           "type": "named",
           "data": {
             "name": "Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ResetArm"
           }
         }
       ]
