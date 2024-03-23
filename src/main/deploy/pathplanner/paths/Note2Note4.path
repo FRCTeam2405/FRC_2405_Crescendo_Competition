@@ -32,10 +32,10 @@
   "constraintZones": [
     {
       "name": "Slow down for note",
-      "minWaypointRelativePos": 0.85,
+      "minWaypointRelativePos": 0.7,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 0.7,
+        "maxVelocity": 0.9,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 720.0
