@@ -177,16 +177,16 @@ public class RobotContainer {
       codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
         .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
-                   () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY, 
-                   () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY,
+                   () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
+                   () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT,
                    () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
                    () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
 
       codriverController.pov(
         Constants.Controllers.Guitar.STRUM_UP)
         .onTrue(new PrimeShooter(sysShooter, sysLighting, 
-              () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY, 
-              () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY));
+              () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
+              () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT));
     }
 
     codriverController.button(Constants.Controllers.Guitar.YELLOW_FRET)
