@@ -253,7 +253,7 @@ public class Dashboard extends SubsystemBase {
     autonChooser.addOption("Start2Note2", new PathPlannerAuto("Start2Note2"));
     autonChooser.addOption("Start3Note3", new PathPlannerAuto("Start3Note3"));
     autonChooser.addOption("Start1Note12", new PathPlannerAuto("Start1Note12"));
-    autonChooser.addOption("Start2Note23", new PathPlannerAuto("Start2Note23"));
+    // autonChooser.addOption("Start2Note23", new PathPlannerAuto("Start2Note23"));
     autonChooser.addOption("Start2Note21", new PathPlannerAuto("Start2Note21"));
     autonChooser.addOption("Start3Note32", new PathPlannerAuto("Start3Note32"));
     autonChooser.addOption("Start1Note123", new PathPlannerAuto("Start1Note123"));
