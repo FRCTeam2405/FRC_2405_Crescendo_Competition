@@ -86,9 +86,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Note8ShootB"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note8ShootB"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
           }
         },
         {
