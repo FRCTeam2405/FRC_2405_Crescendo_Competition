@@ -31,6 +31,7 @@ import frc.robot.commands.SetRobotEmotion;
 import frc.robot.commands.SetStartPose;
 import frc.robot.commands.SetStartPose.StartPosition;
 import frc.classes.AutonChooser;
+import frc.robot.commands.shooting.AimArmSpeaker;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
 import frc.robot.commands.shooting.IntakeOnly;
@@ -223,7 +224,7 @@ public class RobotContainer {
     // This must be done before initializing autos
     NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive, limelight));
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sysArm, sup, sup));
-    NamedCommands.registerCommand("Aim",
+    NamedCommands.registerCommand("Aim", new AimArmSpeaker(swerveDrive, sysArm));
     NamedCommands.registerCommand("SetStart1", new SetStartPose(swerveDrive, StartPosition.Start1));
     NamedCommands.registerCommand("SetStart2", new SetStartPose(swerveDrive, StartPosition.Start2));
     NamedCommands.registerCommand("SetStart3", new SetStartPose(swerveDrive, StartPosition.Start3));
