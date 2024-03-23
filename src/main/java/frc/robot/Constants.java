@@ -13,7 +13,7 @@ public final class Constants {
         public static final double MAX_ATTAINABLE_SPEED_FEET = 12; // Actual max 16.59
         /** Swerve drive max angular speed, in radians per second. */
         // Max speed: ~1.5 rotations per second
-        public static final double MAX_ANGULAR_SPEED = 0.4 * (2 * Math.PI);
+        public static final double MAX_ANGULAR_SPEED = 0.6 * (2 * Math.PI);
 
         public static final HolonomicPathFollowerConfig PATH_PLANNER_CONFIG = 
             new HolonomicPathFollowerConfig(
