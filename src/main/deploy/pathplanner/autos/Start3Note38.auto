@@ -49,6 +49,12 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Note3ShootN3"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "RotateToSpeaker"
@@ -67,7 +73,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note3Note8"
+                  "pathName": "ShootN3Note8"
                 }
               },
               {
