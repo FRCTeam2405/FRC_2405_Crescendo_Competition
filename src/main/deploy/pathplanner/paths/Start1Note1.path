@@ -51,6 +51,17 @@
         "maxAngularVelocity": 360.0,
         "maxAngularAcceleration": 720.0
       }
+    },
+    {
+      "name": "TURN",
+      "minWaypointRelativePos": 0.55,
+      "maxWaypointRelativePos": 0.65,
+      "constraints": {
+        "maxVelocity": 0.3,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 360.0,
+        "maxAngularAcceleration": 720.0
+      }
     }
   ],
   "eventMarkers": [],
