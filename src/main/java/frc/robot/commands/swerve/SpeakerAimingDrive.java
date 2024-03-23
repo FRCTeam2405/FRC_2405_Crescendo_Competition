@@ -131,7 +131,9 @@ public class SpeakerAimingDrive extends Command {
 
     // calculate angle to the speaker so we can aim that direction
     desiredYaw = new Rotation2d(offsetX, offsetY);
-    desiredYaw = desiredYaw.plus(Rotation2d.fromDegrees(90));
+
+    double yawOffset = SmartDashboard.getNumber("yawOffset", 0);
+    desiredYaw = desiredYaw.plus(Rotation2d.fromDegrees(yawOffset));
 
     SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees());
 
