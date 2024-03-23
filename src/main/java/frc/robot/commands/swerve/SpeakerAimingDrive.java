@@ -133,10 +133,12 @@ public class SpeakerAimingDrive extends Command {
   // Returns true when the command should end during autonomous.
   @Override
   public boolean isFinished() {
-    if (DriverStation.isAutonomousEnabled() && Math.abs(swerveDrive.getYaw().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
-      return true;
-    } else {
-      return false;
-    }
+    return true;
+
+    // if (DriverStation.isAutonomousEnabled() && Math.abs(swerveDrive.getYaw().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 }

@@ -80,9 +80,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Note4ShootT"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note4ShootT"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
           }
         },
         {
