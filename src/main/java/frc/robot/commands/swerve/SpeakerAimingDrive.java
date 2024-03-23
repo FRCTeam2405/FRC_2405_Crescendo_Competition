@@ -115,8 +115,10 @@ public class SpeakerAimingDrive extends Command {
       desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_1_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_1_CONSTANT;
     } else if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_3) {
       desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_2_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_2_CONSTANT;
-    } else {
+    } else if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_4) {
       desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_3_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_3_CONSTANT;
+    } else {
+      desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_4_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_4_CONSTANT;
     }
 
     // keep the setpoint within a safe range

@@ -207,8 +207,8 @@ public final class Constants {
         }
 
         public static final class DynamicSetPoints {
-            public static final double PIECE_0_COEFFICIENT = 11.579;
-            public static final double PIECE_0_CONSTANT = -16.47;
+            public static final double PIECE_0_COEFFICIENT = 65.574;
+            public static final double PIECE_0_CONSTANT = -93.246;
 
             public static final double POINT_1 = 1.7272;
             public static final double PIECE_1_COEFFICIENT = 9.843;
@@ -221,6 +221,10 @@ public final class Constants {
             public static final double POINT_3 = 2.729;
             public static final double PIECE_3_COEFFICIENT = 4.988;
             public static final double PIECE_3_CONSTANT = 17.5;
+
+            public static final double POINT_4 = 3.531;
+            public static final double PIECE_4_COEFFICIENT = 1.0285;
+            public static final double PIECE_4_CONSTANT = 31.368;
         }
     }
 
