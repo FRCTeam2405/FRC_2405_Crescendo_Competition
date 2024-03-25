@@ -264,6 +264,8 @@ public class Dashboard extends SubsystemBase {
     autonChooser.addOption("Start3Note38", new PathPlannerAuto("Start3Note38"));
 
     autonChooser.addOption("Start1Note1,4AutoTurn", new PathPlannerAuto("Start1Note1,4AutoTurn"));
+    autonChooser.addOption("Start2Note2,4AutoTurn", new PathPlannerAuto("Start1Note2,4AutoTurn"));
+    autonChooser.addOption("Start3Note3,4AutoTurn", new PathPlannerAuto("Start3Note3,4AutoTurn"));
     
     // switch (startPoseChooser.getSelected()) {
     //   case "start1":
