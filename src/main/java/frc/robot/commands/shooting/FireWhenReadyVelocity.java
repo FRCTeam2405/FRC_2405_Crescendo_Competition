@@ -19,8 +19,8 @@ import frc.robot.subsystems.shooting.Shooter;
 
 public class FireWhenReadyVelocity extends Command {
 
-  // double timestamp;
-  // private Timer timer;
+  double timestamp;
+  private Timer timer;
   private final Shooter sysShooter;
   private final Feeder sysFeeder;
   private final RobotEmotion sysRobotEmotion;
@@ -42,7 +42,7 @@ public class FireWhenReadyVelocity extends Command {
     this.percentOutputFeederTop = percentOutputFeederTop;
     this.percentOutputFeederBottom = percentOutputFeederBottom;
 
-    // timer = new Timer();
+    timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysFeeder, sysRobotEmotion, sysLighting, sysDashboard);
@@ -61,7 +61,7 @@ public class FireWhenReadyVelocity extends Command {
     this.percentOutputFeederTop = percentOutputFeeder;
     this.percentOutputFeederBottom = percentOutputFeeder;
 
-    // timer = new Timer();
+    timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysFeeder, sysRobotEmotion, sysLighting, sysDashboard);
@@ -89,7 +89,7 @@ public class FireWhenReadyVelocity extends Command {
     
     
 
-    // timer = new Timer();
+    timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysShooter, sysFeeder, sysRobotEmotion, sysLighting, sysDashboard);
@@ -98,8 +98,8 @@ public class FireWhenReadyVelocity extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // timer.reset();
-    // timer.start();
+    timer.reset();
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -121,7 +121,7 @@ public class FireWhenReadyVelocity extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // timer.stop();
+    timer.stop();
 
     sysShooter.stopShooter();
     sysFeeder.stopFeeder();
@@ -131,11 +131,10 @@ public class FireWhenReadyVelocity extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if (DriverStation.isAutonomousEnabled() && timer.get() >= 2) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-    return false;
+    if (DriverStation.isAutonomousEnabled() && timer.get() >= 2) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
