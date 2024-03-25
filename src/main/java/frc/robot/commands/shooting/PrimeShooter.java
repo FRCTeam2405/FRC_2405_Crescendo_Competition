@@ -10,40 +10,47 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.shooting.Shooter;
 import frc.robot.Constants;
 import frc.robot.RobotEmotionState;
+import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.LEDLights;
+import frc.robot.subsystems.RobotEmotion;
 
 public class PrimeShooter extends Command {
 
   private final Shooter sysShooter;
+  private final RobotEmotion sysRobotEmotion;
   private final LEDLights sysLighting;
+  private final Dashboard sysDashboard;
   private final DoubleSupplier rpmShooterTop, rpmShooterBottom;
 
   /** Creates a new PrimeShooter. */
-  public PrimeShooter(Shooter sysShooter, LEDLights sysLighting, DoubleSupplier rpmShooterTop, DoubleSupplier rpmShooterBottom) {
+  public PrimeShooter(Shooter sysShooter, RobotEmotion sysRobotEmotion, LEDLights sysLighting, Dashboard sysDashboard, DoubleSupplier rpmShooterTop, DoubleSupplier rpmShooterBottom) {
     this.sysShooter = sysShooter;
+    this.sysRobotEmotion = sysRobotEmotion;
     this.sysLighting = sysLighting;
+    this.sysDashboard = sysDashboard;
     this.rpmShooterTop = rpmShooterTop;
     this.rpmShooterBottom = rpmShooterBottom;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysShooter, sysLighting);
+    addRequirements(sysShooter, sysRobotEmotion, sysLighting, sysDashboard);
   }
 
-  public PrimeShooter(Shooter sysShooter, LEDLights sysLighting) {
+  public PrimeShooter(Shooter sysShooter, RobotEmotion sysRobotEmotion, LEDLights sysLighting, Dashboard sysDashboard, boolean useRobotEmotion) {
     this.sysShooter = sysShooter;
+    this.sysRobotEmotion = sysRobotEmotion;
     this.sysLighting = sysLighting;
-    this.rpmShooterTop = () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_JOY;
-    this.rpmShooterBottom = () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_JOY;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysShooter, sysLighting);
-  }
+    this.sysDashboard = sysDashboard;
 
-  public PrimeShooter(Shooter sysShooter, LEDLights sysLighting, RobotEmotionState robotEmotion) {
-    this.sysShooter = sysShooter;
-    this.sysLighting = sysLighting;
-    this.rpmShooterTop = () -> robotEmotion.getEmotionTopShooterVelocity();
-    this.rpmShooterBottom = () -> robotEmotion.getEmotionBottomShooterVelocity();
+    if (useRobotEmotion) {
+      this.rpmShooterTop = () -> sysRobotEmotion.getEmotionTopShooterVelocity();
+      this.rpmShooterBottom = () -> sysRobotEmotion.getEmotionBottomShooterVelocity();
+    }
+    else {
+    this.rpmShooterTop = () -> sysDashboard.getTopShooterVelocityDashboard();
+    this.rpmShooterBottom = () -> sysDashboard.getBottomShooterVelocityDashboard();
+    }
+    
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysShooter, sysLighting);
+    addRequirements(sysShooter, sysRobotEmotion, sysLighting, sysDashboard);
   }
 
   // Called when the command is initially scheduled.

@@ -265,6 +265,8 @@ public final class Constants {
             public static final int OPTION_A_BUTTON = 7;
             public static final int OPTION_B_BUTTON = 8;
 
+            public static final int COMBO_BUTTON = 9;
+
             // Port IDs for the axes on the controller (joystick)
             public static final int JOYSTICK_X = 0;
             public static final int JOYSTICK_Y = 1;

@@ -208,7 +208,8 @@ public class Dashboard extends SubsystemBase {
       .withPosition(0, 1)
       .withSize(2, 1);
 
-    autonChooser.setDefaultOption("NONE", new PathPlannerAuto("Start2Null"));
+    // autonChooser.setDefaultOption("NONE", new PathPlannerAuto("Start2Null"));
+    autonChooser.setDefaultOption("NONE", new PathPlannerAuto("Blue2Null"));
 
     autonChooser.addOption("Shoot", new PathPlannerAuto("Shoot"));
     autonChooser.addOption("Blue1Null", new PathPlannerAuto("Blue1Null"));

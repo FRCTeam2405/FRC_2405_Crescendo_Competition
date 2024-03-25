@@ -62,6 +62,26 @@ public class RobotEmotion extends SubsystemBase {
     });
   }
 
+public double getEmotionTopShooterVelocity() {
+    return robotEmotion.getEmotionTopShooterVelocity();
+}
+
+public double getEmotionBottomShooterVelocity() {
+    return robotEmotion.getEmotionBottomShooterVelocity();
+}
+
+public double getEmotionLightingColorOne() {
+    return robotEmotion.getEmotionLightingColorOne();
+}
+
+public double getEmotionLightingColorTwo() {
+    return robotEmotion.getEmotionLightingColorTwo();
+}
+
+public double getEmotionArmPosition() {
+    return robotEmotion.getEmotionArmPosition();
+}
+
 
   @Override
   public void periodic() {
