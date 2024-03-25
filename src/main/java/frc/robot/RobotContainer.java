@@ -168,8 +168,8 @@ public class RobotContainer {
 
     // TODO testing combo button
     codriverController.button(Constants.Controllers.Guitar.COMBO_BUTTON)
-                .and(codriverController.button(Constants.Controllers.Guitar.GREEN_FRET))
-                .onTrue(new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
+                .and(codriverController.button(Constants.Controllers.Guitar.RED_FRET))
+                .onTrue(new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
