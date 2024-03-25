@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SetStart1"
+            "name": "SetStart2"
           }
         },
         {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Start1Note1"
+                  "pathName": "Start2Note2"
                 }
               },
               {
@@ -46,12 +46,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Part2"
           }
         },
         {
@@ -73,7 +67,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Part3"
+                  "pathName": "Note2Note4"
                 }
               },
               {
@@ -88,7 +82,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Part4"
+            "pathName": "part2"
           }
         },
         {
