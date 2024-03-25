@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.RobotEmotionState;
 import frc.robot.subsystems.Dashboard;
 import frc.robot.subsystems.LEDLights;
+import frc.robot.subsystems.RobotEmotion;
 import frc.robot.subsystems.shooting.Feeder;
 import frc.robot.subsystems.shooting.Shooter;
 
@@ -21,15 +23,18 @@ public class FireWhenReadyVelocity extends Command {
   private Timer timer;
   private final Shooter sysShooter;
   private final Feeder sysFeeder;
+  private final RobotEmotion sysRobotEmotion;
   private final LEDLights sysLighting;
   private final Dashboard sysDashboard;
   private final DoubleSupplier rpmShooterTop, rpmShooterBottom, percentOutputFeederTop, percentOutputFeederBottom;
+
   /** Creates a new FireWhenReadyVelocity. */
-  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, LEDLights sysLighting, Dashboard sysDashboard,
+  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, RobotEmotion sysRobotEmotion, LEDLights sysLighting, Dashboard sysDashboard,
                       DoubleSupplier rpmShooterTop, DoubleSupplier rpmShooterBottom, 
                       DoubleSupplier percentOutputFeederTop, DoubleSupplier percentOutputFeederBottom)  {
     this.sysShooter = sysShooter;
     this.sysFeeder = sysFeeder;
+    this.sysRobotEmotion = sysRobotEmotion;
     this.sysLighting = sysLighting;
     this.sysDashboard = sysDashboard;
     this.rpmShooterTop = rpmShooterTop;
@@ -40,14 +45,15 @@ public class FireWhenReadyVelocity extends Command {
     timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
+    addRequirements(sysShooter, sysFeeder, sysRobotEmotion, sysLighting, sysDashboard);
   }
 
-  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, LEDLights sysLighting, Dashboard sysDashboard,
+  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, RobotEmotion sysRobotEmotion, LEDLights sysLighting, Dashboard sysDashboard,
                       DoubleSupplier rpmShooter, 
                       DoubleSupplier percentOutputFeeder)  {
     this.sysShooter = sysShooter;
     this.sysFeeder = sysFeeder;
+    this.sysRobotEmotion = sysRobotEmotion;
     this.sysLighting = sysLighting;
     this.sysDashboard = sysDashboard;
     this.rpmShooterTop = rpmShooter;
@@ -58,23 +64,35 @@ public class FireWhenReadyVelocity extends Command {
     timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
+    addRequirements(sysShooter, sysFeeder, sysRobotEmotion, sysLighting, sysDashboard);
   }
 
-  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, LEDLights sysLighting, Dashboard sysDashboard)  {
+  public FireWhenReadyVelocity(Shooter sysShooter, Feeder sysFeeder, RobotEmotion sysRobotEmotion, LEDLights sysLighting, Dashboard sysDashboard, boolean useRobotEmotion)  {
     this.sysShooter = sysShooter;
     this.sysFeeder = sysFeeder;
+    this.sysRobotEmotion = sysRobotEmotion;
     this.sysLighting = sysLighting;
     this.sysDashboard = sysDashboard;
-    this.rpmShooterTop = () -> sysDashboard.getTopShooterVelocityDashboard();
-    this.rpmShooterBottom = () -> sysDashboard.getBottomShooterVelocityDashboard();
-    this.percentOutputFeederTop = () -> sysDashboard.getTopFeederShootingSpeedDashboard();
-    this.percentOutputFeederBottom = () -> sysDashboard.getBottomFeederShootingSpeedDashboard();
+
+    if (useRobotEmotion) {
+      this.rpmShooterTop = () -> sysRobotEmotion.getEmotionTopShooterVelocity();
+      this.rpmShooterBottom = () -> sysRobotEmotion.getEmotionBottomShooterVelocity();
+      this.percentOutputFeederTop = () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED;
+      this.percentOutputFeederBottom = () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED;
+    }
+    else {
+      this.rpmShooterTop = () -> sysDashboard.getTopShooterVelocityDashboard();
+      this.rpmShooterBottom = () -> sysDashboard.getBottomShooterVelocityDashboard();
+      this.percentOutputFeederTop = () -> sysDashboard.getTopFeederShootingSpeedDashboard();
+      this.percentOutputFeederBottom = () -> sysDashboard.getBottomFeederShootingSpeedDashboard();
+    }
+    
+    
 
     timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(sysShooter, sysFeeder, sysLighting, sysDashboard);
+    addRequirements(sysShooter, sysFeeder, sysRobotEmotion, sysLighting, sysDashboard);
   }
 
   // Called when the command is initially scheduled.

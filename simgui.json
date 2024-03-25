@@ -1,0 +1,19 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Auto/Auton": "String Chooser",
+      "/Shuffleboard/Auto/First Note In Auto": "String Chooser",
+      "/Shuffleboard/Auto/Robots starting position": "String Chooser",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/Pigeon 2 (v6) [5]": "Gyro",
+      "/SmartDashboard/autonDropdown": "String Chooser",
+      "/SmartDashboard/firstNoteDropdown": "String Chooser",
+      "/SmartDashboard/startPoseDropdown": "String Chooser",
+      "/SmartDashboard/testAutonDropdown": "String Chooser"
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}
