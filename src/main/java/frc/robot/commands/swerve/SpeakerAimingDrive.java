@@ -108,7 +108,7 @@ public class SpeakerAimingDrive extends Command {
 
     // linear interpolate between measured points to create
     // an angle for the arm to aim at.
-    double desiredSetpoint;
+    // double desiredSetpoint;
     // if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_1) {
     //   desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_0_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_0_CONSTANT;
     // } else if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_2) {
@@ -121,13 +121,17 @@ public class SpeakerAimingDrive extends Command {
     //   desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_4_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_4_CONSTANT;
     // }
 
+    Rotation2d desiredArmAzimuth = new Rotation2d(floorDistance, offsetZ);
+    double desiredArmSetpoint;
+
+
     // keep the setpoint within a safe range
-    MathUtil.clamp(desiredSetpoint, 0, 37);
+    MathUtil.clamp(desiredArmSetpoint, 0, 37);
 
     SmartDashboard.putNumber("floorDistance", floorDistance);
-    SmartDashboard.putNumber("desiredSetpoint", desiredSetpoint);
+    SmartDashboard.putNumber("desiredSetpoint", desiredArmSetpoint);
 
-    arm.moveArmToPosition(desiredSetpoint);
+    arm.moveArmToPosition(desiredArmSetpoint);
 
     // calculate angle to the speaker so we can aim that direction
     desiredYaw = new Rotation2d(offsetX, offsetY);
