@@ -190,7 +190,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive, limelight));
     NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sysArm, sup, sup));
     NamedCommands.registerCommand("Aim", new AimArmSpeaker(swerveDrive, sysArm));
-    NamedCommands.registerCommand("ResetArm", new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.HOME));;
+    NamedCommands.registerCommand("ResetArm", new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
     NamedCommands.registerCommand("SetStart1", new SetStartPose(swerveDrive, StartPosition.Start1));
     NamedCommands.registerCommand("SetStart2", new SetStartPose(swerveDrive, StartPosition.Start2));
     NamedCommands.registerCommand("SetStart3", new SetStartPose(swerveDrive, StartPosition.Start3));
