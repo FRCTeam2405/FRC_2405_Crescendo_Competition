@@ -219,8 +219,8 @@ public final class Constants {
             public static final double PIECE_2_CONSTANT = -0.5;
 
             public static final double POINT_3 = 2.729;
-            public static final double PIECE_3_COEFFICIENT = 4.988;
-            public static final double PIECE_3_CONSTANT = 17.5;
+            public static final double PIECE_3_COEFFICIENT = 4;
+            public static final double PIECE_3_CONSTANT = 19.9;
 
             public static final double POINT_4 = 3.531;
             public static final double PIECE_4_COEFFICIENT = 1.0285;
