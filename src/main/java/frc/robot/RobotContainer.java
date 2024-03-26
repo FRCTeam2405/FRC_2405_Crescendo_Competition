@@ -110,9 +110,8 @@ public class RobotContainer {
 
 
     // Robot Emotion
-    codriverController.axisGreaterThan(Constants.Controllers.Guitar.ROBOT_EMOTION_ID, 0)
-            .whileTrue(new SetRobotEmotion(sysRobotEmotion, 
-            () -> codriverController.getRawAxis(Constants.Controllers.Guitar.ROBOT_EMOTION_ID)));
+    Command cmdSetRobotEmotion = sysRobotEmotion.setEmotionCommand(() -> codriverController.getRawAxis(Constants.Controllers.Guitar.ROBOT_EMOTION_ID));
+    sysRobotEmotion.setDefaultCommand(cmdSetRobotEmotion);
 
     // intake commands
     
@@ -135,77 +134,43 @@ public class RobotContainer {
 
 
     // shooter command
-
-    //FIXME! messy competition fixes, please make cleaner
-    // codriverController.pov(
-    //     Constants.Controllers.Guitar.STRUM_DOWN)
-    //     .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
-    //     () -> { return sysArm.atAmp()
-    //             ? Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP
-    //             : Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT; }, 
-    //     () -> { return sysArm.atAmp()
-    //             ? Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP
-    //             : Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT; }, 
-    //     () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
-    //     () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
-
-    // codriverController.pov(
-    //     Constants.Controllers.Guitar.STRUM_UP)
-    //     .onTrue(new PrimeShooter(sysShooter, sysLighting, 
-    //     () -> { return sysArm.atAmp()
-    //             ? Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP
-    //             : Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT; },
-    //     () -> { return sysArm.atAmp()
-    //             ? Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP
-    //             : Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT; }));
     
-    if (sysArm.getArmPosition() >= Constants.Arm.SetPoints.AMP - 10) {
-       codriverController.pov(
+    codriverController.pov(
         Constants.Controllers.Guitar.STRUM_DOWN)
-        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
-        () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
-        () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP,
-        () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
-        () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysRobotEmotion, sysLighting, sysDashboard, true));
 
         codriverController.pov(
         Constants.Controllers.Guitar.STRUM_UP)
-        .onTrue(new PrimeShooter(sysShooter, sysLighting, 
-                  () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_AMP, 
-                  () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_AMP));
-    }
-    else {
-      codriverController.pov(
-        Constants.Controllers.Guitar.STRUM_DOWN)
-        .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
-                   () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
-                   () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT,
-                   () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
-                   () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+        .onTrue(new PrimeShooter(sysShooter, sysRobotEmotion, sysLighting, sysDashboard, true));
 
-      codriverController.pov(
-        Constants.Controllers.Guitar.STRUM_UP)
-        .onTrue(new PrimeShooter(sysShooter, sysLighting, 
-              () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
-              () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT));
-    }
-
-    codriverController.button(Constants.Controllers.Guitar.YELLOW_FRET)
-                .whileTrue(new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard,
-                () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_ALTERNATE, 
-                () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_ALTERNATE,
-                () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED,
-                () -> Constants.Feeder.Motors.BOTTOM_FEEDER_SHOOTING_SPEED));
+    
     
     // arm commands
-    codriverController.button(Constants.Controllers.Guitar.RED_FRET)
-                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
-    codriverController.button(Constants.Controllers.Guitar.GREEN_FRET)
-                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
-    codriverController.button(Constants.Controllers.Guitar.BLUE_FRET)
-                        .onTrue(new MoveArmToPosition(sysArm, sysDashboard));
-    codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET)
-     .onTrue(new MoveArmToPosition(sysArm, sysDashboard, () -> Constants.Arm.SetPoints.CLIMB));
+    codriverController.button(Constants.Controllers.Guitar.COMBO_BUTTON)
+                .negate()
+                .and(codriverController.button(Constants.Controllers.Guitar.RED_FRET))
+                .onTrue(new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, () -> Constants.Arm.SetPoints.AMP));
+    codriverController.button(Constants.Controllers.Guitar.COMBO_BUTTON)
+                .negate()
+                .and(codriverController.button(Constants.Controllers.Guitar.GREEN_FRET))
+                .onTrue(new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
+    codriverController.button(Constants.Controllers.Guitar.COMBO_BUTTON)
+                .negate()
+                .and(codriverController.button(Constants.Controllers.Guitar.YELLOW_FRET))
+                .onTrue(new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, true));
+    codriverController.button(Constants.Controllers.Guitar.COMBO_BUTTON)
+                .negate()
+                .and(codriverController.button(Constants.Controllers.Guitar.BLUE_FRET))
+                .onTrue(new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, false));
+    codriverController.button(Constants.Controllers.Guitar.COMBO_BUTTON)
+                .negate()
+                .and(codriverController.button(Constants.Controllers.Guitar.ORANGE_FRET))
+                .onTrue(new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, () -> Constants.Arm.SetPoints.CLIMB));
+
+    // TODO testing combo button
+    codriverController.button(Constants.Controllers.Guitar.COMBO_BUTTON)
+                .and(codriverController.button(Constants.Controllers.Guitar.RED_FRET))
+                .onTrue(new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
   }
 
   private DoubleSupplier axisDeadband(CommandGenericHID controller, int axis, double deadband, boolean inverted) {
@@ -231,7 +196,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("SetStart3", new SetStartPose(swerveDrive, StartPosition.Start3));
 
     // Comp bot only
-    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysLighting, sysDashboard, 
+    NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysRobotEmotion, sysLighting, sysDashboard, 
                   () -> Constants.Shooter.Motors.TOP_SHOOTER_VELOCITY_DEFAULT, 
                   () -> Constants.Shooter.Motors.BOTTOM_SHOOTER_VELOCITY_DEFAULT, 
                   () -> Constants.Feeder.Motors.TOP_FEEDER_SHOOTING_SPEED, 

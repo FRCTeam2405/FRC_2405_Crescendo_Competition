@@ -109,21 +109,23 @@ public final class Constants {
 
             public static final double TOP_SHOOTER_VELOCITY_ALTERNATE = 3500; 
             public static final double BOTTOM_SHOOTER_VELOCITY_ALTERNATE = 1600;
+
+            
             // Speed settings
             public static final double TOP_SHOOTER_VELOCITY_SADNESS = 5000; 
             public static final double BOTTOM_SHOOTER_VELOCITY_SADNESS = 5000;
 
-            public static final double TOP_SHOOTER_VELOCITY_FEAR = 4000; 
-            public static final double BOTTOM_SHOOTER_VELOCITY_FEAR = 2000;
+            public static final double TOP_SHOOTER_VELOCITY_FEAR = 5000; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_FEAR = 5000;
 
             public static final double TOP_SHOOTER_VELOCITY_JOY = 3500; 
             public static final double BOTTOM_SHOOTER_VELOCITY_JOY = 1600;
 
-            public static final double TOP_SHOOTER_VELOCITY_DISGUST = 3500; 
-            public static final double BOTTOM_SHOOTER_VELOCITY_DISGUST = 1600;
+            public static final double TOP_SHOOTER_VELOCITY_DISGUST = 5000; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_DISGUST = 5000;
 
-            public static final double TOP_SHOOTER_VELOCITY_ANGER = 3500; 
-            public static final double BOTTOM_SHOOTER_VELOCITY_ANGER = 1600;
+            public static final double TOP_SHOOTER_VELOCITY_ANGER = 5000; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_ANGER = 5000;
 
 
             // Amp speed
@@ -204,6 +206,12 @@ public final class Constants {
             public static final double AMP = 100.0; // 150, original setting
             public static final double CLIMB = 120.0;
             public static final double OVERRIDE = 50;
+
+            public static final double SADNESS = 0;
+            public static final double FEAR = 20;
+            public static final double JOY = 0;
+            public static final double DISGUST = 23;
+            public static final double ANGER = 35;
         }
 
         public static final class DynamicSetPoints {
@@ -277,6 +285,8 @@ public final class Constants {
 
             public static final int OPTION_A_BUTTON = 7;
             public static final int OPTION_B_BUTTON = 8;
+
+            public static final int COMBO_BUTTON = 9;
 
             // Port IDs for the axes on the controller (joystick)
             public static final int JOYSTICK_X = 0;
