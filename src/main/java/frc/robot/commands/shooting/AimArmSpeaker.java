@@ -14,9 +14,11 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.SwerveContainer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 
 public class AimArmSpeaker extends Command {
 
+  private Timer timer;
   Arm arm;
   SwerveContainer swerveDrive;
 
@@ -25,13 +27,18 @@ public class AimArmSpeaker extends Command {
     this.arm = arm;
     this.swerveDrive = swerveDrive;
 
+    timer = new Timer();
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm, swerveDrive);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.reset();
+    timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -87,11 +94,17 @@ public class AimArmSpeaker extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    timer.stop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return arm.atSetPoint();
+    if (DriverStation.isAutonomousEnabled() && timer.get() >= 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

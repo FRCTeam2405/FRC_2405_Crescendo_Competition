@@ -58,7 +58,7 @@ public class Arm extends SubsystemBase {
   }
 
   public boolean atSetPoint() {
-    return Math.abs(getArmPosition() - setpoint) < 2;
+    return Math.abs(getArmPosition() - setpoint) < 5;
   }
 
   @Override

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.5988359597470545,
-        "y": 6.344214763563695
+        "x": 3.7617520673323996,
+        "y": 7.063813197393838
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.5988359597470545,
-        "y": 6.344214763563695
+        "x": 4.7617520673324005,
+        "y": 7.063813197393838
       },
       "isLocked": false,
       "linkedName": "Part2"
@@ -63,7 +63,7 @@
   "reversed": false,
   "folder": "Shootin'",
   "previewStartingState": {
-    "rotation": -160.58851314131644,
+    "rotation": 26.312648494788895,
     "velocity": 0
   },
   "useDefaultConstraints": true
