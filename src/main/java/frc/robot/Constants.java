@@ -206,26 +206,26 @@ public final class Constants {
             public static final double OVERRIDE = 50;
         }
 
-        public static final class DynamicSetPoints {
-            public static final double PIECE_0_COEFFICIENT = 65.574;
-            public static final double PIECE_0_CONSTANT = -93.246;
+        // public static final class DynamicSetPoints {
+        //     public static final double PIECE_0_COEFFICIENT = 65.574;
+        //     public static final double PIECE_0_CONSTANT = -93.246;
 
-            public static final double POINT_1 = 1.7272;
-            public static final double PIECE_1_COEFFICIENT = 9.843;
-            public static final double PIECE_1_CONSTANT = 3;
+        //     public static final double POINT_1 = 1.7272;
+        //     public static final double PIECE_1_COEFFICIENT = 9.843;
+        //     public static final double PIECE_1_CONSTANT = 3;
 
-            public static final double POINT_2 = 2.032;
-            public static final double PIECE_2_COEFFICIENT = 11.474;
-            public static final double PIECE_2_CONSTANT = -0.5;
+        //     public static final double POINT_2 = 2.032;
+        //     public static final double PIECE_2_COEFFICIENT = 11.474;
+        //     public static final double PIECE_2_CONSTANT = -0.5;
 
-            public static final double POINT_3 = 2.729;
-            public static final double PIECE_3_COEFFICIENT = 4.988;
-            public static final double PIECE_3_CONSTANT = 17.5;
+        //     public static final double POINT_3 = 2.729;
+        //     public static final double PIECE_3_COEFFICIENT = 4.988;
+        //     public static final double PIECE_3_CONSTANT = 17.5;
 
-            public static final double POINT_4 = 3.531;
-            public static final double PIECE_4_COEFFICIENT = 1.0285;
-            public static final double PIECE_4_CONSTANT = 31.368;
-        }
+        //     public static final double POINT_4 = 3.531;
+        //     public static final double PIECE_4_COEFFICIENT = 1.0285;
+        //     public static final double PIECE_4_CONSTANT = 31.368;
+        // }
     }
 
     public static final class Field {
