@@ -219,6 +219,10 @@ public class Dashboard extends SubsystemBase {
     autonChooser.addOption("Start1Note14", new PathPlannerAuto("Start1Note14"));
     autonChooser.addOption("Start2Note25", new PathPlannerAuto("Start2Note25"));
     autonChooser.addOption("Start3Note38", new PathPlannerAuto("Start3Note38"));
+
+    autonChooser.addOption("Start2Note21", new PathPlannerAuto("Start2Note21"));
+    autonChooser.addOption("Start2Note23", new PathPlannerAuto("Start2Note23"));
+    autonChooser.addOption("Start2Note123", new PathPlannerAuto("Start2Note123"));
     
     dashboardEntryRobotStartPose = dashboardTabAuto
       .add("Auton", autonChooser)

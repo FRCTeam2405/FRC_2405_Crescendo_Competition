@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.38,
-      "y": 5.55
+      "x": 0.71,
+      "y": 6.71
     },
-    "rotation": 0
+    "rotation": 59.46
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SetStart2"
+            "name": "SetStart1"
           }
         },
         {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Start2Note2"
+                  "pathName": "Start1Note1"
                 }
               },
               {
@@ -51,7 +51,38 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Note2Start2"
+            "pathName": "Note1Start1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Start1Note5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note5Start1"
           }
         },
         {
