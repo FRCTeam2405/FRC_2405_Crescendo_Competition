@@ -7,6 +7,7 @@ package frc.robot.commands.shooting;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.shooting.Intake;
@@ -15,7 +16,7 @@ import frc.robot.subsystems.LEDLights;
 import frc.robot.subsystems.shooting.Feeder;
 
 public class IntakeNote extends Command {
-
+  private Timer timer;
   private final Intake sysIntake;
   private final Feeder sysFeeder;
   private final LEDLights sysLighting;
@@ -34,6 +35,8 @@ public class IntakeNote extends Command {
     this.speedFeederTop = () -> sysDashboard.getTopFeederIntakingSpeedDashboard();
     this.speedFeederBottom = () -> sysDashboard.getBottomFeederIntakingSpeedDashboard();
 
+    timer = new Timer();
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysIntake, sysFeeder, sysLighting, sysDashboard);
   }
@@ -47,6 +50,8 @@ public class IntakeNote extends Command {
     this.speedIntakeRight = speedIntakeRight;
     this.speedFeederTop = speedFeederTop;
     this.speedFeederBottom = speedFeederBottom;
+
+    timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysIntake, sysFeeder, sysLighting, sysDashboard);
@@ -62,13 +67,18 @@ public class IntakeNote extends Command {
     this.speedFeederTop = speedFeeder;
     this.speedFeederBottom = speedFeeder;
 
+    timer = new Timer();
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(sysIntake, sysFeeder, sysLighting, sysDashboard);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.reset();
+    timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -95,6 +105,7 @@ public class IntakeNote extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    timer.stop();
 
     sysIntake.stopIntake();
     sysFeeder.stopFeeder();
@@ -104,6 +115,10 @@ public class IntakeNote extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return sysFeeder.getNoteLimit();
+    if (sysFeeder.getNoteLimit() | timer.get() >= 4) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

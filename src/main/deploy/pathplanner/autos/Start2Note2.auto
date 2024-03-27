@@ -49,9 +49,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "RotateToSpeaker"
+            "pathName": "Note2Start2"
           }
         },
         {

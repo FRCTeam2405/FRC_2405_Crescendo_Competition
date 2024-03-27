@@ -49,9 +49,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "RotateToSpeaker"
+            "pathName": "Note2Start2"
           }
         },
         {
@@ -67,7 +67,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note2Note3"
+                  "pathName": "Note1Start2"
                 }
               },
               {
@@ -82,13 +82,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Note3ShootN3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RotateToSpeaker"
+            "pathName": "Start2Note1"
           }
         },
         {

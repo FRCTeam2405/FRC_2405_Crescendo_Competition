@@ -7,6 +7,7 @@ package frc.robot.commands.swerve;
 import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,7 +15,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveContainer;
 
@@ -23,6 +26,7 @@ public class SpeakerAimingDrive extends Command {
 
   Limelight limelight;
   SwerveContainer swerveDrive;
+  Arm arm;
   Pose2d measuredPose;
   Pose2d currentPose;
   private DoubleSupplier moveX, moveY;
@@ -36,9 +40,10 @@ public class SpeakerAimingDrive extends Command {
    * moveX = main driver x axis joystick inputs
    * moveY = main driver y axis joystick inputs
   */
-  public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, DoubleSupplier vX, DoubleSupplier vY) {
+  public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, Arm arm, DoubleSupplier vX, DoubleSupplier vY) {
     this.limelight = limelight;
     this.swerveDrive = swerveDrive;
+    this.arm = arm;
 
     measuredPose = limelight.getMeasuredPose();
     currentPose = swerveDrive.getPose();
@@ -47,7 +52,7 @@ public class SpeakerAimingDrive extends Command {
     moveY = vY;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(limelight, swerveDrive);
+    addRequirements(limelight, swerveDrive, arm);
   }
 
   @Override
@@ -98,12 +103,37 @@ public class SpeakerAimingDrive extends Command {
     }
 
     // calculate distances to the speaker for shooter calculations
-    // double floorDistance = Math.hypot(offsetX, offsetY);
+    double floorDistance = Math.hypot(offsetX, offsetY);
     // double directDistance = Math.hypot(floorDistance, offsetZ);
+
+    // linear interpolate between measured points to create
+    // an angle for the arm to aim at.
+    double desiredSetpoint;
+    if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_1) {
+      desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_0_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_0_CONSTANT;
+    } else if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_2) {
+      desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_1_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_1_CONSTANT;
+    } else if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_3) {
+      desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_2_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_2_CONSTANT;
+    } else if(floorDistance < Constants.Arm.DynamicSetPoints.POINT_4) {
+      desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_3_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_3_CONSTANT;
+    } else {
+      desiredSetpoint = floorDistance * Constants.Arm.DynamicSetPoints.PIECE_4_COEFFICIENT + Constants.Arm.DynamicSetPoints.PIECE_4_CONSTANT;
+    }
+
+    // keep the setpoint within a safe range
+    MathUtil.clamp(desiredSetpoint, 0, 37);
+
+    SmartDashboard.putNumber("floorDistance", floorDistance);
+    SmartDashboard.putNumber("desiredSetpoint", desiredSetpoint);
+
+    arm.moveArmToPosition(desiredSetpoint);
 
     // calculate angle to the speaker so we can aim that direction
     desiredYaw = new Rotation2d(offsetX, offsetY);
-    desiredYaw.minus(Rotation2d.fromDegrees(90));
+    desiredYaw = desiredYaw.plus(Rotation2d.fromDegrees(180));
+
+    SmartDashboard.putNumber("desiredYaw", desiredYaw.getDegrees());
 
     // normalizes input to [-MAX_SPEED, MAX_SPEED]
     double correctedMoveX = moveX.getAsDouble() * Constants.Swerve.MAX_SPEED;
@@ -117,9 +147,10 @@ public class SpeakerAimingDrive extends Command {
     }
   
     // Rotation deadband so we don't oscillate
-    if (Math.abs(currentPose.getRotation().getDegrees() - (desiredYaw.getDegrees() - 90)) > 0.25) {
-      desiredYaw = swerveDrive.getYaw();
-    }
+    //TODO! enable
+    // if (Math.abs(currentPose.getRotation().getDegrees() - (desiredYaw.getDegrees() - 90)) > 0.25) {
+    //   desiredYaw = swerveDrive.getYaw();
+    // }
 
     swerveDrive.driveAbsolute(correctedMoveX, correctedMoveY, desiredYaw);
   }
@@ -133,6 +164,8 @@ public class SpeakerAimingDrive extends Command {
   // Returns true when the command should end during autonomous.
   @Override
   public boolean isFinished() {
+    // return true;
+
     if (DriverStation.isAutonomousEnabled() && Math.abs(swerveDrive.getYaw().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
       return true;
     } else {

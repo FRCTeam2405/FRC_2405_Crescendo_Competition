@@ -5,7 +5,7 @@
       "x": 0.74,
       "y": 4.38
     },
-    "rotation": -59.77999999999997
+    "rotation": -58.586834759931186
   },
   "command": {
     "type": "sequential",
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note3Start3"
+                  "pathName": "Start3Note3"
                 }
               },
               {
@@ -51,13 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Note3ShootN3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RotateToSpeaker"
+            "pathName": "Note3Start3"
           }
         },
         {

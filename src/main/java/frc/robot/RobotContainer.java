@@ -31,6 +31,7 @@ import frc.robot.commands.SetRobotEmotion;
 import frc.robot.commands.SetStartPose;
 import frc.robot.commands.SetStartPose.StartPosition;
 import frc.classes.AutonChooser;
+import frc.robot.commands.shooting.AimArmSpeaker;
 import frc.robot.commands.shooting.FireWhenReadyVelocity;
 import frc.robot.commands.shooting.IntakeNote;
 import frc.robot.commands.shooting.IntakeOnly;
@@ -102,10 +103,10 @@ public class RobotContainer {
 
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
     driverController.button(Constants.Controllers.Taranis.ADD_VISION_MEASURMENT_BUTTON).whileTrue(new GetVisionMeasurement(swerveDrive, limelight));
-    // driverController.button(Constants.Controllers.Taranis.ROTATE_TO_SPEAKER_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, 
-    //  axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
-    //  axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
-    // ));
+    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_SPEAKER_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, sysArm,
+     axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
+     axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
+    ));
 
 
     // Robot Emotion
@@ -187,13 +188,12 @@ public class RobotContainer {
     // Register named commands for pathplanner
     // This must be done before initializing autos
     NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive, limelight));
-    NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sup, sup));
-    NamedCommands.registerCommand("SetBlue1", new SetStartPose(swerveDrive, StartPosition.Blue1));
-    NamedCommands.registerCommand("SetBlue2", new SetStartPose(swerveDrive, StartPosition.Blue2));
-    NamedCommands.registerCommand("SetBlue3", new SetStartPose(swerveDrive, StartPosition.Blue3));
-    NamedCommands.registerCommand("SetRed1", new SetStartPose(swerveDrive, StartPosition.Red1));
-    NamedCommands.registerCommand("SetRed2", new SetStartPose(swerveDrive, StartPosition.Red2));
-    NamedCommands.registerCommand("SetRed3", new SetStartPose(swerveDrive, StartPosition.Red3));
+    NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sysArm, sup, sup));
+    NamedCommands.registerCommand("Aim", new AimArmSpeaker(swerveDrive, sysArm));
+    NamedCommands.registerCommand("ResetArm", new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
+    NamedCommands.registerCommand("SetStart1", new SetStartPose(swerveDrive, StartPosition.Start1));
+    NamedCommands.registerCommand("SetStart2", new SetStartPose(swerveDrive, StartPosition.Start2));
+    NamedCommands.registerCommand("SetStart3", new SetStartPose(swerveDrive, StartPosition.Start3));
 
     // Comp bot only
     NamedCommands.registerCommand("Shoot", new FireWhenReadyVelocity(sysShooter, sysFeeder, sysRobotEmotion, sysLighting, sysDashboard, 

@@ -3,14 +3,10 @@
   "robotLength": 0.92,
   "holonomicMode": true,
   "pathFolders": [
-    "Auton Command Test paths",
-    "Competition Paths",
-    "Old Test Paths"
+    "Competition Paths"
   ],
   "autoFolders": [
-    "Auton Command Tests",
-    "Competition Autos",
-    "Old Test Autos"
+    "Competition Autos"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
