@@ -3,16 +3,12 @@
   "robotLength": 0.92,
   "holonomicMode": true,
   "pathFolders": [
-    "Auton Command Test paths",
     "Competition Paths",
-    "Shootin'",
-    "Old Test Paths"
+    "Shootin'"
   ],
   "autoFolders": [
-    "Auton Command Tests",
     "Competition Autos",
-    "New Folder for my sanity",
-    "Old Test Autos"
+    "New Folder for my sanity"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
