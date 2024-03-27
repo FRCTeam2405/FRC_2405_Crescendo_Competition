@@ -3,12 +3,10 @@
   "robotLength": 0.92,
   "holonomicMode": true,
   "pathFolders": [
-    "Competition Paths",
-    "Shootin'"
+    "Competition Paths"
   ],
   "autoFolders": [
-    "Competition Autos",
-    "New Folder for my sanity"
+    "Competition Autos"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

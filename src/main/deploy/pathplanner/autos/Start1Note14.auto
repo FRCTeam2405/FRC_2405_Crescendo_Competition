@@ -5,7 +5,7 @@
       "x": 0.71,
       "y": 6.71
     },
-    "rotation": 61.25
+    "rotation": 59.46
   },
   "command": {
     "type": "sequential",
@@ -49,9 +49,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "RotateToSpeaker"
+            "pathName": "Note1Start1"
           }
         },
         {
@@ -61,19 +61,13 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ResetArm"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Note1Note4"
+                  "pathName": "Start1Note4"
                 }
               },
               {
@@ -86,45 +80,20 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Note4ShootT"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RotateToSpeaker"
+            "pathName": "Note4Start1"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ResetArm"
           }
         }
       ]
     }
   },
-  "folder": "New Folder for my sanity",
+  "folder": "Competition Autos",
   "choreoAuto": false
 }
