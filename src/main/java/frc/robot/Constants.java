@@ -115,11 +115,11 @@ public final class Constants {
             public static final double TOP_SHOOTER_VELOCITY_SADNESS = 5000; 
             public static final double BOTTOM_SHOOTER_VELOCITY_SADNESS = 5000;
 
-            public static final double TOP_SHOOTER_VELOCITY_FEAR = 5000; 
-            public static final double BOTTOM_SHOOTER_VELOCITY_FEAR = 5000;
+            public static final double TOP_SHOOTER_VELOCITY_FEAR = 3500; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_FEAR = 1600;
 
-            public static final double TOP_SHOOTER_VELOCITY_JOY = 3500; 
-            public static final double BOTTOM_SHOOTER_VELOCITY_JOY = 1600;
+            public static final double TOP_SHOOTER_VELOCITY_JOY = 5000; 
+            public static final double BOTTOM_SHOOTER_VELOCITY_JOY = 5000;
 
             public static final double TOP_SHOOTER_VELOCITY_DISGUST = 5000; 
             public static final double BOTTOM_SHOOTER_VELOCITY_DISGUST = 5000;
@@ -208,10 +208,10 @@ public final class Constants {
             public static final double OVERRIDE = 50;
 
             public static final double SADNESS = 0;
-            public static final double FEAR = 20;
-            public static final double JOY = 0;
+            public static final double FEAR = 0;
+            public static final double JOY = 31;
             public static final double DISGUST = 23;
-            public static final double ANGER = 35;
+            public static final double ANGER = 0;
         }
     }
 
