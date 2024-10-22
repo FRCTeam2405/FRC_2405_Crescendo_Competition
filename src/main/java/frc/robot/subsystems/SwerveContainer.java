@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import java.io.File;
+import java.util.function.DoubleSupplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -12,6 +13,7 @@ import edu.wpi.first.hal.HALUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.numbers.N1;
@@ -21,6 +23,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import swervelib.SwerveController;
@@ -148,6 +151,16 @@ public class SwerveContainer implements Subsystem {
       getYaw().getRadians()
     );
     inner.drive(SwerveController.getTranslation2d(desiredSpeeds), desiredSpeeds.omegaRadiansPerSecond, true, false);
+  }
+
+  public Command driveTeleop(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier angularRotationX) {
+    return run(() -> {
+      inner.drive(new Translation2d(Math.pow(translationX.getAsDouble(), 3) * inner.getMaximumVelocity(),
+                                    Math.pow(translationY.getAsDouble(),3) * inner.getMaximumVelocity()),
+                  Math.pow(angularRotationX.getAsDouble(), 3) * inner.getMaximumAngularVelocity(),
+                  true,
+                  false);
+    });
   }
 
   //TODO! Document
