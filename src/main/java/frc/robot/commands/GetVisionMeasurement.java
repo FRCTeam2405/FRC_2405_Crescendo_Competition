@@ -14,24 +14,22 @@ import frc.robot.subsystems.SwerveContainer;
 
 public class GetVisionMeasurement extends Command {
   private SwerveContainer swerve;
-  private Limelight limelight;
+  // private Limelight limelight;
   double lastUpdateTime = 0;
   double timestamp;
 
   /** Creates a new GetVisionMeasurement. */
-  public GetVisionMeasurement(SwerveContainer swerve, Limelight limelight) {
+  public GetVisionMeasurement(SwerveContainer swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.limelight = limelight;
     this.swerve = swerve;
 
-    addRequirements(limelight, swerve);
+    addRequirements(swerve);
 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    limelight.initialize();
     lastUpdateTime = 0;
   }
 
@@ -39,19 +37,19 @@ public class GetVisionMeasurement extends Command {
   @Override
   public void execute() {
     // Post the pose to dashboard
-    Pose2d pose = swerve.getPose();
+    // Pose2d pose = swerve.getPose();
 
     // Vision measurement
     // Make sure we only get it once per second
     //TODO! move this "once per second" reading into Limelight subsystem
     timestamp = Timer.getFPGATimestamp();
-    if (timestamp - lastUpdateTime >= 1) {
-     Pose2d measuredPose = limelight.getMeasuredPose();
-     if(limelight.hasTarget() && limelight.tagCount() >= 2) {
-       swerve.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
-       lastUpdateTime = timestamp;
-     }
-   }
+  //   if (timestamp - lastUpdateTime >= 1) {
+  //    Pose2d measuredPose = limelight.getMeasuredPose();
+  //    if(limelight.hasTarget() && limelight.tagCount() >= 2) {
+  //      swerve.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), pose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
+  //      lastUpdateTime = timestamp;
+  //    }
+  //  }
   }
 
   // Called once the command ends or is interrupted.
@@ -61,10 +59,11 @@ public class GetVisionMeasurement extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (DriverStation.isAutonomousEnabled() && (timestamp > 0.25 | (limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1))) {
-     return true;
-    } else {
-     return false;
-    }
+    return true;
+    // if (DriverStation.isAutonomousEnabled() && (timestamp > 0.25 | (limelight.hasTarget() && limelight.tagCount() >= 2 && timestamp - lastUpdateTime >= 1))) {
+    //  return true;
+    // } else {
+    //  return false;
+    // }
   }
 }

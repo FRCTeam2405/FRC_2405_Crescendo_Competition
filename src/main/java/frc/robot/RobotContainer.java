@@ -12,6 +12,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.hal.HALUtil;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -59,7 +60,7 @@ public class RobotContainer {
 
   // Initialize subsystems
   private SwerveContainer swerveDrive = new SwerveContainer();
-  private Limelight limelight = new Limelight();
+  // private Limelight limelight = new Limelight();
 
   // Comp bot only
   private LEDLights sysLighting = new LEDLights(Constants.LEDs.LED_COLORS.TELEOP_COLOR_ONE_DEFAULT, Constants.LEDs.LED_COLORS.TELEOP_COLOR_TWO_DEFAULT);
@@ -84,6 +85,13 @@ public class RobotContainer {
     // reduce resolution to reduce bandwidth
     // camera.setResolution(640, 480);
 
+    Command cmdDriveFieldOrientedAngularVelocity = swerveDrive.driveTeleop(
+          () -> MathUtil.applyDeadband(driverController.getRawAxis(Constants.Controllers.Taranis.DRIVE_X_AXIS) * -1, Constants.Controllers.Taranis.DRIVE_DEADBAND),
+          () -> MathUtil.applyDeadband(driverController.getRawAxis(Constants.Controllers.Taranis.DRIVE_Y_AXIS) * -1, Constants.Controllers.Taranis.DRIVE_DEADBAND),
+          () -> MathUtil.applyDeadband(driverController.getRawAxis(Constants.Controllers.Taranis.ROTATE_AXIS), Constants.Controllers.Taranis.ROTATE_DEADBAND));
+
+    swerveDrive.setDefaultCommand(cmdDriveFieldOrientedAngularVelocity);
+    
     configureBindings();
     configureAutonomous();
     // SmartDashboard.putNumber(Constants.Dashboard.Utility.Widgets.ROBOT_EMOTION_SETTING_NAME, codriverController.getRawAxis(Constants.Controllers.Guitar.ROBOT_EMOTION_ID));
@@ -93,20 +101,22 @@ public class RobotContainer {
   private void configureBindings() {
     // Temporary controls for testing
     //TODO! Competition controls
-    swerveDrive.setDefaultCommand(new TeleopDrive(swerveDrive,
-      // Invert X Axis - WPIlib is forward-positive, joystick is down-positive
-      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
-      // Invert Y Axis - WPILib is left-positive, joystick is right-positive
-      axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
-      axisDeadband(driverController, Constants.Controllers.Taranis.ROTATE_AXIS, Constants.Controllers.Taranis.ROTATE_DEADBAND, false)
-    ));
+    // swerveDrive.setDefaultCommand(new TeleopDrive(swerveDrive,
+    //   // Invert X Axis - WPIlib is forward-positive, joystick is down-positive
+    //   axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
+    //   // Invert Y Axis - WPILib is left-positive, joystick is right-positive
+    //   axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true),
+    //   axisDeadband(driverController, Constants.Controllers.Taranis.ROTATE_AXIS, Constants.Controllers.Taranis.ROTATE_DEADBAND, false)
+    // ));
+
+    
 
     driverController.button(Constants.Controllers.Taranis.ZERO_GYRO_BUTTON).onTrue(new ZeroGyro(swerveDrive));
-    driverController.button(Constants.Controllers.Taranis.ADD_VISION_MEASURMENT_BUTTON).whileTrue(new GetVisionMeasurement(swerveDrive, limelight));
-    driverController.button(Constants.Controllers.Taranis.ROTATE_TO_SPEAKER_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, sysArm,
-     axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
-     axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
-    ));
+    // driverController.button(Constants.Controllers.Taranis.ADD_VISION_MEASURMENT_BUTTON).whileTrue(new GetVisionMeasurement(swerveDrive, limelight));
+    // driverController.button(Constants.Controllers.Taranis.ROTATE_TO_SPEAKER_BUTTON).whileTrue(new SpeakerAimingDrive(limelight, swerveDrive, sysArm,
+    //  axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_X_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true), 
+    //  axisDeadband(driverController, Constants.Controllers.Taranis.DRIVE_Y_AXIS, Constants.Controllers.Taranis.DRIVE_DEADBAND, true)
+    // ));
 
 
     // Robot Emotion
@@ -187,8 +197,8 @@ public class RobotContainer {
   private void configureAutonomous() {
     // Register named commands for pathplanner
     // This must be done before initializing autos
-    NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive, limelight));
-    NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(limelight, swerveDrive, sysArm, sup, sup));
+    NamedCommands.registerCommand("GetVisionMeasurement", new GetVisionMeasurement(swerveDrive));
+    NamedCommands.registerCommand("RotateToSpeaker", new SpeakerAimingDrive(swerveDrive, sysArm, sup, sup));
     NamedCommands.registerCommand("Aim", new AimArmSpeaker(swerveDrive, sysArm));
     NamedCommands.registerCommand("ResetArm", new MoveArmToPosition(sysArm, sysRobotEmotion, sysDashboard, () -> Constants.Arm.SetPoints.HOME));
     NamedCommands.registerCommand("SetStart1", new SetStartPose(swerveDrive, StartPosition.Start1));

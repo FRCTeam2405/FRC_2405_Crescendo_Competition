@@ -24,7 +24,7 @@ import frc.robot.subsystems.SwerveContainer;
 
 public class SpeakerAimingDrive extends Command {
 
-  Limelight limelight;
+  // Limelight limelight;
   SwerveContainer swerveDrive;
   Arm arm;
   Pose2d measuredPose;
@@ -40,19 +40,18 @@ public class SpeakerAimingDrive extends Command {
    * moveX = main driver x axis joystick inputs
    * moveY = main driver y axis joystick inputs
   */
-  public SpeakerAimingDrive(Limelight limelight, SwerveContainer swerveDrive, Arm arm, DoubleSupplier vX, DoubleSupplier vY) {
-    this.limelight = limelight;
+  public SpeakerAimingDrive(SwerveContainer swerveDrive, Arm arm, DoubleSupplier vX, DoubleSupplier vY) {
     this.swerveDrive = swerveDrive;
     this.arm = arm;
 
-    measuredPose = limelight.getMeasuredPose();
+    measuredPose = swerveDrive.getPose();
     currentPose = swerveDrive.getPose();
 
     moveX = vX;
     moveY = vY;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(limelight, swerveDrive, arm);
+    addRequirements(swerveDrive, arm);
   }
 
   @Override
@@ -71,17 +70,17 @@ public class SpeakerAimingDrive extends Command {
     }
     
     // Only check limelight once per second to avoid overloading network
-    double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
+    // double timestamp = Timer.getFPGATimestamp() - limelight.getLatency();
 
-    if (timestamp - lastUpdateTime >= 1) {
-      measuredPose = limelight.getMeasuredPose();
+    // if (timestamp - lastUpdateTime >= 1) {
+    //   measuredPose = limelight.getMeasuredPose();
 
-      // Two tag measuring is stable, one tag measuring is not
-      if(limelight.hasTarget() && limelight.tagCount() >= 2) {
-        swerveDrive.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
-        lastUpdateTime = timestamp;
-     }
-    }
+    //   // Two tag measuring is stable, one tag measuring is not
+    //   if(limelight.hasTarget() && limelight.tagCount() >= 2) {
+    //     swerveDrive.addVisionMeasurement(new Pose2d(measuredPose.getX(), measuredPose.getY(), measuredPose.getRotation()), timestamp, VecBuilder.fill(0.01, 0.01, 999999999));
+    //     lastUpdateTime = timestamp;
+    //  }
+    // }
 
     currentPose = swerveDrive.getPose();
 
@@ -164,12 +163,12 @@ public class SpeakerAimingDrive extends Command {
   // Returns true when the command should end during autonomous.
   @Override
   public boolean isFinished() {
-    // return true;
+    return true;
 
-    if (DriverStation.isAutonomousEnabled() && Math.abs(swerveDrive.getYaw().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (DriverStation.isAutonomousEnabled() && Math.abs(swerveDrive.getYaw().getDegrees() - desiredYaw.getDegrees()) > 0.25) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 }
